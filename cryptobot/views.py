@@ -42,10 +42,6 @@ def index(request):
             user_db = store.UserDB()
             user_db.store_keys(user, keys)
 
-    trade_db = store.TradeDB()
-    trade_db.update_csv(
-        os.path.join(os.path.dirname(__file__), 'mtgoxUSD.csv'))
-
     stream = io.StringIO()
 
     # Test storing and deleting keys
