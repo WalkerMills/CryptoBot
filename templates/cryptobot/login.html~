@@ -1,0 +1,34 @@
+<html>
+
+<head>
+    <title>log the fuck in</title>
+    <link rel="stylesheet" href="{{ STATIC_URL }}pure-min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}style.css">
+</head>
+
+<body>
+
+<div class="main-splash">
+    <h1>CryptoBot</h1>
+    <h2>simple algorithmic cryptocurrency trading bot creation</h2>
+</div>
+
+<div class="main-content">
+    <div class="main-3col pure-g-r">
+        <div class="pure-u-1-3">
+            <h3>SIMPLE</h3>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla a nisi in velit euismod accumsan. Nullam ornare ut ante ac cursus. Pellentesque erat mauris, pulvinar ut dolor eget, venenatis sollicitudin quam. Nullam quis sodales urna, a adipiscing lectus. Aenean a euismod lectus, sed fringilla urna. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque non orci at eros vulputate viverra sed nec augue. Maecenas gravida, dolor a tempor porta, ante quam tempor magna, vitae posuere urna enim at eros. Maecenas hendrerit, ipsum sed vehicula volutpat, dolor justo ultricies quam, vitae scelerisque nulla purus id nunc. Morbi sodales odio a mauris euismod, ac sollicitudin tortor commodo.</p>
+        </div>
+        <div class="pure-u-1-3">
+            <h3>ALGORITHMIC</h3>
+            <p> Phasellus feugiat elementum mi vulputate accumsan. Duis gravida ultricies velit, et hendrerit neque auctor vel. Cras gravida vel purus cursus lobortis. Praesent gravida tempus erat, quis congue mi dictum bibendum. Etiam hendrerit tellus hendrerit nunc mattis gravida. Aliquam consectetur pharetra nulla, vel imperdiet felis molestie ut. Sed cursus a elit sit amet sodales. Proin sollicitudin rhoncus tellus. Ut volutpat tempor vestibulum.</p>
+        </div>
+        <div class="pure-u-1-3">
+            <h3>TRADING</h3>
+            <p>Duis porta ligula nulla, et euismod sapien porttitor nec. Pellentesque sit amet augue dignissim, dapibus magna non, sagittis massa. Nulla venenatis magna sit amet nisi tempor scelerisque. Morbi velit lectus, venenatis vel vestibulum eget, molestie nec magna. Vivamus scelerisque pretium neque, sit amet fermentum enim aliquam vitae. Curabitur iaculis eros eget libero condimentum venenatis. Sed sed consequat leo. Ut auctor neque eu dolor luctus rhoncus sit amet at massa. Pellentesque eu malesuada risus. Sed in ligula fermentum, pellentesque odio vel, blandit neque. In volutpat eu turpis sit amet dignissim. Nulla in ligula vitae arcu tristique vestibulum. Vivamus at arcu adipiscing, commodo urna non, semper ligula. Mauris a felis adipiscing, volutpat dolor in, congue dolor. Proin id tincidunt velit, sit amet lobortis nunc. Nam interdum velit ac nulla suscipit egestas.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

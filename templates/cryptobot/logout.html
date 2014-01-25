@@ -1,0 +1,28 @@
+<html>
+
+<head>
+    <title>log the fuck in</title>
+    <link rel="stylesheet" href="{{ STATIC_URL }}pure-min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}style.css">
+</head>
+
+<body id="logout">
+
+{% block content %}
+
+<div class="log-out">
+    <p>You've been logged out successfully.</p>
+</div>
+
+<script>
+function redirect() {
+    window.location.href = "/";
+}
+setTimeout(redirect, 2000);
+</script>
+
+{% endblock %}
+
+
+</body>
+</html>
