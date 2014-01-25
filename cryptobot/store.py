@@ -1,30 +1,33 @@
 from . import models
 
-import abc
+import csv
 import hashlib
+import itertools
 import sys
 
 from Crypto import Random
 from Crypto.Cipher import AES
+from django.db.models import Max
 
 
 class BaseDB(object):
-    __metaclass__ = abc.ABCMeta
 
     def __init__(self, model):
         self.model = model
 
-    @abc.abstractmethod
-    def store(self, *args, **kwargs):
-        return
+    def store(self, values):
+        row, created = self.model.objects.get_or_create(**values)
+        if created:
+            row.save()
 
-    @abc.abstractmethod
-    def delete(self, *args, **kwargs):
-        return
+    def delete(self, **filters):
+        rows = self.model.objects.filter(**filters)
+        rows.delete()
 
-    @abc.abstractmethod
-    def get(self, *args, **kwargs):
-        return
+    def get(self, **filters):
+        rows = self.model.objects.filter(**filters)
+        return [v for v in rows.values()]
+
 
 
 class KeystoreDB(BaseDB):
@@ -150,9 +153,7 @@ class KeystoreDB(BaseDB):
                 row.save()
 
     def delete(self, user, **filters):
-        rows = self.model.objects.filter(username=user.username, 
-                                         **filters)
-        rows.delete()
+        super(KeystoreDB, self).delete(username=user.username)
 
     def get(self, user, **filters):
         rows = self.model.objects.filter(username=user.username, 
@@ -170,19 +171,6 @@ class UserDB(BaseDB):
         super(UserDB, self).__init__(model)
         self.keystore = KeystoreDB()
 
-    def store(self, values):
-        user, created = self.model.objects.get_or_create(**values)
-        if created:
-            user.save()
-
-    def delete(self, **filters):
-        rows = self.model.objects.filter(**filters)
-        rows.delete()
-
-    def get(self, **filters):
-        rows = self.model.objects.filter(**filters)
-        return [v for v in rows.values()]
-
     def store_keys(self, *args, **kwargs):
         self.keystore.store(*args, **kwargs)
 
@@ -191,3 +179,30 @@ class UserDB(BaseDB):
 
     def get_keys(self, *args, **kwargs):
         return self.keystore.get(*args, **kwargs)
+
+
+class TradeDB(BaseDB):
+
+    def __init__(self, model=models.Trade):
+        super(TradeDB, self).__init__(model)
+        self.fields = ('time', 'price', 'amount') 
+
+    def store_csv(self, csvfile):
+        with open(csvfile, 'rb') as f:
+            reader = csv.reader(f, delimiter=',')
+            for line in reader:
+                values = dict(itertools.izip(self.fields, line))
+                super(TradeDB, self).store(values)
+
+    def update_csv(self, csvfile):
+        maximum = self.model.objects.all().aggregate(Max('time'))
+        maximum = int(maximum['time__max'])
+
+        with open(csvfile, 'rb') as f:
+            reader = csv.reader(f, delimiter=',')
+            for line in reader:
+                if line[0] < maximum:
+                    continue
+
+                values = dict(itertools.izip(self.fields, line))
+                super(TradeDB, self).store(values)
