@@ -43,7 +43,7 @@ class MtGoxClient(object):
     # Currency pair
     PAIR = RES + AUX
     # Default API key name
-    NAME = 'bitbot'
+    NAME = 'cryptobot'
     ATTEMPTS = 10
 
     def __init__(self, user, name=NAME, currency=PAIR):

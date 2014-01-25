@@ -12,8 +12,10 @@ from django.http import HttpResponse
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
+USER = 'test'
+PASS = 'foo'
 KEYFILE = os.path.dirname(__file__) + '/tmp/keys.txt'
-NAME = u'bitbot'
+NAME = u'cryptobot'
 
 def get_keys(path):
     with io.open(path) as f:
@@ -25,12 +27,24 @@ def json_print(json_str):
     return json.dumps(json_str, sort_keys=True, indent=4, 
                       separators=(',', ': '))
 
-@login_required(login_url='/bitbot/login/')
+def init(user, keys):
+    user_db = store.UserDB()
+    user_db.store_keys(user, keys)
+
+@login_required(login_url='/cryptobot/login/')
 def index(request):
     user = request.user
 
     keys = get_keys(KEYFILE)
-    client = mtgox.MtGoxClient(user, name=NAME)
+
+    initialized = False
+    while not initialized:
+        try:
+            client = mtgox.MtGoxClient(user, name=NAME)
+            initialized = True
+        except IndexError:
+            init(user, keys)
+
     stream = io.StringIO()
 
     # Test storing and deleting keys
