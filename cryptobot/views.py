@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 
 USER = 'test'
 PASS = 'foo'
-KEYFILE = os.path.dirname(__file__) + '/tmp/keys.txt'
+KEYFILE = os.path.join(os.path.dirname(__file__), 'tmp/keys.txt')
 NAME = u'cryptobot'
 
 def get_keys(path):
@@ -26,10 +26,6 @@ def get_keys(path):
 def json_print(json_str):
     return json.dumps(json_str, sort_keys=True, indent=4,
                       separators=(',', ': '))
-
-def init(user, keys):
-    user_db = store.UserDB()
-    user_db.store_keys(user, keys)
 
 @login_required(login_url='/login/')
 def index(request):
@@ -43,7 +39,12 @@ def index(request):
             client = mtgox.MtGoxClient(user, name=NAME)
             initialized = True
         except IndexError:
-            init(user, keys)
+            user_db = store.UserDB()
+            user_db.store_keys(user, keys)
+
+    trade_db = store.TradeDB()
+    trade_db.update_csv(
+        os.path.join(os.path.dirname(__file__), 'mtgoxUSD.csv'))
 
     stream = io.StringIO()
 
