@@ -24,14 +24,14 @@ def get_keys(path):
     return keys
 
 def json_print(json_str):
-    return json.dumps(json_str, sort_keys=True, indent=4, 
+    return json.dumps(json_str, sort_keys=True, indent=4,
                       separators=(',', ': '))
 
 def init(user, keys):
     user_db = store.UserDB()
     user_db.store_keys(user, keys)
 
-@login_required(login_url='/cryptobot/login/')
+@login_required(login_url='/login/')
 def index(request):
     user = request.user
 
@@ -99,11 +99,10 @@ def index(request):
         sys.stderr.flush()
         stream.write(u'Checking {}:\n\n'.format(name))
         # Pretty print method return value
-        stream.write(u'{}\n\n'.format(json_print(public[name](*api_args, 
+        stream.write(u'{}\n\n'.format(json_print(public[name](*api_args,
                                                               **api_kwargs))))
 
     output = stream.getvalue()
     stream.close()
-    logout(request)
-    
+
     return HttpResponse(output, content_type='text/plain')

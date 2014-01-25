@@ -1,24 +1,46 @@
+<html>
+
+<head>
+    <title>log the fuck in</title>
+    <link rel="stylesheet" href="{{ STATIC_URL }}pure-min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}style.css">
+</head>
+
+<body id="login">
+
 {% block content %}
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+<div class="log-in">
+<form class="pure-form pure-form-stacked" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+    <fieldset>
+    {% csrf_token %}
 
-<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
+    <div class="pure-control-group">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+    </div>
 
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next }}" />
+    <div class="pure-control-group">
+        {{ form.password.label_tag }}
+        {{ form.password }}
+    </div>
+
+    <div class="pure-controls">
+        <button class="pure-button pure-button-primary" type="submit">Log in</button>
+    </div>
+    </fieldset>
 </form>
+</div>
+
+<p class="log-in-error">
+{% if form.errors %}
+Your username and password didn't match. Please try again.
+{% endif %}
+</p>
+
 
 {% endblock %}
+
+
+</body>
+</html>

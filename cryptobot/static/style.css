@@ -1,0 +1,82 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway);
+
+body {
+    color: #111;
+    background-color: #DDDDDD;
+}
+
+.main-splash {
+    width: 100%;
+    height: 12rem;
+    margin: auto;
+    padding: 2rem 0 0 0;
+
+    background-color: #4965D6;
+    color: white;
+
+    font-family: 'Raleway', sans-serif;
+}
+.main-splash h1, h2 {
+    margin: 0;
+
+    text-align: center;
+}
+.main-splash h1 {
+    font-size: 6rem;
+    letter-spacing: 6px;
+}
+
+.login-box {
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+}
+.returning-box {
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+}
+.sign-up-button, .log-in-button, .log-out-button {
+    margin: 1rem;
+    background-color: white;
+    width: 6rem;
+}
+.account-button { 
+    margin: 1rem;
+    background-color: orange;
+}
+.log-out-button {
+    float: right;
+}
+
+.main-3col {
+    font-size: 1.5rem;
+    text-align: center;
+}
+.main-3col h3 {
+    padding: 1rem 0 0;
+    font-size: 2rem;
+}
+.main-3col p {
+    padding: 1rem 2rem 0;
+}
+
+.log-in {
+    margin: 0 auto;
+    padding-top: 3rem;
+    width: 10rem;
+}
+.log-in button {
+    margin-top: 1.5rem;
+    background-color: #4965D6;
+    float: right;
+}
+p.log-in-error {
+    text-align: center;
+    color: red;
+    margin-top: 4rem;
+}
+
+.log-out p {
+    text-align: center;
+}
