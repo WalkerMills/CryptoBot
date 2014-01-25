@@ -10,3 +10,10 @@ class APIKey(models.Model):
 
     class Meta:
         unique_together = (('username', 'name'),)
+
+
+class Trade(models.Model):
+    time = models.DecimalField(max_digits=10, decimal_places=0)
+    price = models.DecimalField(max_digits=17, decimal_places=12)
+    amount = models.DecimalField(max_digits=20, decimal_places=12)
+
