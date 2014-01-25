@@ -4,13 +4,16 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <iostream>
+#include <ctime>
 
 #include "ta_libc.h"
 
 using namespace std;
 
+// Setting up function map of the TA_lib functions
 typedef TA_RETcode (*func_t)();
-typedef std::map<string,funct_t> func_map_t;
+typedef map<string,funct_t> func_map_t;
 
 func_map_t func_map;
 func_map["TA_AVGPRICE"] = &TA_AVGPRICE;
@@ -18,23 +21,30 @@ func_map["TA_EMA"] = &TA_EMA;
 func_map["TA_MACD"] = &TA_MACD;
 func_map["SMA"] = &TA_SMA;
 
-enum str AlgoRuleType {ConstComp, VarComp, Exist};
 
+// Enum for the AlgoRule class types
+enum string AlgoRuleType {ConstComp, VarComp, Exist};
+
+
+// Defining Errors
 class DimensionError: public exception {
-    virtual const char* what() const throw() {
+    virtual const string * what() const throw() {
         return "The dimensions are mismatched.";
     }
 } DimensionError;
 
 class RuleTypeError: public exception {
-    virtual const char* what() const throw() {
+    virtual const string * what() const throw() {
         return "The algo rule type does not match the arguments"
     }
 } TypeError;
 
+
+// TaInd class. Each one represents a single technical indicator
+// along with the parameters that go with it. 
 class TaInd {
 private:
-    char *function;
+    string function;
 
     int start;
     int end;
@@ -42,86 +52,53 @@ private:
     int optInTimePeriod;
     int optInMAType;
 
+
 public:
-    TaInd (char *function, int start, int end, const double *in,
+    TaInd (string *function, int start, int end, const double *in,
            int optInTimePeriod, int optInMAType);
 
+    double *results();
 };
 
+
+// AlgoBot Class. Each one represents a single algorithmic trading
+// bot. Each of them consists of a vector of AlgoRules that they 
+// constantly execute on. 
 class AlgoBot {
+    string algoName;
 
-    public: 
-    char AlgoName;
-
-    vector<TaInd *> taQueue;
+    vector<AlgoRule *> taQueue;
     
-    boolean update() {
-        for (TaInd *indicator : taQueue) {
+    vector<double> update(); 
 
-        } 
-    }
+    vector<double> crossover(double *indicator1, double *indicator2) {
+    };
 
-    vector<int> crossover(int indicator1[], int indicator2[]) {
-        
-        if (indicator1.size() != indicator2.size()) {
-            throw DimensionError;
-        }
+    vector<double> existence(TaInd *indicator) {
+    };
 
-        vector<int> crossovers;
-        int size = indicator1.size();
-        int difference = indicator1[0] - indicator2[0];
-        int sign;
+    vector<double> boundcomp(double *indicator1, double constant) {
+    };
 
-        if (difference > 0) {
-            sign = 1;
-        }
-        else {
-            sign = -1;
-        }
-
-        while(i = 1; i++; i < size) {
-            difference = indicator1[i] - indicator2[i];
-            if ((difference > 0 and sign == -1) or (difference < 0 and sign == 1)) {
-                crossovers.insert(i);
-                sign = -sign;
-            }
-        }
-        return crossovers;
-    }
-
-    boolean existence(TaInd *indicator) {
-
-    }
+public: 
+    AlgoBot (string name);
 
 };
 
-AlgoBot::AlgoBot (char botname) {
-    AlgoName = botname;
-}
 
-class AlgoRule (TaInd indicator1, TaInd indicator2 = NULL, AlgoRuleType type, constant = NULL) {
-    if (indicator2 != NULL and AlgoRuleType != 'VarComp') {
-        throw TypeError;
-    }
+// AlgoRule Class. Each instance represents a rule based on either 1 or 2 technical 
+// indicators. The type is one of the enumerated types above, and if necessary, the
+// constant field is for arguments for constant comparison.
 
-    if (AlgoRuleType = 'ConstComp' and constant == NULL) {
-        throw TypeError;
-    }
+class AlgoRule () {
+    int id;
+    TaInd indicator1; 
+    TaInd indicator2;
+    AlgoRuleType type;
+    double constant;
 
-    if (indicator2 == NULL and AlgoRuleType == 'VarComp') {
-        throw TypeError;
-    }
-
-
-    TaInd indicator1 = indicator1;
-    TaInd indicator2 = indicator2;
-    AlgoRuleType = type;
-    constant = constant;
-
-    public: 
-
-    AlgoRule ()
-
+public: 
+    AlgoRule (TaInd *indicator1, TaInd *indicator2 = NULL, AlgoRuleType *type, constant = NULL);
 
 }
 
@@ -129,29 +106,27 @@ class AlgoRule (TaInd indicator1, TaInd indicator2 = NULL, AlgoRuleType type, co
 
 
 
-
+// User class. This class contains the functions that users will be allowed
+// to call. For instance, they will be allowed to create bots, add and delete
+// Algo Rules, list all the bots and all the Algo Rules for each bot, and to
+// delete bots. 
 class User {
+    
+    vector<AlgoBot *> botList;
+
     public: 
 
+    AlgoBot *createBot(string botName);
 
+    TaInd *addRule(string indName, start, end, data, optTP, optMA);
 
-    AlgoBot *create_bot(char botName) {
-        return AlgoBot (botName);
-    }
+    TaInd *removeRule(string indName);
 
-    TaInd *addInd(char indName, start, end, data, optTP, optMA) {
-        new_ind = new *TaInd;
-        new_ind = TaInd(ind_name, start, end, data, optTP, optMA);
-        return *new_ind;
-    }
+    TaInd *listRules(string *botName);
 
-    TaInd *listInd() {
-        //iterate through list of indicators and print it out
-    }
+    Boolean deleteBot(string botName);
 
-    Boolean deleteBot(char botName) {
-
-    }
+    void runBot(string botName);
 };
 
 #endif // BOTS_HH
