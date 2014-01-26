@@ -75,7 +75,7 @@ CACHES = {
 }
 
 TEMPLATE_DIRS = (
-    'templates'
+    os.path.join(BASE_DIR, 'templates')
 )
 
 PASSWORD_HASHERS = (
@@ -104,4 +104,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'cryptobot/static')
 STATIC_URL = '/static/'
+LOGIN_REDIRECT_URL = '/accounts/splash/'

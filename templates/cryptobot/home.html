@@ -15,8 +15,8 @@
 
 {% if user.is_authenticated %}
 <div class="returning-box">
-    <form class="pure-form" action="/accounts/profile/">
-        <button class="pure-button account-button">Welcome back {{ user.username }}!</button>
+    <form class="pure-form" action="/accounts/splash/">
+        <button class="pure-button account-button">Welcome back, {{ user.username }}!</button>
     </form>
     <form class="pure-form" action="/logout/">
         <button class="pure-button log-out-button">Log out</button>
@@ -24,7 +24,7 @@
 </div>
 {% else %}
 <div class="login-box">
-    <form class="pure-form" action="http://www.google.com">
+    <form class="pure-form" action="/register/">
         <button class="pure-button sign-up-button">Sign up</button>
     </form>
     <form class="pure-form" action="/login/">
