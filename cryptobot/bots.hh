@@ -36,6 +36,9 @@ static void makeMap() {
 // Enum for the AlgoRule class types
 enum AlgoRuleType {ConstComp, VarComp, Exist};
 
+//Enum for the Actions class types
+enum ActionType {Buy, Sell};
+
 
 // Defining Errors
 class DimensionError: public exception {
@@ -48,7 +51,6 @@ class RuleTypeError: public exception {
     virtual const char * what() const throw() {
         return "The algo rule type does not match the arguments";
     }
-
 } TypeError;
 
 
@@ -83,8 +85,14 @@ public:
     AlgoRuleType type;
     double constant;
 
+    Actiontype action;
+    double actionAmount;
+    
+
     AlgoRule (TaInd *indicator1, AlgoRuleType type, TaInd *indicator2, 
-              double constant);
+              double constant, Actiontype action, double actionAmount);
+
+    TradeCall (Actiontype action, double actionAmount);
 
 };
 

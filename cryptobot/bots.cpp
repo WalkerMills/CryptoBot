@@ -3,12 +3,23 @@
 #include <string>
 #include <vector>
 
+
+#include <sys/types>
+#include <sys/socket>
+#include <sys/un>
+#include <cstdio>
 #include <cstdlib>
 #include <ctime>
 
 #include "bots.hh"
 
+// Defining socket path
+#define SOCK_PATH "/tmp/cryptobot"
+
 using namespace std;
+
+
+
 
 
 // TaInd functions
@@ -99,6 +110,24 @@ vector<double> AlgoBot::existence(retValue *output) {
 
 vector<double> AlgoBot::boundcomp(retValue *output, double constant) {
     vector<double> out;
+
+    double difference = constant - output->out[output->begin];
+    int sign;
+    if (difference > 0) {
+    	sign = 1;
+    }
+    else {
+    	sign = -1;
+    }
+
+    for (int i = 1; i < output->size, i++) {
+    	difference = constant - output->out[output->begin];
+    	if ((difference > 0 && sign == -1) || 
+    	    (difference < 0 && sign == 1)) {
+    		out.push_back(i);
+    		sign == -sign;
+    	}
+    }
     return out;
 }
 
@@ -127,7 +156,8 @@ void AlgoBot::update() {
 
 // AlgoRule Functions
 AlgoRule::AlgoRule (TaInd *indicator1, AlgoRuleType type, 
-                    TaInd *indicator2 = NULL, double constant = 0) {
+                    TaInd *indicator2 = NULL, double constant = 0, 
+                    ActionType action, double amount) {
     if (indicator2 != NULL && type != VarComp) {
         throw TypeError;
     }
@@ -148,8 +178,53 @@ AlgoRule::AlgoRule (TaInd *indicator1, AlgoRuleType type,
     this->type = type;
     this->constant = constant;
     this->id = id;
+
+    this->action = action;
+    this->actionAmount = amount;
 }
 
+int AlgoRule::TradeCall (ActionType action, double amount) {
+	int s, t, len;
+	struct sockaddr_un remote;
+	char str[100];
+
+	if ((s = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
+		perror("socket");
+		exit(1);
+	}
+
+	remote.sun_family = AF_UNIX;
+	strcpy(remote.sun_path, SOCK_PATH);
+	len = strlen(remote.sun_path) + sizeof(remote.sun_family);
+	if (connect(s, (struct sockaddr *)&remote, len) == -1) {
+		fprintf(stderr, "connect");
+		exit(1);
+	}
+
+	printf("connected.\n");
+
+	while(printf("> "), fgets(str, 100, stdin), !feof(stdin)) {
+		if (send(s, str, strlen(str), 0) == -1) {
+			fprintf(stderr, "send");
+			exit(1);
+		}
+
+		if ((t=recv(s, str, 100, 0)) > 0) {
+			str[t] = '\0';
+			fprintf("echo> %s", str);
+		}
+
+		else {
+			if (t < 0){
+				fprintf(stderr, "recv");
+			}
+			else fprintf("Server closed connection\n");
+			exit(1);
+		}
+	}
+
+	send(action, amount);
+}
 
 // User Functions
 
@@ -198,7 +273,7 @@ bool User::removeRule(string botName, time_t id) {
 	}
 }
 
-// not sure about type def for this one
+
 void User::listRules(string botName) {
     for (AlgoBot *bot : *this->botList) {
         if (bot->algoName == botName) {
