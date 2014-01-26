@@ -1,10 +1,11 @@
 #ifndef BOTS_HH
-#define BOTS_HH
+#define BOTS_HH 
 
-#include <map>
-#include <string>
-#include <vector>
 #include <iostream>
+#include <string>
+#include <unordered_map>
+#include <vector>
+
 #include <ctime>
 
 #include "ta_libc.h"
@@ -12,31 +13,42 @@
 using namespace std;
 
 // Setting up function map of the TA_lib functions
-typedef TA_RETcode (*func_t)();
-typedef map<string,funct_t> func_map_t;
+typedef TA_RetCode (*func_t)(int, int, const double *, int, int*, int *, 
+                             double *);
+
+typedef struct _retValue {
+    double *out;
+    int begin;
+    int size;
+} retValue;
+
+typedef unordered_map<string, func_t> func_map_t;
 
 func_map_t func_map;
-func_map["TA_AVGPRICE"] = &TA_AVGPRICE;
-func_map["TA_EMA"] = &TA_EMA;
-func_map["TA_MACD"] = &TA_MACD;
-func_map["SMA"] = &TA_SMA;
 
+static void makeMap() {
+    // func_map["TA_AVGPRICE"] = &TA_AVGPRICE;
+    func_map["TA_EMA"] = &TA_EMA;
+    // func_map["TA_MACD"] = &TA_MACD;
+    func_map["SMA"] = &TA_SMA;
+}
 
 // Enum for the AlgoRule class types
-enum string AlgoRuleType {ConstComp, VarComp, Exist};
+enum AlgoRuleType {ConstComp, VarComp, Exist};
 
 
 // Defining Errors
 class DimensionError: public exception {
-    virtual const string * what() const throw() {
+    virtual const char * what() const throw() {
         return "The dimensions are mismatched.";
     }
 } DimensionError;
 
 class RuleTypeError: public exception {
-    virtual const string * what() const throw() {
-        return "The algo rule type does not match the arguments"
+    virtual const char * what() const throw() {
+        return "The algo rule type does not match the arguments";
     }
+
 } TypeError;
 
 
@@ -48,16 +60,32 @@ private:
 
     int start;
     int end;
-    vector<double> in;
+    const double *in;
     int optInTimePeriod;
     int optInMAType;
 
-
 public:
-    TaInd (string *function, int start, int end, const double *in,
+    TaInd (string function, int start, int end, const double *in,
            int optInTimePeriod, int optInMAType);
 
-    double *results();
+    retValue *results();
+};
+
+
+// AlgoRule Class. Each instance represents a rule based on either 1 or 2
+// technical indicators. The type is one of the enumerated types above, and if
+// necessary, the constant field is for arguments for constant comparison.
+class AlgoRule {
+public: 
+    int id;
+    TaInd *indicator1; 
+    TaInd *indicator2;
+    AlgoRuleType type;
+    double constant;
+
+    AlgoRule (TaInd *indicator1, AlgoRuleType type, TaInd *indicator2, 
+              double constant);
+
 };
 
 
@@ -65,67 +93,36 @@ public:
 // bot. Each of them consists of a vector of AlgoRules that they 
 // constantly execute on. 
 class AlgoBot {
-    string algoName;
-
-    vector<AlgoRule *> taQueue;
-    
-    vector<double> update(); 
-
-    vector<double> crossover(double *indicator1, double *indicator2) {
-    };
-
-    vector<double> existence(TaInd *indicator) {
-    };
-
-    vector<double> boundcomp(double *indicator1, double constant) {
-    };
-
 public: 
-    AlgoBot (string name);
+    string algoName;
+    vector<AlgoRule *> *taQueue;
+    
+    AlgoBot(string name);
 
+    vector<double> crossover(retValue *output1, retValue *output2);
+    vector<double> existence(retValue *output);
+    vector<double> boundcomp(retValue *output, double constant);
+    void update(); 
 };
 
 
-// AlgoRule Class. Each instance represents a rule based on either 1 or 2 technical 
-// indicators. The type is one of the enumerated types above, and if necessary, the
-// constant field is for arguments for constant comparison.
-
-class AlgoRule () {
-    int id;
-    TaInd indicator1; 
-    TaInd indicator2;
-    AlgoRuleType type;
-    double constant;
-
-public: 
-    AlgoRule (TaInd *indicator1, TaInd *indicator2 = NULL, AlgoRuleType *type, constant = NULL);
-
-}
-
-
-
-
-
 // User class. This class contains the functions that users will be allowed
-// to call. For instance, they will be allowed to create bots, add and delete
-// Algo Rules, list all the bots and all the Algo Rules for each bot, and to
+// to call. For instance, they will be allowed to create bots, add && delete
+// Algo Rules, list all the bots && all the Algo Rules for each bot, && to
 // delete bots. 
 class User {
-    
-    vector<AlgoBot *> botList;
+public:
+    vector<AlgoBot *> *botList;
 
-    public: 
+    User();
 
-    AlgoBot *createBot(string botName);
+    void createBot(string botName);
+    void addRule(string botName, TaInd *indicator1, AlgoRuleType type, 
+                 TaInd *indicator2, double constant);
+    bool removeRule(string indName, time_t id);
+    void listRules(string botName);
 
-    TaInd *addRule(string indName, start, end, data, optTP, optMA);
-
-    TaInd *removeRule(string indName);
-
-    TaInd *listRules(string *botName);
-
-    Boolean deleteBot(string botName);
-
+    bool deleteBot(string botName);
     void runBot(string botName);
 };
 
