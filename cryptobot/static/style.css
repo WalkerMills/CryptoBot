@@ -77,6 +77,26 @@ p.log-in-error {
     margin-top: 4rem;
 }
 
-.log-out p {
+.log-out p, .success p {
     text-align: center;
+}
+
+.newuser-div {
+    width: 10rem;
+    margin: 0 auto;
+    padding-top: 3rem;
+}
+ul.errorlist {
+    list-style-type: none;
+}
+.errorlist li {
+    color:red;
+    text-align: center;
+
+}
+.register-button {
+    background-color: #4965D6;
+    color: white;
+    float: right;
+    margin-top: 1rem;
 }

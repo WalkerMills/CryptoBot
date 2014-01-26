@@ -37,9 +37,9 @@ class KeystoreDB(BaseDB):
         """Return a string of 16 random characters.
 
         Normally, just use PyCrypto's builtin functions to generate an
-        IV. If the quantum flag is set to True, then fetch a block of 
-        random binary text from the quantum random number generator on 
-        the ANU servers, and turn it into a string of characters by 
+        IV. If the quantum flag is set to True, then fetch a block of
+        random binary text from the quantum random number generator on
+        the ANU servers, and turn it into a string of characters by
         casting eight digit (binary) substrings as characters. See
 
             http://qrng.anu.edu.au/FAQ.php
@@ -64,16 +64,16 @@ class KeystoreDB(BaseDB):
             soup = BeautifulSoup(urllib.request.urlopen(
                 'https://qrng.anu.edu.au/RawBin.php'))
             rows = soup('table')[0]
-            
+
             for row in rows.strings:
                 text = re.sub('\n', '', row.string)
                 if text != '':
                     break
 
-            random = ''.join(chr(int(text[i * 8: (i + 1) * 8], 2)) 
+            random = ''.join(chr(int(text[i * 8: (i + 1) * 8], 2))
                              for i in range(AES.block_size))
             random = random.encode('utf-8')
-            
+
             return random[:AES.block_size]
         else:
             r = Random.new()
@@ -142,7 +142,7 @@ class KeystoreDB(BaseDB):
             (name, key, self._encrypt(secret, user.password))
             for (name, (key, secret)) in values.items())
         for key in encrypted:
-            row, created = self.model.objects.get_or_create(username=user, 
+            row, created = self.model.objects.get_or_create(username=user,
                                                             name=key[0],
                                                             key=key[1],
                                                             ciphertext=key[2])
@@ -155,7 +155,7 @@ class KeystoreDB(BaseDB):
         rows.delete()
 
     def get(self, user, **filters):
-        rows = self.model.objects.filter(username=user.username, 
+        rows = self.model.objects.filter(username=user.username,
                                          **filters)
         values = rows.values()
         for v in values:
@@ -191,3 +191,33 @@ class UserDB(BaseDB):
 
     def get_keys(self, *args, **kwargs):
         return self.keystore.get(*args, **kwargs)
+<<<<<<< Updated upstream
+=======
+
+
+class TradeDB(BaseDB):
+
+    def __init__(self, model=models.Trade):
+        super(TradeDB, self).__init__(model)
+        self.fields = ('time', 'price', 'amount')
+
+    def store_csv(self, csvfile):
+        with open(csvfile, 'rb') as f:
+            reader = csv.reader(f, delimiter=',')
+            for line in reader:
+                values = dict(itertools.izip(self.fields, line))
+                super(TradeDB, self).store(values)
+
+    def update_csv(self, csvfile):
+        maximum = self.model.objects.all().aggregate(Max('time'))
+        maximum = int(maximum['time__max'])
+
+        with open(csvfile, 'rb') as f:
+            reader = csv.reader(f, delimiter=',')
+            for line in reader:
+                if line[0] < maximum:
+                    continue
+
+                values = dict(itertools.izip(self.fields, line))
+                super(TradeDB, self).store(values)
+>>>>>>> Stashed changes
