@@ -110,9 +110,9 @@ public:
     
     AlgoBot(string name);
 
-    Boolean crossover(retValue *output1, retValue *output2);
-    Boolean existence(retValue *output);
-    Boolean constcomp(retValue *output, double constant);
+    bool crossover(retValue *output1, retValue *output2);
+    bool existence(retValue *output);
+    bool constcomp(retValue *output, double constant);
     void update(); 
 };
 
@@ -122,10 +122,15 @@ public:
 // Algo Rules, list all the bots && all the Algo Rules for each bot, && to
 // delete bots. 
 class User {
+private:
+    const char *user;
+    mysqlpp::Connection *conn;
+
 public:
     vector<AlgoBot *> *botList;
 
-    User();
+    User(const char *user, const char *db, const char *server, 
+         const char *dbUser, const char *password, unsigned port);
 
     void createBot(string botName);
     void addRule(string botName, TaInd *indicator1, AlgoRuleType type, 
