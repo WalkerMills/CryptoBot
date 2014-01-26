@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^register/', 'cryptobot.views.register_user'),
     url(r'^accounts/', include('cryptobot.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^trades_to_django/', 'cryptobot.views.mtgox_trade'),
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve',
         {'document_root': settings.STATIC_ROOT}),
 )
