@@ -7,7 +7,6 @@ class APIKey(models.Model):
     key = models.CharField(max_length=36)
     ciphertext = models.BinaryField(max_length=48)
 
-
     class Meta:
         unique_together = (('username', 'name'),)
 
@@ -17,3 +16,11 @@ class Trade(models.Model):
     price = models.DecimalField(max_digits=17, decimal_places=12)
     amount = models.DecimalField(max_digits=20, decimal_places=12)
 
+
+class Bot(models.Model):
+    username = models.ForeignKey(User, to_field='username')
+    name = models.CharField(max_length=32)
+    pid = models.IntegerField()
+
+    class Meta:
+        unique_together = (('username', 'name'),)
