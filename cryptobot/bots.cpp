@@ -2,7 +2,7 @@
 #include <random>
 #include <string>
 #include <vector>
-
+#include <mysql++>
 
 #include <sys/types>
 #include <sys/socket>
@@ -32,6 +32,45 @@ TaInd::TaInd(string function, int start, int end, const double in[],
     this->in = in;
     this->optInTimePeriod = optInTimePeriod;
     this->optInMAType = optInMAType;
+}
+
+double *data (time_t time) {
+	    // Get database access parameters from command line
+    mysqlpp::examples::CommandLine cmdline(argc, argv);
+    if (!cmdline) {
+        return 1;
+    }
+
+    // Connect to the sample database.
+    mysqlpp::Connection conn(false);
+    if (conn.connect(mysqlpp::examples::db_name, cmdline.server(),
+            cmdline.user(), cmdline.pass())) {
+        // Retrieve a subset of the sample stock table set up by resetdb
+        // and display it.
+        mysqlpp::Query query = conn.query(
+            "SELECT price FROM django_db.cryptobot_trade ORDER BY time "
+            "DESC LIMIT 500;");
+        if (mysqlpp::StoreQueryResult res = query.store()) {
+            mysqlpp::StoreQueryResult::const_iterator it;
+            vector<double> output;
+            
+            for (it = res.begin(); it != res.end(); ++it) {
+                mysqlpp::Row row = *it;
+                output.push_back(row[0]);
+            }
+
+            const double *outputArray = output.data();
+            return outputArray;
+        }
+        else {
+            cerr << "Failed to get item list: " << query.error() << endl;
+        }
+    }
+    else {
+        cerr << "DB connection failed: " << conn.error() << endl;
+    }
+
+    return NULL;
 }
 
 retValue *TaInd::results() {
@@ -74,15 +113,10 @@ AlgoBot::AlgoBot (string botname) {
     this->taQueue = new vector<AlgoRule *>;
 }
 
-vector<double> AlgoBot::crossover(retValue *output1, retValue *output2){
-        
-    if (output1->size != output2->size) {
-        throw DimensionError;
-    }
-
-    vector<double> crossovers;
-    double difference = output1->out[output1->begin] - 
-                        output2->out[output2->begin];
+Boolean AlgoBot::crossover(retValue *output1, retValue *output2){
+	Boolean trade = false;
+    double difference = output1->out[output1->end] - 
+                        output2->out[output2->end];
     int sign;
 
     if (difference > 0) {
@@ -92,23 +126,23 @@ vector<double> AlgoBot::crossover(retValue *output1, retValue *output2){
         sign = -1;
     }
 
-    for (int i = 1; i < output1->size; i++) {
+    for (int i = output1->size(); i > (output1->size() - 100); i--) {
         difference = output1->out[output1->begin] - 
                      output2->out[output2->begin];
         if ((difference > 0 && sign == -1) || (difference < 0 && sign == 1)) {
-            crossovers.push_back(i); 
-            sign = -sign;
+            trade = true;
+            break;
         }
     }
-    return crossovers;
+    return trade;
 }
 
-vector<double> AlgoBot::existence(retValue *output) {
+Boolean AlgoBot::existence(retValue *output) {
     vector<double> out;
     return out;
 }
 
-vector<double> AlgoBot::boundcomp(retValue *output, double constant) {
+Boolean AlgoBot::boundcomp(retValue *output, double constant) {
     vector<double> out;
 
     double difference = constant - output->out[output->begin];
@@ -132,21 +166,28 @@ vector<double> AlgoBot::boundcomp(retValue *output, double constant) {
 }
 
 void AlgoBot::update() {
-    vector<double> result;
 
     for (AlgoRule *rule : *taQueue) {
         switch (rule->type) {
             case ConstComp:
                 result = this->boundcomp(rule->indicator1->results(), 
                                          rule->constant);
-                break;
+                if (result == true) {
+                	rule->TradeCall(rule->action, rule->actionAmount);
+                }
+
             case VarComp:
                 result = this->crossover(rule->indicator1->results(), 
                                             rule->indicator2->results());
-                break;
+                if (result == true) {
+                	rule->TradeCall(rule->action, rule->actionAmount);
+                }
+       
             case Exist:
                 result = this->existence(rule->indicator1->results());
-                break;
+                if (result == true) {
+                	rule->TradeCall(rule->action, rule->actionAmount);
+                }
 
             default:
                 break;

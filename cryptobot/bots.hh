@@ -5,6 +5,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <mysql++>
 
 #include <ctime>
 
@@ -70,6 +71,8 @@ public:
     TaInd (string function, int start, int end, const double *in,
            int optInTimePeriod, int optInMAType);
 
+    double data ();
+
     retValue *results();
 };
 
@@ -107,9 +110,9 @@ public:
     
     AlgoBot(string name);
 
-    vector<double> crossover(retValue *output1, retValue *output2);
-    vector<double> existence(retValue *output);
-    vector<double> boundcomp(retValue *output, double constant);
+    Boolean crossover(retValue *output1, retValue *output2);
+    Boolean existence(retValue *output);
+    Boolean constcomp(retValue *output, double constant);
     void update(); 
 };
 
