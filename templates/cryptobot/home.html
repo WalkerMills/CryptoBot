@@ -15,7 +15,7 @@
 
 {% if user.is_authenticated %}
 <div class="returning-box">
-    <form class="pure-form" action="/accounts/profile/">
+    <form class="pure-form" action="/accounts/splash/">
         <button class="pure-button account-button">Welcome back, {{ user.username }}!</button>
     </form>
     <form class="pure-form" action="/logout/">

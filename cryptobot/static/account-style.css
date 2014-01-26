@@ -1,0 +1,51 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway);
+
+body {
+    color: #111;
+    background-color: #DDDDDD;
+}
+
+.splash-top {
+    background-color: #111;
+    color: #EEE;
+    position: absolute;
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+    height: 3.5rem;
+}
+.splash-top h1 {
+    float: left;
+    padding-left: 2rem;
+    padding-top: 0.25rem;
+    font-size: 1.25rem;
+}
+.splash-top h2 {
+    float: right;
+    padding-right: 2rem;
+    padding-top: 0.25rem;
+    font-size: 1.25rem;
+}
+
+.left-half, .right-half {
+    width: 50%;
+    height: 100%;
+    display: table;
+}
+.left-half {
+    float: left;
+    background-color: #4965D6;
+}
+.right-half {
+    float: right;
+    background-color: white;
+}
+.choose-button-wrapper {
+    font-size: 3rem;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+.bots-button {
+    background-color: #4965D6;
+    color: white;
+}
