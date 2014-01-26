@@ -34,7 +34,7 @@ TaInd::TaInd(string function, int start, int end, const double in[],
     this->optInMAType = optInMAType;
 }
 
-double *data (time_t time) {
+double *TaInd::data (time_t time) {
 	    // Get database access parameters from command line
     mysqlpp::examples::CommandLine cmdline(argc, argv);
     if (!cmdline) {
@@ -88,7 +88,7 @@ retValue *TaInd::results() {
     time_t end;
 
     time(&end);
-    retCode = (*func_map[this->function])(0, end, this->in, 
+    retCode = (*func_map[this->function])(0, end, this->data(), 
                                           this->optInTimePeriod, &outBegIdx, 
                                           &outNbElement, out);
 
