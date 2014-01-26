@@ -179,11 +179,6 @@ class UserDB(BaseDB):
 
     def get_keys(self, *args, **kwargs):
         return self.keystore.get(*args, **kwargs)
-<<<<<<< HEAD
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> billywork
 
 
 class TradeDB(BaseDB):
@@ -191,7 +186,7 @@ class TradeDB(BaseDB):
     def __init__(self, model=models.Trade):
         super(TradeDB, self).__init__(model)
 <<<<<<< HEAD
-        self.fields = ('time', 'price', 'amount') 
+        self.fields = ('time', 'price', 'amount')
 =======
         self.fields = ('time', 'price', 'amount')
 >>>>>>> billywork
