@@ -1,0 +1,99 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway);
+
+body {
+    color: #111;
+    background-color: #4965D6;
+}
+
+.splash-top {
+    background-color: #111;
+    color: #EEE;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+    height: 3.5rem;
+}
+.splash-top h1 {
+    margin: 0;
+    float: left;
+    padding-left: 2rem;
+    padding-top: 1rem;
+    font-size: 1.25rem;
+}
+.splash-top h2 {
+    margin: 0;
+    float: right;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    font-size: 1.25rem;
+}
+
+.contentwrap {
+    background-color: #EEE;
+    margin: 3.5rem 20% 0;
+}
+
+#trade-header h1 {
+    color: #111;
+    font-size: 4rem;
+    font-family: 'Raleway', sans-serif;
+    padding: 2rem 0 0;
+    text-align: center;
+    border-bottom: 4px solid #111;
+    width: 70%;
+    margin: 0 auto 1rem;
+}
+
+.amount-form { 
+    margin: 4rem 0;
+}
+#buy-sell-buttons, #market-limit-buttons {
+    text-align: center;
+    font-size: 2rem;
+}
+.option-buy-label > input[type=radio] {
+    display: none;
+}
+.option-sell-label > input[type=radio] {
+    display: none;
+}
+.option-market-label > input[type=radio] {
+    display: none;
+}
+.option-limit-label > input[type=radio] {
+    display: none;
+}
+input[type=radio] + span {
+    cursor: pointer;
+}
+input[type=radio]:checked + span {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #4965D6;
+}
+
+.amount-form {
+    text-align: center;
+}
+.currency1, .exchange-rate, .currency2, .multiplication-sign, .equals-sign {
+    display: inline-block;
+    text-align: center;
+}
+.currency1 {
+    float: left;
+    padding-left: 10%;
+}
+.exchange-rate {
+    text-align: center;
+}
+.currency2 {
+    float: right;
+    padding-right: 10%;
+}
+.amount-form input {
+    text-align: center;
+}
+.multiplication-sign {
+    padding-right: 4%;
+}
