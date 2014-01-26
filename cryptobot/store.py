@@ -185,11 +185,8 @@ class TradeDB(BaseDB):
 
     def __init__(self, model=models.Trade):
         super(TradeDB, self).__init__(model)
-<<<<<<< HEAD
         self.fields = ('time', 'price', 'amount')
-=======
         self.fields = ('time', 'price', 'amount')
->>>>>>> billywork
 
     def store_csv(self, csvfile):
         with open(csvfile, 'rb') as f:
@@ -210,7 +207,3 @@ class TradeDB(BaseDB):
 
                 values = dict(itertools.izip(self.fields, line))
                 super(TradeDB, self).store(values)
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
->>>>>>> billywork
