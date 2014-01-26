@@ -76,16 +76,14 @@ input[type=radio]:checked + span {
 .input-wrap {
     text-align: center;
 }
-.currency2-below:before {
-    content: "=";
-    float: left;
-    margin-top: -2.8rem;
+.division-symbol {
+    position: relative;
+    left: 50%;
     font-size: 2rem;
 }
-.currency1-below:after {
-    content: "\00D7";
-    float: right;
-    margin-top: -2.8rem;
+.equals-sign {
+    position: relative;
+    right: 50%;
     font-size: 2rem;
 }
 
