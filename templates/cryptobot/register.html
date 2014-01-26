@@ -1,0 +1,28 @@
+<html>
+
+<head>
+    <title>fill this out</title>
+    <link rel="stylesheet" href="{{ STATIC_URL }}pure-min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}style.css">
+</head>
+
+<body id="register">
+
+{% block content %}
+
+<div class="newuser-div">
+    <form class="pure-form pure-form-stacked" action="" method="post">
+    <fieldset>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="pure-button register-button">Register</button>
+    </fieldset>
+    </form>
+</div>
+
+
+{% endblock %}
+
+
+</body>
+</html>

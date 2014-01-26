@@ -14,6 +14,8 @@ urlpatterns = patterns('',
         {'template_name': 'cryptobot/login.html'}),
     url(r'^logout/', 'django.contrib.auth.views.logout',
         {'template_name': 'cryptobot/logout.html'}),
+    url(r'^register_success/', 'cryptobot.views.register_success'),
+    url(r'^register/', 'cryptobot.views.register_user'),
     url(r'^accounts/profile/', include('cryptobot.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

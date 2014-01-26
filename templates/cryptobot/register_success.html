@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>log the fuck out</title>
+    <title>YOU'RE BEING REDIRECTED!</title>
     <link rel="stylesheet" href="{{ STATIC_URL }}pure-min.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}style.css">
 </head>
@@ -10,13 +10,13 @@
 
 {% block content %}
 
-<div class="log-out">
-    <p>You've been logged out successfully.</p>
+<div class="success">
+    <p>Registration successful! Please log in...</p>
 </div>
 
 <script>
 function redirect() {
-    window.location.href = "/";
+    window.location.href = "/login/";
 }
 setTimeout(redirect, 2000);
 </script>
