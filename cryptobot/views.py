@@ -32,7 +32,6 @@ def json_print(json_str):
     return json.dumps(json_str, sort_keys=True, indent=4,
                       separators=(',', ': '))
 
-<<<<<<< HEAD
 def init(user, keys):
     user_db = store.UserDB()
     user_db.store_keys(user, keys)
@@ -52,8 +51,6 @@ def register_success(request):
     form = RegisterForm()
     return render(request, "cryptobot/register_success.html")
 
-=======
->>>>>>> 4c099fd2cd0d7b02aeb00b70dca715e64f26d5cd
 @login_required(login_url='/login/')
 def index(request):
     user = request.user
