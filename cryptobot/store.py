@@ -9,6 +9,64 @@ from Crypto import Random
 from Crypto.Cipher import AES
 from django.db.models import Max
 
+class DBFactory(object):
+    
+    factories = {}
+
+    @staticmethod
+    def addFactory(class_, dbFactory):
+        factories[class_] = dbFactory
+
+    @staticmethod
+    def createDB(class_):
+        if not DBFactory.factories.has_key(class_):
+            ShapeFactory.factories[class_] = \
+              eval('{}.Factory({0})'.format(class_))
+        return ShapeFactory.factories[class_].create()
+
+
+class DjangoDB(object):
+
+    def __init__(self, model):
+        self.model = model
+
+    def store(self, values):
+        row, created = self.model.objects.get_or_create(**values)
+        if created:
+            row.save()
+
+    def delete(self, **filters):
+        rows = self.model.objects.filter(**filters)
+        rows.delete()
+
+    def get(self, **filters):
+        rows = self.model.objects.filter(**filters)
+        return [v for v in rows.values()]
+
+
+    class Factory(object):
+
+        def create(self, base):
+            for cls_ in extends:
+
+class BaseDB(object):
+
+    def __init__(self, model):
+        self.model = model
+
+    def store(self, values):
+        row, created = self.model.objects.get_or_create(**values)
+        if created:
+            row.save()
+
+    def delete(self, **filters):
+        rows = self.model.objects.filter(**filters)
+        rows.delete()
+
+    def get(self, **filters):
+        rows = self.model.objects.filter(**filters)
+        return [v for v in rows.values()]
+
 
 class KeyDB(BaseDB):
 
