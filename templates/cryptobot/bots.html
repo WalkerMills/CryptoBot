@@ -3,8 +3,9 @@
 <head>
     <title>DECIDE</title>
     <link rel="stylesheet" href="{{ STATIC_URL }}pure-min.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}bots-style.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}bot-style.css">
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+
 </head>
 
 <body>
@@ -17,7 +18,7 @@
 <div class="contentwrap">
 
 <div id="trade-header">
-    <h1>Algorithmic Bots</h1>
+    <h1 id='title'>Algorithmic Bots</h1>
 </div>
 
 
@@ -74,6 +75,12 @@
                 <input id="actionamount" type="text">
             </div>
         </div>
+
+    <button type="submit" class="pure-button pure-button-primary">Create Rule</button>
+    </fieldset>
+</form>
+
+
 </div>
 
 

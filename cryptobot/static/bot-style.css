@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Raleway);
 
-body {
+b1ody {
     color: #111;
     background-color: #4965D6;
 }
@@ -27,6 +27,11 @@ body {
     padding-right: 2rem;
     padding-top: 1rem;
     font-size: 1.25rem;
+}
+
+.title {
+    text-align: center;
+    text-decoration: underline 8px;
 }
 
 .contentwrap {

@@ -10,30 +10,10 @@ from Crypto.Cipher import AES
 from django.db.models import Max
 
 
-class BaseDB(object):
-
-    def __init__(self, model):
-        self.model = model
-
-    def store(self, values):
-        row, created = self.model.objects.get_or_create(**values)
-        if created:
-            row.save()
-
-    def delete(self, **filters):
-        rows = self.model.objects.filter(**filters)
-        rows.delete()
-
-    def get(self, **filters):
-        rows = self.model.objects.filter(**filters)
-        return [v for v in rows.values()]
-
-
-
-class KeystoreDB(BaseDB):
+class KeyDB(BaseDB):
 
     def __init__(self, model=models.APIKey):
-        super(KeystoreDB, self).__init__(model)
+        super(KeyDB, self).__init__(model)
 
     @staticmethod
     def _get_iv(quantum=False):
@@ -153,7 +133,7 @@ class KeystoreDB(BaseDB):
                 row.save()
 
     def delete(self, user, **filters):
-        super(KeystoreDB, self).delete(username=user.username)
+        super(KeyDB, self).delete(username=user.username)
 
     def get(self, user, **filters):
         rows = self.model.objects.filter(username=user.username,
@@ -169,24 +149,25 @@ class UserDB(BaseDB):
 
     def __init__(self, model=models.User):
         super(UserDB, self).__init__(model)
-        self.keystore = KeystoreDB()
+        self.fields = {'username': str, 'first_name': str, 'last_name': str,
+                       'email': str, 'password': str}
+        self.keys = KeyDB()
 
     def store_keys(self, *args, **kwargs):
-        self.keystore.store(*args, **kwargs)
+        self.keys.store(*args, **kwargs)
 
     def delete_keys(self, *args, **kwargs):
-        self.keystore.delete(*args, **kwargs)
+        self.keys.delete(*args, **kwargs)
 
     def get_keys(self, *args, **kwargs):
-        return self.keystore.get(*args, **kwargs)
+        return self.keys.get(*args, **kwargs)
 
 
 class TradeDB(BaseDB):
 
     def __init__(self, model=models.Trade):
         super(TradeDB, self).__init__(model)
-        self.fields = ('time', 'price', 'amount')
-        self.fields = ('time', 'price', 'amount')
+        self.fields = {'time': int, 'price': float, 'amount': float}
 
     def store_csv(self, csvfile):
         with open(csvfile, 'rb') as f:
@@ -207,3 +188,11 @@ class TradeDB(BaseDB):
 
                 values = dict(itertools.izip(self.fields, line))
                 super(TradeDB, self).store(values)
+
+
+class BotDB(BaseDB):
+
+    def __init__(self, model=models.Bot):
+        super(BotDB, self).__init__(model)
+        self.users = UserDB()
+        self.trades = TradeDB()
