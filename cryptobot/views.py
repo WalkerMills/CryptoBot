@@ -14,6 +14,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render
+from django.http import HttpResponse
 
 from registrationform import RegisterForm
 
@@ -62,3 +63,32 @@ def trade(request):
 @login_required(login_url='/login/')
 def bots(request):
     return render(request, "cryptobot/bots.html")
+
+@login_required(login_url='/login/')
+def mtgox_trade(request):
+    if request.method == 'POST':
+        tobuy = request.POST['tobuy']
+        marketorder = request.POST['marketorder']
+        curr1 = request.POST['curr1']
+        exchange = request.POST['exchange']
+        curr2 = request.POST['curr2']
+
+        tobuy = (tobuy == 'true')
+        marketorder = (marketorder == 'true')
+        curr1 = float(curr1)
+        exchange = float(exchange)
+        curr2 = float(curr2)
+
+        mesg = ""
+        if tobuy and marketorder:
+            mesg = "the user bought " + str(curr2) + " bitcoin for " + str(curr1) + " dollars"
+        elif not tobuy and marketorder:
+            mesg = "the user sold " + str(curr1) + " bitcoin for " + str(curr2) + " dollars"
+        elif tobuy and not marketorder:
+            mesg = "the user put in a buy order of " + str(curr2) + " bitcoin at " + str(1.0/exchange) + " bitcoin per dollar"
+        else:
+            mesg = "the user put in a sell order of " + str(curr1) + " bitcoin at " + str(exchange) + " dollars per bitcoin"
+
+        response = HttpResponse()
+        response.write(mesg)
+        return response

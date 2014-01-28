@@ -4,10 +4,10 @@ include config.mk
 SRCS = bots.cpp
 
 # Object file names (targets)
-OBJS = bots.o
+OBJS = bots.o test.o
 
 # Binary file names (targets)
-BINS = 
+BINS = test.c
 
 # Dynamic library names (targets)
 LIBS = libbots.so

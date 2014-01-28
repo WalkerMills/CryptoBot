@@ -20,7 +20,8 @@ class Trade(models.Model):
 class Bot(models.Model):
     username = models.ForeignKey(User, to_field='username')
     name = models.CharField(max_length=32)
-    pid = models.IntegerField()
+    active = models.BooleanField(default=False)
+    pid = models.IntegerField(null=True)
 
     class Meta:
         unique_together = (('username', 'name'),)
