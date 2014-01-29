@@ -48,7 +48,7 @@ class MtGoxClient(object):
 
     def __init__(self, user, name=NAME, currency=PAIR):
         self._api_url = 'https://data.mtgox.com/api/2/'
-        self._user_db = store.DjangoDB.user()
+        self._user_db = store.user()
         self.currency = currency
         self.user = user
         self.name = name
