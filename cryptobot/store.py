@@ -2,6 +2,7 @@ from . import models
 
 import csv
 import hashlib
+import inspect
 import itertools
 import sys
 
@@ -9,45 +10,6 @@ from Crypto import Random
 from Crypto.Cipher import AES
 from django.db.models import Max
 
-class DBFactory(object):
-    
-    factories = {}
-
-    @staticmethod
-    def addFactory(class_, dbFactory):
-        factories[class_] = dbFactory
-
-    @staticmethod
-    def createDB(class_):
-        if not DBFactory.factories.has_key(class_):
-            ShapeFactory.factories[class_] = \
-              eval('{}.Factory({0})'.format(class_))
-        return ShapeFactory.factories[class_].create()
-
-
-class DjangoDB(object):
-
-    def __init__(self, model):
-        self.model = model
-
-    def store(self, values):
-        row, created = self.model.objects.get_or_create(**values)
-        if created:
-            row.save()
-
-    def delete(self, **filters):
-        rows = self.model.objects.filter(**filters)
-        rows.delete()
-
-    def get(self, **filters):
-        rows = self.model.objects.filter(**filters)
-        return [v for v in rows.values()]
-
-
-    class Factory(object):
-
-        def create(self, base):
-            for cls_ in extends:
 
 class BaseDB(object):
 
@@ -68,10 +30,45 @@ class BaseDB(object):
         return [v for v in rows.values()]
 
 
-class KeyDB(BaseDB):
+    class Factory(object):
 
-    def __init__(self, model=models.APIKey):
-        super(KeyDB, self).__init__(model)
+        export = ('store', 'delete', 'get')
+
+        def __init__(self, base):
+            self.base = base
+
+        def create(self):
+            # Create an instance of the class to generate
+            instance = self.base()
+
+            # Populate the instance with methods to manipulate data in other
+            # databases through their interface class
+            for cls_ in instance.extends:
+                # Name of the class to extend
+                name = cls_.__name__.lower()
+
+                # Put an instance of that class into our wrapping instance (so
+                # that the methods we need persist)
+                obj = cls_()
+                setattr(instance, name + '_db', obj)
+
+                # Get the instances of the methods we want to expose
+                public = filter(lambda x: x[0] in self.export,
+                    inspect.getmembers(obj, predicate=inspect.ismethod))
+
+                # Add those methods to our wrapping instance
+                for method, inst in public:
+                    setattr(instance, method + '_' + name, inst)
+
+            return instance
+
+
+class Key(BaseDB):
+
+    extends = ()
+
+    def __init__(self, model=models.Key):
+        super(Key, self).__init__(model)
 
     @staticmethod
     def _get_iv(quantum=False):
@@ -123,8 +120,8 @@ class KeyDB(BaseDB):
 
             return IV
 
-    @classmethod
-    def _encrypt(cls, text, key, quantum=False):
+    @staticmethod
+    def _encrypt(text, key, quantum=False):
         """Encrypt a string using the given key.
 
         Arguments:
@@ -140,7 +137,7 @@ class KeyDB(BaseDB):
         key = hashlib.sha256(bytes(key)).digest()
 
         # Generate a new random initialization vector
-        IV = cls._get_iv(quantum)
+        IV = Key._get_iv(quantum)
 
         # Initialize the cipher
         cipher = AES.new(key, AES.MODE_CBC, IV=IV)
@@ -183,15 +180,16 @@ class KeyDB(BaseDB):
             (name, key, self._encrypt(secret, user.password))
             for (name, (key, secret)) in values.items())
         for key in encrypted:
-            row, created = self.model.objects.get_or_create(username=user,
-                                                            name=key[0],
-                                                            key=key[1],
-                                                            ciphertext=key[2])
+            row, created = \
+                self.model.objects.get_or_create(username=user,
+                                                 name=key[0],
+                                                 key=key[1],
+                                                 ciphertext=key[2])
             if created:
                 row.save()
 
     def delete(self, user, **filters):
-        super(KeyDB, self).delete(username=user.username)
+        super(Key, self).delete(username=user.username)
 
     def get(self, user, **filters):
         rows = self.model.objects.filter(username=user.username,
@@ -203,36 +201,19 @@ class KeyDB(BaseDB):
         return [v for v in values]
 
 
-class UserDB(BaseDB):
+class Trade(BaseDB):
 
-    def __init__(self, model=models.User):
-        super(UserDB, self).__init__(model)
-        self.fields = {'username': str, 'first_name': str, 'last_name': str,
-                       'email': str, 'password': str}
-        self.keys = KeyDB()
-
-    def store_keys(self, *args, **kwargs):
-        self.keys.store(*args, **kwargs)
-
-    def delete_keys(self, *args, **kwargs):
-        self.keys.delete(*args, **kwargs)
-
-    def get_keys(self, *args, **kwargs):
-        return self.keys.get(*args, **kwargs)
-
-
-class TradeDB(BaseDB):
+    extends = (Key,)
 
     def __init__(self, model=models.Trade):
-        super(TradeDB, self).__init__(model)
-        self.fields = {'time': int, 'price': float, 'amount': float}
+        super(Trade, self).__init__(model)
 
     def store_csv(self, csvfile):
         with open(csvfile, 'rb') as f:
             reader = csv.reader(f, delimiter=',')
             for line in reader:
                 values = dict(itertools.izip(self.fields, line))
-                super(TradeDB, self).store(values)
+                super(Trade, self).store(values)
 
     def update_csv(self, csvfile):
         maximum = self.model.objects.all().aggregate(Max('time'))
@@ -245,12 +226,35 @@ class TradeDB(BaseDB):
                     continue
 
                 values = dict(itertools.izip(self.fields, line))
-                super(TradeDB, self).store(values)
+                super(Trade, self).store(values)
 
 
-class BotDB(BaseDB):
+class User(BaseDB):
+
+    extends = (Key, Trade)
+
+    def __init__(self, model=models.User):
+        super(User, self).__init__(model)
+
+
+class Bot(BaseDB):
+
+    extends = (Key, Trade, User)
 
     def __init__(self, model=models.Bot):
-        super(BotDB, self).__init__(model)
-        self.users = UserDB()
-        self.trades = TradeDB()
+        super(Bot, self).__init__(model)
+
+def key():
+    return BaseDB.Factory(Key).create()
+
+def trade():
+    return BaseDB.Factory(Trade).create()
+
+def user():
+    return BaseDB.Factory(User).create()
+
+def bot():
+    return BaseDB.Factory(Bot).create()
+
+
+
