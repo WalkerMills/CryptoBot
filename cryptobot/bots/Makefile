@@ -1,16 +1,23 @@
 include config.mk
 
+# Compiler flags for compiling with ta-lib
+TA_CFLAGS = -I/usr/include/ta-lib -lta_lib
+
+# Compiler flags for compiling with mysql++
+MYSQLPP_CFLAGS = -I/usr/include/mysql -I/usr/include/mysql++ -lmysqlpp \
+-lmysqlclient
+
 # Source file names
 SRCS = bots.cpp
 
 # Object file names (targets)
-OBJS = bots.o test.o
+OBJS = bots.o ta_wrapper.o reflection.o
 
 # Binary file names (targets)
-BINS = test.c
+BINS = 
 
 # Dynamic library names (targets)
-LIBS = libbots.so
+LIBS = libbots.so libta_wrapper.so libreflection.so
 
 # Absolute file paths for object files
 OBJS_O = $(foreach obj, $(OBJS), $(libdir)/$(obj))
@@ -30,7 +37,7 @@ BINS_ = $(foreach bin, $(BINS), $(bindir)/$(bin))
 # Declare all phony targets
 .PHONY: all mklib mkbin clean
 
-all: libbots.so
+all: $(LIBS)
 	
 # Create directory for containing object files and libraries
 mklib:
@@ -57,9 +64,15 @@ clean:
 	fi
 
 bots.o: bots.cpp mklib
-	$(CXX) $(ALL_CFLAGS) -fpic -I/usr/include/ta-lib -lta_lib -c $< \
+	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) $(MYSQLPP_CFLAGS) -fpic -c $< \
 	-o $(libdir)/$@
 
-libbots.so: bots.o
+ta_wrapper.o: ta_wrapper.cpp mklib
+	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) -fpic -c $< -o $(libdir)/$@
+
+reflection.o: reflection.cpp mklib
+	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) -fpic -c $< -o $(libdir)/$@
+
+lib%.so: %.o
 	$(CXX) -shared $(libdir)/$< -o $(libdir)/$@
 

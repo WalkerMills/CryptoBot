@@ -3,17 +3,17 @@
 #include <string>
 #include <vector>
 
-#include <sys/types>
-#include <sys/socket>
-#include <sys/un>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/un.h>
 
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
 
-#include <mysql++>
-#include <query>
+#include <mysql++.h>
+#include <query.h>
 
 #include "bots.hh"
 
