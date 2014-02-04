@@ -75,13 +75,16 @@ void user::insert_bot(bot *b) {
 }
 
 void user::delete_bot(std::string name) {
+    // TODO: add MySQL hooks for record keeping
     this->bots->erase(name);
 }
 
 void user::run_bot(std::string name) {
+    // TODO: add MySQL hooks for record keeping (active status)
     this->bots->at(name)->run();
 }
 
 void user::stop_bot(std::string name) {
+    // TODO: add MySQL hooks for record keeping (active status)
     this->bots->at(name)->stop();
 }

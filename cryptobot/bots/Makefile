@@ -8,16 +8,19 @@ MYSQLPP_CFLAGS = -I/usr/include/mysql -I/usr/include/mysql++ -lmysqlpp \
 -lmysqlclient
 
 # Source file names
-SRCS = bots.cpp
+SRCS = bots.cpp db.cpp reflection.cpp ta.cpp
+
+# Header file names
+HDRS = bots.hh db.hh reflection.hh ta.hh
 
 # Object file names (targets)
-OBJS = bots.o ta.o reflection.o
+OBJS = bots.o db.o reflection.o ta.o
 
 # Binary file names (targets)
 BINS = 
 
 # Dynamic library names (targets)
-LIBS = libbots.so libta.so libreflection.so
+LIBS = libbots.so libdb.so libreflection.so libta.so
 
 # Absolute file paths for object files
 OBJS_O = $(foreach obj, $(OBJS), $(libdir)/$(obj))
@@ -32,7 +35,7 @@ BINS_ = $(foreach bin, $(BINS), $(bindir)/$(bin))
 .SUFFIXES:
 
 # Set allowed target suffixes
-.SUFFIXES: .c .o .so
+.SUFFIXES: .cpp .o .so
 
 # Declare all phony targets
 .PHONY: all mklib mkbin clean
@@ -67,12 +70,15 @@ bots.o: bots.cpp mklib
 	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) -Wno-sign-compare -fpic -c $< \
 	-o $(libdir)/$@
 
-ta.o: ta.cpp mklib
-	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) -fpic -c $< -o $(libdir)/$@
+db.o: db.cpp mklib
+	$(CXX) $(ALL_CFLAGS) $(MYSQLPP_CFLAGS) -fpic -c $< -o $(libdir)/$@
 
 reflection.o: reflection.cpp mklib
 	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) -Wno-unused-function -fpic -c $< \
 	-o $(libdir)/$@
+
+ta.o: ta.cpp mklib
+	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) -fpic -c $< -o $(libdir)/$@
 
 lib%.so: %.o
 	$(CXX) -shared $(libdir)/$< -o $(libdir)/$@
