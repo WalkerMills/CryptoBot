@@ -1,10 +1,11 @@
 #include <unistd.h>
+#include <signal.h>
 
 #include "bots.hh"
 #include "db.hh"
 
 #define HOST "107.170.247.187"
-#define PID 0
+#define PID -1
 
 using namespace bots;
 
@@ -18,7 +19,7 @@ rule::rule(action_t action, double amount) {
 }
 
 bool rule::test() {
-    // TODO: test can access market data
+    // TODO: test can manipulate market data
     return true;
 }
 
@@ -32,7 +33,8 @@ void rule::trade() {
     }
 }
 
-bot::bot(std::string name) {
+bot::bot(std::string owner, std::string name) {
+    this->owner = owner;
     this->name = name;
     this->rules = new std::vector<rule *>();
 }
@@ -50,17 +52,15 @@ void bot::delete_rule(int index) {
 }
 
 void bot::run() {
-    while ( true ) {
-        for (int i = 0; i < this->rules->size(); i++) {
-            this->rules->at(i)->trade();
+    if (pid == 0) {
+        while ( true ) {
+            for (int i = 0; i < this->rules->size(); i++) {
+                this->rules->at(i)->trade();
+            }
+
+            sleep(5 * 1000);
         }
-
-        sleep(2 * 1000);
     }
-}
-
-void bot::stop() {
-
 }
 
 user::user(std::string username) {
@@ -80,7 +80,6 @@ void user::insert_bot(bot *b) {
         ret.first->second = b;
     }
 
-    // TODO: Get actual processes running
     this->bot_db->insert(this->username, b->name, false, HOST, PID);
 }
 
@@ -90,11 +89,18 @@ void user::delete_bot(std::string name) {
 }
 
 void user::run_bot(std::string name) {
-    this->bots->at(name)->run();
-    this->bot_db->start(this->username, name);
+    int pid = fork()
+
+    if ( pid == 0 ) {
+        this->bots->at(name)->run();
+        this->bot_db->start(this->username, name, pid);
+    }
 }
 
 void user::stop_bot(std::string name) {
-    this->bots->at(name)->stop();
+    mysqlpp::StoreQueryResult res = this->bot_db->get(this->username, name);
+    mysqlpp::Row row = res.fetch_row();
+
+    kill(row["pid"], SIGKILL);
     this->bot_db->stop(this->username, name);
 }

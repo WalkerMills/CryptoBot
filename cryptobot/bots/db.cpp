@@ -30,7 +30,7 @@ mysqlpp::StoreQueryResult base_db::store(std::string command) {
 
     if ( !res ) {
         std::cerr << "Command \'" << query.str() << "\' failed: " 
-                 << query.error() << std::endl;
+                  << query.error() << std::endl;
         exit(EXIT_FAILURE);
     }
 
@@ -52,13 +52,21 @@ mysqlpp::SimpleResult base_db::execute(std::string command) {
 
 mysqlpp::SimpleResult bot::insert(std::string username, std::string name, 
                                   bool active, std::string host, 
-                                  unsigned int pid) {
+                                  int pid) {
     std::stringstream query;
     std::string boolean = active ? "TRUE" : "FALSE";
 
+
     query << "INSERT INTO " << this->model << "VALUES (\'" << username 
           << "\', \'" << name << "\', \'" << boolean << "\', \'" << host 
-          << "\', \'" << pid << "\');";
+          << "\', ";
+
+    if ( pid != -1 ) { 
+        query << "\'" << pid << "\'";
+    } else {
+        query << "NULL";
+    }
+    query << ");";
     return this->execute(query.str());
 }
 
@@ -78,19 +86,20 @@ mysqlpp::SimpleResult bot::erase(std::string username, std::string name) {
     return this->execute(query.str());
 }
 
-mysqlpp::SimpleResult bot::start(std::string username, std::string name) {
+mysqlpp::SimpleResult bot::start(std::string username, std::string name,
+                                 int pid) {
     std::stringstream query;
 
-    query << "UPDATE " << this->model << " SET active=TRUE WHERE username=" 
-          << username << ", name=" << name << ";";
+    query << "UPDATE " << this->model << " SET active=TRUE, pid=" << pid 
+          << " WHERE username=" << username << ", name=" << name << ";";
     return this->execute(query.str());
 }
 
 mysqlpp::SimpleResult bot::stop(std::string username, std::string name) {
     std::stringstream query;
 
-    query << "UPDATE " << this->model << " SET active=FALSE WHERE username=" 
-          << username << ", name=" << name << ";";
+    query << "UPDATE " << this->model << " SET active=FALSE, pid=NULL "
+             "WHERE username=" << username << ", name=" << name << ";";
     return this->execute(query.str());
 }
 

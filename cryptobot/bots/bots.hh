@@ -25,17 +25,17 @@ public:
 
 class bot {
 public:
+    std::string owner;
     std::string name;
     std::vector<rule *> *rules;
 
-    bot(std::string name);
+    bot(std::string::owner, std::string name);
     ~bot();
 
     void insert_rule(rule *r);
     void delete_rule(int index);
 
     void run();
-    void stop();
 };
 
 class user {

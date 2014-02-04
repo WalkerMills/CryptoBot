@@ -33,9 +33,9 @@ private:
 public:
     mysqlpp::SimpleResult insert(time_t time, double price, double amount);
 
-    mysqlpp::StoreQueryResult get(unsigned int id);
+    mysqlpp::StoreQueryResult get(int id);
     mysqlpp::StoreQueryResult get(time_t time, double price, double amount);
-    mysqlpp::SimpleResult erase(unsigned int id);
+    mysqlpp::SimpleResult erase(int id);
     mysqlpp::SimpleResult erase(time_t time, double price, double amount);
 
     mysqlpp::SimpleResult csv_update(std::string file);
@@ -48,11 +48,12 @@ private:
 public:
     mysqlpp::SimpleResult insert(std::string username, std::string name,
                                  bool active, std::string host, 
-                                 unsigned int pid);
+                                 int pid);
     mysqlpp::StoreQueryResult get(std::string username, std::string name);
     mysqlpp::SimpleResult erase(std::string username, std::string name);
 
-    mysqlpp::SimpleResult start(std::string username, std::string name);
+    mysqlpp::SimpleResult start(std::string username, std::string name, 
+                                int pid);
     mysqlpp::SimpleResult stop(std::string username, std::string name);
 };
 
