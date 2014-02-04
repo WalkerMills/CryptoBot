@@ -1,17 +1,18 @@
-#ifndef REFLECTION_HH
-#define REFLECTION_HH
+#ifndef __REFLECTION_HH__
+#define __REFLECTION_HH__
 
 #include <map>
 #include <string>
 
-#include "ta_wrapper.hh"
+#include "ta.hh"
 
-class TAReflector {
-private:
-    static std::map<std::string, TAWrapper *> factoryMap;
-
+class ta_reflector {
 public:
-    TAWrapper *reflect(std::string name);
+    static std::map<std::string, ta::ta *> factory_map;
+
+    static ta::ta *get(std::string name);
 };
+
+static ta::ta *reflect(std::string name);
 
 #endif

@@ -21,6 +21,7 @@ class Bot(models.Model):
     username = models.ForeignKey(User, to_field='username')
     name = models.CharField(max_length=32)
     active = models.BooleanField(default=False)
+    host = models.IPAddressField()
     pid = models.IntegerField(null=True)
 
     class Meta:

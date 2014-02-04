@@ -11,13 +11,13 @@ MYSQLPP_CFLAGS = -I/usr/include/mysql -I/usr/include/mysql++ -lmysqlpp \
 SRCS = bots.cpp
 
 # Object file names (targets)
-OBJS = bots.o ta_wrapper.o reflection.o
+OBJS = bots.o ta.o reflection.o
 
 # Binary file names (targets)
 BINS = 
 
 # Dynamic library names (targets)
-LIBS = libbots.so libta_wrapper.so libreflection.so
+LIBS = libbots.so libta.so libreflection.so
 
 # Absolute file paths for object files
 OBJS_O = $(foreach obj, $(OBJS), $(libdir)/$(obj))
@@ -64,14 +64,15 @@ clean:
 	fi
 
 bots.o: bots.cpp mklib
-	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) $(MYSQLPP_CFLAGS) -fpic -c $< \
+	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) -Wno-sign-compare -fpic -c $< \
 	-o $(libdir)/$@
 
-ta_wrapper.o: ta_wrapper.cpp mklib
+ta.o: ta.cpp mklib
 	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) -fpic -c $< -o $(libdir)/$@
 
 reflection.o: reflection.cpp mklib
-	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) -fpic -c $< -o $(libdir)/$@
+	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) -Wno-unused-function -fpic -c $< \
+	-o $(libdir)/$@
 
 lib%.so: %.o
 	$(CXX) -shared $(libdir)/$< -o $(libdir)/$@
