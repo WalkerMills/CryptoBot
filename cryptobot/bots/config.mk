@@ -17,7 +17,8 @@ libdir = $(DESTDIR)$(srcdir)/lib
 bindir = $(DESTDIR)$(srcdir)/bin
 
 # Default compiler flags for C
-CFLAGS = -O3 -mtune=generic 
+CFLAGS = -O3 -mtune=generic -Wno-sign-compare -Wno-write-strings \
+-Wno-unused-function
 
 # Default compiler flags for C++
 CXXFLAGS = -std=c++11

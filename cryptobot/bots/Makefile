@@ -66,20 +66,13 @@ clean:
 	    rm -rf $(bindir); \
 	fi
 
-bots.o: bots.cpp mklib
-	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) -Wno-sign-compare -fpic -c $< \
-	-o $(libdir)/$@
+bots.o: ALL_CFLAGS += $(TA_CFLAGS) $(MYSQLPP_CFLAGS)
+db.o: ALL_CFLAGS += $(MYSQLPP_CFLAGS)
+reflection.o: ALL_CFLAGS += $(TA_CFLAGS)
+ta.o: ALL_CFLAGS += $(TA_CFLAGS)
 
-db.o: db.cpp mklib
-	$(CXX) $(ALL_CFLAGS) $(MYSQLPP_CFLAGS) -fpic -Wno-write-strings -c $< \
-	-o $(libdir)/$@
-
-reflection.o: reflection.cpp mklib
-	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) -Wno-unused-function -fpic -c $< \
-	-o $(libdir)/$@
-
-ta.o: ta.cpp mklib
-	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) -fpic -c $< -o $(libdir)/$@
+%.o: %.cpp %.hh mklib
+	$(CXX) $(ALL_CFLAGS) -fpic -c $< -o $(libdir)/$@
 
 lib%.so: %.o
 	$(CXX) -shared $(libdir)/$< -o $(libdir)/$@

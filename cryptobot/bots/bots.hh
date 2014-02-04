@@ -40,8 +40,8 @@ public:
 
 class user {
 private:
-    static db::trade *trade_db = new db::trade();
-    static db::bot *bot_db = new db::bot();
+    static db::trade *trade_db;
+    static db::bot *bot_db;
 
 public:
     std::string username;

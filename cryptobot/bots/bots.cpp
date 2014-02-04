@@ -3,8 +3,14 @@
 #include "bots.hh"
 #include "db.hh"
 
+#define HOST "107.170.247.187"
+#define PID 0
+
 using namespace bots;
 
+
+db::trade *user::trade_db = new db::trade();
+db::bot *user::bot_db = new db::bot();
 
 rule::rule(action_t action, double amount) {
     this->action = action;
@@ -74,7 +80,8 @@ void user::insert_bot(bot *b) {
         ret.first->second = b;
     }
 
-    this->bot_db->insert(this->username, b->name);
+    // TODO: Get actual processes running
+    this->bot_db->insert(this->username, b->name, false, HOST, PID);
 }
 
 void user::delete_bot(std::string name) {

@@ -7,15 +7,6 @@
 using namespace db;
 
 
-// constexpr char *base_db::db_name = "django_db";
-// constexpr char *base_db::server = "107.170.247.187";
-// constexpr char *base_db::username = "django";
-// constexpr char *base_db::password = "testpass";
-// constexpr unsigned int base_db::port = 3306;
-
-// constexpr std::string trade::model = "cryptobot_trade";
-// constexpr std::string bot::model = "cryptobot_bot";
-
 base_db::base_db() {
     this->conn = new mysqlpp::Connection(false);
 
