@@ -7,9 +7,9 @@
 
 #include "ta.hh"
 
+namespace bots {
 
 enum action_t {buy, sell};
-
 
 class rule {
 public:
@@ -21,7 +21,6 @@ public:
     virtual bool test();
     virtual void trade();
 };
-
 
 class bot {
 public:
@@ -35,8 +34,8 @@ public:
     void delete_rule(int index);
 
     void run();
+    void stop();
 };
-
 
 class user {
 public:
@@ -50,6 +49,9 @@ public:
     void delete_bot(std::string name);
 
     void run_bot(std::string name);
+    void stop_bot(std::string name);
 };
+
+}
 
 #endif

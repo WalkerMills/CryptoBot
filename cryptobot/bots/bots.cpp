@@ -9,10 +9,13 @@ rule::rule(action_t action, double amount) {
 }
 
 bool rule::test() {
+    // TODO: test can access market data
     return true;
 }
 
 void rule::trade() {
+    // TODO: trade takes action based on test (customize rules by 
+    // subclassing rule)
     if (this->test()) {
         return;
     } else {
@@ -47,6 +50,11 @@ void bot::run() {
     }
 }
 
+void bot::stop() {
+    // TODO: use MySQL hooks to kill bot using host ip and pid
+    return;
+}
+
 user::user(std::string username) {
     this->username = username;
     this->bots = new std::map<std::string, bot *>();
@@ -57,6 +65,7 @@ user::~user() {
 }
 
 void user::insert_bot(bot *b) {
+    // TODO: add MySQL hooks for record keeping
     std::pair<std::map<std::string, bot *>::iterator, bool> ret; 
     ret = this->bots->emplace(b->name, b);
     
@@ -71,4 +80,8 @@ void user::delete_bot(std::string name) {
 
 void user::run_bot(std::string name) {
     this->bots->at(name)->run();
+}
+
+void user::stop_bot(std::string name) {
+    this->bots->at(name)->stop();
 }
