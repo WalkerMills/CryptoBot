@@ -1,37 +1,61 @@
 #ifndef __DB_HH__
 #define __DB_HH__
 
+#include <string>
+#include <ctime>
+
 #include <mysql++.h>
 
+namespace db {
 
-class db {
+class base_db {
 private:
-    static char *db_name;
-    static char *server;
-    static char *username;
-    static char *password;
-    static unsigned int port;
+    static constexpr char *db_name = "django_db";
+    static constexpr char *server = "107.170.247.187";
+    static constexpr char *username = "django";
+    static constexpr char *password = "testpass";
+    static constexpr unsigned int port = 3306;
 
 public:
     mysqlpp::Connection *conn;
 
-    db();
-    ~db();
+    base_db();
+    ~base_db();
 
     mysqlpp::StoreQueryResult store(std::string command);
     mysqlpp::SimpleResult execute(std::string command);
 };
 
-class user_db : public db {
+class trade : private base_db {
+private:
+    static constexpr char *model = "cryptobot_trade";
 
+public:
+    mysqlpp::SimpleResult insert(time_t time, double price, double amount);
+
+    mysqlpp::StoreQueryResult get(unsigned int id);
+    mysqlpp::StoreQueryResult get(time_t time, double price, double amount);
+    mysqlpp::SimpleResult remove(unsigned int id);
+    mysqlpp::SimpleResult remove(time_t time, double price, double amount);
+
+    mysqlpp::SimpleResult csv_update(std::string file);
 };
 
-class trade_db : public db {
+class bot : private base_db {
+private:
+    static constexpr char *model = "cryptobot_bot";
 
+public:
+    mysqlpp::SimpleResult insert(std::string username, std::string name,
+                                 bool active, std::string host, 
+                                 unsigned int pid);
+    mysqlpp::StoreQueryResult get(std::string username, std::string name);
+    mysqlpp::SimpleResult remove(std::string username, std::string name);
+
+    mysqlpp::SimpleResult start(std::string username, std::string name);
+    mysqlpp::SimpleResult stop(std::string username, std::string name);
 };
 
-class bot_db : public db {
-
-};
+}
 
 #endif // __DB_HH__
