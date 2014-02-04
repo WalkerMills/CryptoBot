@@ -11,7 +11,7 @@ namespace db {
 class base_db {
 private:
     static constexpr char *db_name = "django_db";
-    static constexpr char *server = "107.170.247.187";
+    static constexpr char *host = "107.170.247.187";
     static constexpr char *username = "django";
     static constexpr char *password = "testpass";
     static constexpr unsigned int port = 3306;
@@ -22,11 +22,13 @@ public:
     base_db();
     ~base_db();
 
+    std::string get_host();
+
     mysqlpp::StoreQueryResult store(std::string command);
     mysqlpp::SimpleResult execute(std::string command);
 };
 
-class trade : private base_db {
+class trade : public base_db {
 private:
     static constexpr char *model = "cryptobot_trade";
 
@@ -41,7 +43,7 @@ public:
     mysqlpp::SimpleResult csv_update(std::string file);
 };
 
-class bot : private base_db {
+class bot : public base_db {
 private:
     static constexpr char *model = "cryptobot_bot";
 

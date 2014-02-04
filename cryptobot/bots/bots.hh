@@ -29,7 +29,7 @@ public:
     std::string name;
     std::vector<rule *> *rules;
 
-    bot(std::string::owner, std::string name);
+    bot(std::string owner, std::string name);
     ~bot();
 
     void insert_rule(rule *r);
@@ -42,6 +42,8 @@ class user {
 private:
     static db::trade *trade_db;
     static db::bot *bot_db;
+
+    std::string get_host();
 
 public:
     std::string username;

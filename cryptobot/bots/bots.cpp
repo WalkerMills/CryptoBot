@@ -52,14 +52,12 @@ void bot::delete_rule(int index) {
 }
 
 void bot::run() {
-    if (pid == 0) {
-        while ( true ) {
-            for (int i = 0; i < this->rules->size(); i++) {
-                this->rules->at(i)->trade();
-            }
-
-            sleep(5 * 1000);
+    while ( true ) {
+        for (int i = 0; i < this->rules->size(); i++) {
+            this->rules->at(i)->trade();
         }
+
+        sleep(5 * 1000);
     }
 }
 
@@ -70,6 +68,10 @@ user::user(std::string username) {
 
 user::~user() {
     delete this->bots;
+}
+
+std::string user::get_host() {
+    return this->bot_db->get_host();
 }
 
 void user::insert_bot(bot *b) {
@@ -89,7 +91,7 @@ void user::delete_bot(std::string name) {
 }
 
 void user::run_bot(std::string name) {
-    int pid = fork()
+    int pid = fork();
 
     if ( pid == 0 ) {
         this->bots->at(name)->run();
@@ -99,8 +101,7 @@ void user::run_bot(std::string name) {
 
 void user::stop_bot(std::string name) {
     mysqlpp::StoreQueryResult res = this->bot_db->get(this->username, name);
-    mysqlpp::Row row = res.fetch_row();
 
-    kill(row["pid"], SIGKILL);
+    kill(res[0]["pid"], SIGKILL);
     this->bot_db->stop(this->username, name);
 }

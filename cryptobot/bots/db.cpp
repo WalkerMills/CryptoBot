@@ -10,7 +10,7 @@ using namespace db;
 base_db::base_db() {
     this->conn = new mysqlpp::Connection(false);
 
-    bool status = this->conn->connect(this->db_name, this->server, 
+    bool status = this->conn->connect(this->db_name, this->host, 
                                       this->username, this->password,
                                       this->port);
     if ( !status ) {
@@ -22,6 +22,10 @@ base_db::base_db() {
 
 base_db::~base_db() {
     this->conn->disconnect();
+}
+
+std::string base_db::get_host() {
+  return std::string(this->host);
 }
 
 mysqlpp::StoreQueryResult base_db::store(std::string command) {
