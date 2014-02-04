@@ -1,6 +1,7 @@
 #include <unistd.h>
 
 #include "bots.hh"
+#include "db.hh"
 
 using namespace bots;
 
@@ -53,8 +54,7 @@ void bot::run() {
 }
 
 void bot::stop() {
-    // TODO: use MySQL hooks to kill bot using host ip and pid
-    return;
+
 }
 
 user::user(std::string username) {
@@ -67,26 +67,27 @@ user::~user() {
 }
 
 void user::insert_bot(bot *b) {
-    // TODO: add MySQL hooks for record keeping
     std::pair<std::map<std::string, bot *>::iterator, bool> ret; 
     ret = this->bots->emplace(b->name, b);
-    
+
     if ( !ret.second ) {
         ret.first->second = b;
     }
+
+    this->bot_db->insert(this->username, b->name);
 }
 
 void user::delete_bot(std::string name) {
-    // TODO: add MySQL hooks for record keeping
     this->bots->erase(name);
+    this->bot_db->erase(this->username, name);
 }
 
 void user::run_bot(std::string name) {
-    // TODO: add MySQL hooks for record keeping (active status)
     this->bots->at(name)->run();
+    this->bot_db->start(this->username, name);
 }
 
 void user::stop_bot(std::string name) {
-    // TODO: add MySQL hooks for record keeping (active status)
     this->bots->at(name)->stop();
+    this->bot_db->stop(this->username, name);
 }

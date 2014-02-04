@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "db.hh"
 #include "ta.hh"
 
 namespace bots {
@@ -38,6 +39,10 @@ public:
 };
 
 class user {
+private:
+    static db::trade *trade_db = new db::trade();
+    static db::bot *bot_db = new db::bot();
+
 public:
     std::string username;
     std::map<std::string, bot *> *bots;

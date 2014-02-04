@@ -79,7 +79,7 @@ mysqlpp::StoreQueryResult bot::get(std::string username, std::string name) {
     return this->store(query.str());
 }
 
-mysqlpp::SimpleResult bot::remove(std::string username, std::string name) {
+mysqlpp::SimpleResult bot::erase(std::string username, std::string name) {
     std::stringstream query;
 
     query << "DELETE FROM " <<  this->model << "WHERE username=" << username 
