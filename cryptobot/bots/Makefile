@@ -71,7 +71,8 @@ bots.o: bots.cpp mklib
 	-o $(libdir)/$@
 
 db.o: db.cpp mklib
-	$(CXX) $(ALL_CFLAGS) $(MYSQLPP_CFLAGS) -fpic -c $< -o $(libdir)/$@
+	$(CXX) $(ALL_CFLAGS) $(MYSQLPP_CFLAGS) -fpic -Wno-write-strings -c $< \
+	-o $(libdir)/$@
 
 reflection.o: reflection.cpp mklib
 	$(CXX) $(ALL_CFLAGS) $(TA_CFLAGS) -Wno-unused-function -fpic -c $< \

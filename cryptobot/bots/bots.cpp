@@ -2,6 +2,8 @@
 
 #include "bots.hh"
 
+using namespace bots;
+
 
 rule::rule(action_t action, double amount) {
     this->action = action;

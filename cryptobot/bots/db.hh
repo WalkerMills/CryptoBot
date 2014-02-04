@@ -1,17 +1,16 @@
 #ifndef __DB_HH__
 #define __DB_HH__
 
-#include <string>
-
 #include <mysql++.h>
 
 
 class db {
 private:
-    static std::string db_name;
-    static std::string server;
-    static std::string username;
-    static std::string password;
+    static char *db_name;
+    static char *server;
+    static char *username;
+    static char *password;
+    static unsigned int port;
 
 public:
     mysqlpp::Connection *conn;
@@ -35,4 +34,4 @@ class bot_db : public db {
 
 };
 
-#endif
+#endif // __DB_HH__
