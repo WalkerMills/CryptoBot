@@ -17,7 +17,7 @@ SRCS = bots.cpp db.cpp interface.pyx reflection.cpp ta.cpp
 HDRS = bots.hh db.hh reflection.hh ta.hh
 
 # Object file names (targets)
-OBJS = bots.o db.o reflection.o ta.o
+OBJS = bots.o db.o interface.o reflection.o ta.o
 
 # Binary file names (targets)
 BINS = 
@@ -41,19 +41,12 @@ BINS_ = $(foreach bin, $(BINS), $(bindir)/$(bin))
 .SUFFIXES: .cpp .o .so
 
 # Declare all phony targets
-.PHONY: all mklib mkbin clean
+.PHONY: all clean install mklib mkbin 
 
-all: $(LIBS)
+install: clean all
+	rm -f $(OBJS_O)
 	
-# Create directory for containing object files and libraries
-mklib:
-	@# Make libdir if it doesn't already exist
-	test -d $(libdir) || mkdir $(libdir)
-
-# Create directory for containing binary executables
-mkbin:
-	@# Make bindir if it doesn't already exist
-	test -d $(bindir) || mkdir $(bindir)
+all: $(LIBS)
 
 # Clean up all files
 clean:
@@ -68,6 +61,16 @@ clean:
 	if [[ -d $(bindir) && -z "`ls -A $(bindir)`" ]]; then \
 	    rm -rf $(bindir); \
 	fi
+
+# Create directory for containing object files and libraries
+mklib:
+	@# Make libdir if it doesn't already exist
+	test -d $(libdir) || mkdir $(libdir)
+
+# Create directory for containing binary executables
+mkbin:
+	@# Make bindir if it doesn't already exist
+	test -d $(bindir) || mkdir $(bindir)
 
 %.cpp: %.pyx
 	$(CYTHON) $(CYTHON_FLAGS) $< -o $@

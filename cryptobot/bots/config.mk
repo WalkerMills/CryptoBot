@@ -4,7 +4,7 @@ SHELL = /bin/sh
 # Default C++ compiler
 CXX = g++
 
-# Default Cython (C++) compiler
+# Default Cython compiler
 CYTHON = cython
 
 # Directory containing source files
@@ -26,9 +26,7 @@ CFLAGS = -O3 -mtune=generic -Wno-sign-compare -Wno-write-strings \
 # Default compiler flags for C++
 CXXFLAGS = -std=c++11
 
-# Linker flags
-LDFLAGS = -Wl,-rpath=$(libdir)
-
+# Default compiler flags for Cython
 CYTHON_FLAGS = --cplus -2
 
 # All C flags required for proper compilation
