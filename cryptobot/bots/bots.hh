@@ -8,16 +8,27 @@
 #include "db.hh"
 #include "ta.hh"
 
+extern "C" {
+    void create_bot(char *username, char *name);
+    void delete_bot(char *username, char *name);
+
+    void run_bot(char *username, char *name);
+    void stop_bot(char *username, char *name);
+}
+
 namespace bots {
 
-enum action_t {buy, sell};
-
 class rule {
+private:
+    enum action_t {buy, sell};
+
 public:
     action_t action;
     double amount;
+    std::vector<ta::ta *> *indicators;
 
     rule(action_t action, double amount);
+    ~rule();
 
     virtual bool test();
     virtual void trade();
@@ -53,6 +64,7 @@ public:
     ~user();
 
     void insert_bot(bot *b);
+    void create_bot(std::string name);
     void delete_bot(std::string name);
 
     void run_bot(std::string name);

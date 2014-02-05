@@ -16,10 +16,16 @@ db::bot *user::bot_db = new db::bot();
 rule::rule(action_t action, double amount) {
     this->action = action;
     this->amount = amount;
+
+    this->indicators = new std::vector<ta::ta *>();
+}
+
+rule::~rule() {
+    delete this->indicators;
 }
 
 bool rule::test() {
-    // TODO: test can manipulate market data
+    // TODO: test can retrieve market data
     return true;
 }
 
@@ -85,6 +91,11 @@ void user::insert_bot(bot *b) {
     this->bot_db->insert(this->username, b->name, false, HOST, PID);
 }
 
+void user::create_bot(std::string name) {
+    bot *b = new bot(this->username, name);
+    this->insert_bot(b);
+}
+
 void user::delete_bot(std::string name) {
     this->bots->erase(name);
     this->bot_db->erase(this->username, name);
@@ -95,6 +106,7 @@ void user::run_bot(std::string name) {
 
     if ( pid == 0 ) {
         this->bots->at(name)->run();
+    } else {
         this->bot_db->start(this->username, name, pid);
     }
 }
@@ -105,3 +117,32 @@ void user::stop_bot(std::string name) {
     kill(res[0]["pid"], SIGKILL);
     this->bot_db->stop(this->username, name);
 }
+
+void create_bot(char *username, char *name) {
+    user *u = new user(std::string(username));
+    u->create_bot(std::string(name));
+
+    delete u;
+}
+
+void delete_bot(char *username, char *name) {
+    user *u = new user(std::string(username));
+    u->delete_bot(std::string(name));
+
+    delete u;
+}
+
+void run_bot(char *username, char *name) {
+    user *u = new user(std::string(username));
+    u->run_bot(std::string(name));
+
+    delete u;
+}
+
+void stop_bot(char *username, char *name) {
+    user *u = new user(std::string(username));
+    u->stop_bot(std::string(name));
+
+    delete u;
+}
+
