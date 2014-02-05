@@ -8,14 +8,6 @@
 #include "db.hh"
 #include "ta.hh"
 
-extern "C" {
-    void create_bot(char *username, char *name);
-    void delete_bot(char *username, char *name);
-
-    void run_bot(char *username, char *name);
-    void stop_bot(char *username, char *name);
-}
-
 namespace bots {
 
 class rule {

@@ -1,14 +1,17 @@
 include config.mk
 
-# Compiler flags for compiling with ta-lib
+# Compiler flags for compiling with TA-Lib
 TA_CFLAGS = -I/usr/include/ta-lib -lta_lib
 
-# Compiler flags for compiling with mysql++
+# Compiler flags for compiling with MySQL++
 MYSQLPP_CFLAGS = -I/usr/include/mysql -I/usr/include/mysql++ -lmysqlpp \
 -lmysqlclient
 
+# Compiler flags for compiling with Cython
+CYTHON_CFLAGS = -pthread -fwrapv -fno-strict-aliasing -I/usr/include/python2.7
+
 # Source file names
-SRCS = bots.cpp db.cpp reflection.cpp ta.cpp
+SRCS = bots.cpp db.cpp interface.pyx reflection.cpp ta.cpp
 
 # Header file names
 HDRS = bots.hh db.hh reflection.hh ta.hh
@@ -20,7 +23,7 @@ OBJS = bots.o db.o reflection.o ta.o
 BINS = 
 
 # Dynamic library names (targets)
-LIBS = libbots.so libdb.so libreflection.so libta.so
+LIBS = libbots.so libdb.so libinterface.so libreflection.so libta.so
 
 # Absolute file paths for object files
 OBJS_O = $(foreach obj, $(OBJS), $(libdir)/$(obj))
@@ -66,12 +69,17 @@ clean:
 	    rm -rf $(bindir); \
 	fi
 
-bots.o: ALL_CFLAGS += $(TA_CFLAGS) $(MYSQLPP_CFLAGS)
-db.o: ALL_CFLAGS += $(MYSQLPP_CFLAGS)
-reflection.o: ALL_CFLAGS += $(TA_CFLAGS)
-ta.o: ALL_CFLAGS += $(TA_CFLAGS)
+%.cpp: %.pyx
+	$(CYTHON) $(CYTHON_FLAGS) $< -o $@
 
-%.o: %.cpp %.hh mklib
+bots.o: private ALL_CFLAGS += $(TA_CFLAGS) $(MYSQLPP_CFLAGS)
+db.o: private ALL_CFLAGS += $(MYSQLPP_CFLAGS)
+reflection.o: private ALL_CFLAGS += $(TA_CFLAGS)
+ta.o: private ALL_CFLAGS += $(TA_CFLAGS)
+interface.o: private ALL_CFLAGS += $(CYTHON_CFLAGS) $(TA_CFLAGS) \
+$(MYSQLPP_CFLAGS)
+
+%.o: %.cpp mklib
 	$(CXX) $(ALL_CFLAGS) -fpic -c $< -o $(libdir)/$@
 
 lib%.so: %.o

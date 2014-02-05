@@ -117,32 +117,3 @@ void user::stop_bot(std::string name) {
     kill(res[0]["pid"], SIGKILL);
     this->bot_db->stop(this->username, name);
 }
-
-void create_bot(char *username, char *name) {
-    user *u = new user(std::string(username));
-    u->create_bot(std::string(name));
-
-    delete u;
-}
-
-void delete_bot(char *username, char *name) {
-    user *u = new user(std::string(username));
-    u->delete_bot(std::string(name));
-
-    delete u;
-}
-
-void run_bot(char *username, char *name) {
-    user *u = new user(std::string(username));
-    u->run_bot(std::string(name));
-
-    delete u;
-}
-
-void stop_bot(char *username, char *name) {
-    user *u = new user(std::string(username));
-    u->stop_bot(std::string(name));
-
-    delete u;
-}
-
