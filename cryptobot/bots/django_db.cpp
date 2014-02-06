@@ -2,7 +2,7 @@
 #include <sstream>
 #include <cstdlib>
 
-#include "db.hh"
+#include "django_db.hh"
 
 using namespace db;
 
@@ -61,9 +61,9 @@ mysqlpp::SimpleResult bot::insert(std::string username, std::string name,
     std::string boolean = active ? "TRUE" : "FALSE";
 
 
-    query << "INSERT INTO " << this->model << "VALUES (\'" << username 
-          << "\', \'" << name << "\', \'" << boolean << "\', \'" << host 
-          << "\', ";
+    query << "INSERT INTO " << this->model << " VALUES (DEFAULT, \'" 
+          << username << "\', \'" << name << "\', " << boolean 
+          << ", \'" << host << "\', ";
 
     if ( pid != -1 ) { 
         query << "\'" << pid << "\'";
@@ -77,16 +77,16 @@ mysqlpp::SimpleResult bot::insert(std::string username, std::string name,
 mysqlpp::StoreQueryResult bot::get(std::string username, std::string name) {
     std::stringstream query;
 
-    query << "SELECT * FROM " <<  this->model << "WHERE username=" << username 
-          << ", name=" << name << ";";
+    query << "SELECT * FROM " <<  this->model << " WHERE username_id=\'" 
+          << username << "\' AND name=\'" << name << "\';";
     return this->store(query.str());
 }
 
 mysqlpp::SimpleResult bot::erase(std::string username, std::string name) {
     std::stringstream query;
 
-    query << "DELETE FROM " <<  this->model << "WHERE username=" << username 
-          << ", name=" << name << ";";
+    query << "DELETE FROM " <<  this->model << " WHERE username_id=\'" 
+          << username << "\' AND name=\'" << name << "\';";
     return this->execute(query.str());
 }
 
@@ -95,7 +95,8 @@ mysqlpp::SimpleResult bot::start(std::string username, std::string name,
     std::stringstream query;
 
     query << "UPDATE " << this->model << " SET active=TRUE, pid=" << pid 
-          << " WHERE username=" << username << ", name=" << name << ";";
+          << " WHERE username_id=\'" << username << "\' AND name=\'" << name 
+          << "\';";
     return this->execute(query.str());
 }
 
@@ -103,7 +104,8 @@ mysqlpp::SimpleResult bot::stop(std::string username, std::string name) {
     std::stringstream query;
 
     query << "UPDATE " << this->model << " SET active=FALSE, pid=NULL "
-             "WHERE username=" << username << ", name=" << name << ";";
+             "WHERE username_id=\'" << username << "\' AND name=\'" << name 
+          << "\';";
     return this->execute(query.str());
 }
 

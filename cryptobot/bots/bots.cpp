@@ -2,7 +2,7 @@
 #include <signal.h>
 
 #include "bots.hh"
-#include "db.hh"
+#include "django_db.hh"
 
 #define HOST "107.170.247.187"
 #define PID -1

@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "db.hh"
+#include "django_db.hh"
 #include "ta.hh"
 
 namespace bots {
@@ -22,8 +22,8 @@ public:
     rule(action_t action, double amount);
     ~rule();
 
-    virtual bool test();
-    virtual void trade();
+    virtual bool test() = 0;
+    virtual void trade() = 0;
 };
 
 class bot {
@@ -61,6 +61,8 @@ public:
 
     void run_bot(std::string name);
     void stop_bot(std::string name);
+
+    // Add accessors to check bot status
 };
 
 }
