@@ -62,7 +62,9 @@ public:
     void run_bot(std::string name);
     void stop_bot(std::string name);
 
-    // Add accessors to check bot status
+    void kill_bot(std::string name);
+
+    bool active(std::string name);
 };
 
 }

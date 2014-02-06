@@ -60,7 +60,6 @@ mysqlpp::SimpleResult bot::insert(std::string username, std::string name,
     std::stringstream query;
     std::string boolean = active ? "TRUE" : "FALSE";
 
-
     query << "INSERT INTO " << this->model << " VALUES (DEFAULT, \'" 
           << username << "\', \'" << name << "\', " << boolean 
           << ", \'" << host << "\', ";
@@ -103,7 +102,7 @@ mysqlpp::SimpleResult bot::start(std::string username, std::string name,
 mysqlpp::SimpleResult bot::stop(std::string username, std::string name) {
     std::stringstream query;
 
-    query << "UPDATE " << this->model << " SET active=FALSE, pid=NULL "
+    query << "UPDATE " << this->model << " SET active=FALSE "
              "WHERE username_id=\'" << username << "\' AND name=\'" << name 
           << "\';";
     return this->execute(query.str());

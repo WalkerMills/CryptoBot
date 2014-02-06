@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <signal.h>
+#include <sys/types.h>
 
 #include "bots.hh"
 #include "django_db.hh"
@@ -89,31 +90,74 @@ void user::insert_bot(bot *b) {
     }
 
     this->bot_db->insert(this->username, b->name, false, HOST, PID);
+    this->run_bot(b->name);
+    this->stop_bot(b->name);
 }
 
 void user::create_bot(std::string name) {
     bot *b = new bot(this->username, name);
+
     this->insert_bot(b);
 }
 
 void user::delete_bot(std::string name) {
+    this->kill_bot(name);
     this->bots->erase(name);
     this->bot_db->erase(this->username, name);
 }
 
 void user::run_bot(std::string name) {
-    int pid = fork();
+    mysqlpp::StoreQueryResult res = this->bot_db->get(this->username, name);
+    mysqlpp::String pid_col = res[0]["pid"];
 
-    if ( pid == 0 ) {
-        this->bots->at(name)->run();
+    if ( this->active(name) ) {
+        return;
+    }
+
+    std::cerr << "PID is currently " << pid_col << std::endl;
+    if ( pid_col == mysqlpp::null ) {
+        pid_t forked = fork();
+
+        if ( forked == 0 ) {
+            this->bots->at(name)->run();
+        } else {
+            std::cerr << "Spawned new process " << forked << std::endl;
+            this->bot_db->start(this->username, name, forked);
+        }
     } else {
+        pid_t pid = pid_col;
+        std::cerr << "Sending SIGCONT to " << pid << std::endl;
+        kill(pid, SIGCONT);
+
         this->bot_db->start(this->username, name, pid);
     }
 }
 
 void user::stop_bot(std::string name) {
     mysqlpp::StoreQueryResult res = this->bot_db->get(this->username, name);
+    mysqlpp::String pid_col = res[0]["pid"];
 
-    kill(res[0]["pid"], SIGKILL);
+    pid_t pid = pid_col;
+    std::cerr << "Sending SIGSTOP to " << pid << std::endl;
+    kill(pid, SIGSTOP);
+
     this->bot_db->stop(this->username, name);
+}
+
+void user::kill_bot(std::string name) {
+    mysqlpp::StoreQueryResult res = this->bot_db->get(this->username, name);
+    mysqlpp::String pid_col = res[0]["pid"];
+
+    pid_t pid = pid_col;
+    std::cerr << "Sending SIGKILL to " << pid << std::endl;
+    kill(pid, SIGKILL);
+
+    this->bot_db->stop(this->username, name);
+}
+
+bool user::active(std::string name) {
+    mysqlpp::StoreQueryResult res = this->bot_db->get(this->username, name);
+    bool state = res[0]["active"];
+
+    return state;
 }

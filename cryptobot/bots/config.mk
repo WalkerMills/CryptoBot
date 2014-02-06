@@ -23,7 +23,7 @@ libdir = $(DESTDIR)$(srcdir)/lib
 bindir = $(DESTDIR)$(srcdir)/bin
 
 # Default compiler flags for C
-CFLAGS = -O3 -march=native -mtune=generic -pipe -fstack-protector \
+CFLAGS = -Og -g -march=native -mtune=generic -pipe -fstack-protector \
 --param=ssp-buffer-size=4 -Wno-sign-compare -Wno-write-strings \
 -Wno-unused-function
 

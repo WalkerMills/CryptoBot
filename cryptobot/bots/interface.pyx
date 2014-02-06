@@ -1,33 +1,24 @@
+cimport interface
+
 from libcpp.string cimport string
-
-
-cdef extern from "bots.hh" namespace "bots":
-    cdef cppclass user:
-        user(string)
-
-        void create_bot(string)
-        void delete_bot(string)
-
-        void run_bot(string)
-        void stop_bot(string)
 
 
 cdef class PyUser:
 
-    cdef user *thisptr
+    cdef interface.user *thisptr
 
-    def __cinit__(self, char *username):
-        self.thisptr = new user(<string> username)
+    def __cinit__(self, string username):
+        self.thisptr = new interface.user(username)
     def __dealloc__(self):
         del self.thisptr
 
-    def create_bot(self, char *name):
-        self.thisptr.create_bot(<string> name)
-    def delete_bot(self, char *name):
-        self.thisptr.delete_bot(<string> name)
+    def create_bot(self, string name):
+        self.thisptr.create_bot(name)
+    def delete_bot(self, string name):
+        self.thisptr.delete_bot(name)
 
-    def run_bot(self, char *name):
-        self.thisptr.run_bot(<string> name)
-    def stop_bot(self, char *name):
-        self.thisptr.stop_bot(<string> name)
+    def run_bot(self, string name):
+        self.thisptr.run_bot(name)
+    def stop_bot(self, string name):
+        self.thisptr.stop_bot(name)
 
