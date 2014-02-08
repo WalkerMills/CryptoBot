@@ -23,6 +23,6 @@ cdef class PyUser:
         self.thisptr.stop_bot(name)
 
     def active(self, string name):
-        self.thisptr.active(name)
+        return self.thisptr.active(name)
 
 
