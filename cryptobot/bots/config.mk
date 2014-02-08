@@ -35,6 +35,10 @@ TA_LDFLAGS = -lta_lib
 MYSQLPP_CFLAGS = -I/usr/include/mysql -I/usr/include/mysql++ 
 MYSQLPP_LDFLAGS = -lmysqlpp -lmysqlclient
 
+# Compiler flags for compiling with boost::python
+PYTHON_CFLAGS = -I/usr/include/python2.7
+PYTHON_LDFLAGS = -lboost_python -lpython2.7
+
 # All C flags required for normal compilation
 ALL_CFLAGS = -Wall $(CFLAGS) $(CXXFLAGS) -I$(includedir) -L$(libdir)
 
