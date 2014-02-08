@@ -8,8 +8,6 @@
 #include "django_db.hh"
 #include "ta.hh"
 
-namespace bots {
-
 class rule {
 private:
     enum action_t {buy, sell};
@@ -43,8 +41,8 @@ public:
 
 class user {
 private:
-    static db::trade *trade_db;
-    static db::bot *bot_db;
+    db::trade *trade_db;
+    db::bot *bot_db;
 
     std::string get_host();
 
@@ -66,7 +64,5 @@ public:
 
     bool active(std::string name);
 };
-
-}
 
 #endif

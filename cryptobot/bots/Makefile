@@ -1,7 +1,7 @@
 include config.mk
 
 # Source file names
-SRCS = bots.cpp django_db.cpp reflection.cpp ta.cpp main.cpp
+SRCS = bots.cpp django_db.cpp interface.pyx reflection.cpp ta.cpp main.cpp
 
 # Header file names
 HDRS = bots.hh django_db.hh reflection.hh ta.hh
@@ -16,13 +16,13 @@ BINS = main
 LIBS = libbots.so libdjango_db.so libinterface.so libreflection.so libta.so
 
 # Absolute file paths for object files
-OBJS_O = $(foreach obj, $(OBJS), $(libdir)/$(obj))
+OBJ_FILES = $(foreach obj, $(OBJS), $(libdir)/$(obj))
 
 # Absolute file paths for dynamic libraries
-LIBS_SO = $(foreach lib, $(LIBS), $(libdir)/$(lib))
+LIB_FILES = $(foreach lib, $(LIBS), $(libdir)/$(lib))
 
 # Absolute file paths for binary executables
-BINS_ = $(foreach bin, $(BINS), $(bindir)/$(bin))
+BIN_FILES = $(foreach bin, $(BINS), $(bindir)/$(bin))
 
 TEST = main
 
@@ -37,13 +37,13 @@ TEST = main
 
 install: ALL_CFLAGS += -DNDEBUG
 install: clean all
-	rm -f $(OBJS_O)
+	rm -f $(OBJ_FILES)
 	
 all: $(LIBS) $(BINS)
 
 # Clean up all files
 clean:
-	rm -f $(OBJS_O) $(LIBS_SO) $(BINS_)
+	rm -f $(OBJ_FILES) $(LIB_FILES) $(BIN_FILES)
 
 	@# If libdir is empty, remove it
 	if [[ -d $(libdir) && -z "`ls -A $(libdir)`" ]]; then \
@@ -68,33 +68,33 @@ mkbin:
 	@# Make bindir if it doesn't already exist
 	test -d $(bindir) || mkdir $(bindir)
 
+%.cpp: %.pyx mklib
+	$(CYTHON) $(CYTHON_FLAGS) $(srcdir)/$< -o $(srcdir)/$@
+
 bots.o: libdjango_db.so libreflection.so
 interface.o: libbots.so
 reflection.o: libta.so
 
 bots.o: private ALL_CFLAGS += $(TA_CFLAGS) $(MYSQLPP_CFLAGS)
 django_db.o: private ALL_CFLAGS += $(MYSQLPP_CFLAGS)
-interface.o: private ALL_CFLAGS += $(PYTHON_CFLAGS) $(MYSQLPP_CFLAGS) \
+interface.o: private ALL_CFLAGS += $(CYTHON_CFLAGS) $(MYSQLPP_CFLAGS) \
 $(TA_CFLAGS)
 reflection.o: private ALL_CFLAGS += $(TA_CFLAGS)
 ta.o: private ALL_CFLAGS += $(TA_CFLAGS)
 main.o: private ALL_CFLAGS += $(MYSQLPP_CFLAGS) $(TA_CFLAGS)
 
 %.o: %.cpp mklib 
-	$(CXX) $(ALL_CFLAGS) -fPIC -c $< -o $(libdir)/$@
+	$(CXX) $(ALL_CFLAGS) -fPIC -c $(srcdir)/$< -o $(libdir)/$@
 
-libinterface.so: interface.o bots.o django_db.o
-
+libinterface.so: private EXTRA_LDFLAGS = $(CYTHON_LDFLAGS) -lbots
 libbots.so: private EXTRA_LDFLAGS = -ldjango_db -lta
 libdjango_db.so: private EXTRA_LDFLAGS = $(MYSQLPP_LDFLAGS)
-libinterface.so: private EXTRA_LDFLAGS = $(PYTHON_LDFLAGS) $(MYSQLPP_LDFLAGS) \
--lbots
 libreflection.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS) -lta
 libta.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS)
 
 lib%.so: %.o
-	$(CXX) $(LD_FLAGS) -shared -Wl,-soname=$@ $(EXTRA_LDFLAGS) \
-	$(foreach obj, $^, $(libdir)/$(obj)) -o $(libdir)/$@
+	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,$@ $(libdir)/$< -o $(libdir)/$@ \
+	$(EXTRA_LDFLAGS)
 
 main: libbots.so
 

@@ -4,7 +4,9 @@ SHELL = /bin/sh
 # Default C++ compiler
 CXX = g++
 
-# Directory containing source files
+# Default Cython compiler
+CYTHON = cython
+
 srcdir = $(CURDIR)
 
 # Directory containing header files
@@ -25,7 +27,8 @@ CFLAGS = -O3 -march=native -mtune=generic -pipe -fstack-protector \
 CXXFLAGS = -std=c++11
 
 # Default linker flags
-LD_FLAGS = -L$(libdir)
+LD_FLAGS = -L$(libdir) -Wl,-rpath=$(libdir)
+
 
 # Compiler flags for compiling with TA-Lib
 TA_CFLAGS = -I/usr/include/ta-lib
@@ -35,10 +38,10 @@ TA_LDFLAGS = -lta_lib
 MYSQLPP_CFLAGS = -I/usr/include/mysql -I/usr/include/mysql++ 
 MYSQLPP_LDFLAGS = -lmysqlpp -lmysqlclient
 
-# Compiler flags for compiling with boost::python
-PYTHON_CFLAGS = -I/usr/include/python2.7
-PYTHON_LDFLAGS = -lboost_python -lpython2.7
-
+# Compiler flags for compiling with Cython
+CYTHON_CFLAGS = -pthread -fwrapv -fno-strict-aliasing -I/usr/include/python2.7 
+CYTHON_LDFLAGS = -lpython2.7 -Wl,-O1,--sort-common,--as-needed,-z,relro 
+CYTHON_ALL = $(CYTHON_CFLAGS) $(CYTHON_LDFLAGS)
 # All C flags required for normal compilation
 ALL_CFLAGS = -Wall $(CFLAGS) $(CXXFLAGS) -I$(includedir) -L$(libdir)
 

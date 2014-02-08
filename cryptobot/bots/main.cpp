@@ -3,7 +3,7 @@
 #define NAME "test_bot"
 
 int main() {
-    bots::user *u = new bots::user("test");
+    user *u = new user("test");
 
     u->create_bot(NAME);
     u->run_bot(NAME);
