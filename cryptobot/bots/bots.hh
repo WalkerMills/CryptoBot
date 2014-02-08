@@ -43,8 +43,8 @@ public:
 
 class user {
 private:
-    static db::trade *trade_db;
-    static db::bot *bot_db;
+    db::trade *trade_db;
+    db::bot *bot_db;
 
     std::string get_host();
 

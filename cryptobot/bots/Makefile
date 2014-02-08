@@ -13,8 +13,7 @@ OBJS = bots.o django_db.o interface.o reflection.o ta.o main.o
 BINS = main
 
 # Dynamic library names (targets)
-LIBS = libbots.so libdjango_db.so libinterface.so libreflection.so libta.so \
-libbots.a libdjango_db.a
+LIBS = libbots.so libdjango_db.so libinterface.so libreflection.so libta.so
 
 # Absolute file paths for object files
 OBJ_FILES = $(foreach obj, $(OBJS), $(libdir)/$(obj))
@@ -96,9 +95,6 @@ libta.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS)
 lib%.so: %.o
 	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,$@ $(libdir)/$< -o $(libdir)/$@ \
 	$(EXTRA_LDFLAGS)
-
-lib%.a: %.o
-	$(AR) rcs $(libdir)/$@ $(libdir)/$<
 
 main: libbots.so
 

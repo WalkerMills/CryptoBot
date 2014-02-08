@@ -11,9 +11,6 @@
 using namespace bots;
 
 
-db::trade *user::trade_db = new db::trade();
-db::bot *user::bot_db = new db::bot();
-
 rule::rule(action_t action, double amount) {
     this->action = action;
     this->amount = amount;
@@ -70,7 +67,10 @@ void bot::run() {
 
 user::user(std::string username) {
     this->username = username;
+
     this->bots = new std::map<std::string, bot *>();
+    this->trade_db = new db::trade();
+    this->bot_db = new db::bot();
 }
 
 user::~user() {
