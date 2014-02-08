@@ -27,7 +27,8 @@ OBJ_FILES = $(foreach obj, $(OBJS), $(libdir)/$(obj))
 LIB_FILES = $(foreach lib, $(LIBS), $(libdir)/$(lib))
 
 # Absolute file paths for Cython extensions
-EXT_FILES = $(foreach lib, $(EXTS), $(libdir)/$(lib))
+EXT_FILES = $(foreach ext, $(EXTS), $(libdir)/$(ext))
+EXT_LINKS = $(foreach ext, $(EXTS), $(srcdir)/$(ext))
 
 # Absolute file paths for binary executables
 BIN_FILES = $(foreach bin, $(BINS), $(bindir)/$(bin))
@@ -55,7 +56,7 @@ all: $(LIBS) $(EXTS) $(BINS)
 
 # Clean up all files
 clean:
-	rm -f $(OBJ_FILES) $(LIB_FILES) $(EXT_FILES) $(BIN_FILES)
+	rm -f $(OBJ_FILES) $(LIB_FILES) $(EXT_FILES) $(EXT_LINKS) $(BIN_FILES)
 
 	@# If libdir is empty, remove it
 	if [[ -d $(libdir) && -z "`ls -A $(libdir)`" ]]; then \
@@ -77,9 +78,11 @@ mkbin:
 	@# Make bindir if it doesn't already exist
 	test -d $(bindir) || mkdir $(bindir)
 
-# Compile a C++ file from our Cython files
+
+# Generate a C++ file from a Cython file
 %.cpp: %.pyx mklib
 	$(CYTHON) $(CYTHON_FLAGS) $(srcdir)/$< -o $(srcdir)/$@
+
 
 # Object target dependencies
 bots.o: libdjango_db.so libreflection.so
@@ -100,6 +103,7 @@ main.o: private ALL_CFLAGS += $(MYSQLPP_CFLAGS) $(TA_CFLAGS)
 	@# Everything is compiled with -fPIC so they can be dynamically linked
 	$(CXX) $(ALL_CFLAGS) -fPIC -c $(srcdir)/$< -o $(libdir)/$@
 
+
 # Library target linking flags
 interface.so: private EXTRA_LDFLAGS = $(CYTHON_LDFLAGS) -lbots
 libbots.so: private EXTRA_LDFLAGS = -ldjango_db -lta
@@ -107,7 +111,7 @@ libdjango_db.so: private EXTRA_LDFLAGS = $(MYSQLPP_LDFLAGS)
 libreflection.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS) -lta
 libta.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS)
 
-# Implicit rule matching C++ library naming convention to compile pure C++
+# Implicit rule matching the C/C++ dynamic library naming convention
 lib%.so: %.o
 	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,$@ $(libdir)/$< -o $(libdir)/$@ \
 	$(EXTRA_LDFLAGS)
@@ -118,6 +122,9 @@ lib%.so: %.o
 %.so: %.o
 	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,$@ $(libdir)/$< -o $(libdir)/$@ \
 	$(EXTRA_LDFLAGS)
+	@# Link the extension back to our source directory for use
+	ln -s $(libdir)/$@ $(srcdir)
+
 
 # Default rule for compiling binaries
 %: %.o mkbin

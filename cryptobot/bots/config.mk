@@ -7,6 +7,7 @@ CXX = g++
 # Default Cython compiler (pyx -> cpp)
 CYTHON = cython
 
+
 # Directory containing source files
 srcdir = $(CURDIR)
 
@@ -18,6 +19,7 @@ libdir = $(DESTDIR)$(srcdir)/lib
 
 # Destination directory for binaries
 bindir = $(DESTDIR)$(srcdir)/bin
+
 
 # Default compiler flags for C (and C++)
 CFLAGS = -O3 -march=native -mtune=generic -pipe -fstack-protector \
@@ -31,6 +33,7 @@ LD_FLAGS = -L$(libdir) -Wl,-O1,--sort-common,--as-needed,-z,relro
 
 # Default Cython flags
 CYTHON_FLAGS = --cplus -2
+
 
 # Compiler flags for compiling with TA-Lib
 TA_CFLAGS = -I/usr/include/ta-lib
