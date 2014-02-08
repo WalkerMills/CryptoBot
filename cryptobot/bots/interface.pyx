@@ -3,7 +3,7 @@ cimport interface
 from libcpp.string cimport string
 
 
-cdef class PyUser:
+cdef class User:
 
     cdef interface.user *thisptr
 

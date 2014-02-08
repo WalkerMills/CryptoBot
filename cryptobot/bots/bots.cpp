@@ -160,7 +160,11 @@ void user::kill_bot(std::string name) {
 
 bool user::active(std::string name) {
     mysqlpp::StoreQueryResult res = this->bot_db->get(this->username, name);
-    bool state = res[0]["active"];
 
-    return state;
+    if ( res ) {
+        bool state = res[0]["active"];
+        return state;
+    }
+
+    return false;
 }

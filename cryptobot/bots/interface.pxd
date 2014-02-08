@@ -1,5 +1,5 @@
-from libcpp.string cimport string
 from libcpp cimport bool
+from libcpp.string cimport string
 
 
 cdef extern from "bots.hh" namespace "bots":
