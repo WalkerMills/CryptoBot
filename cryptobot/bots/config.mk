@@ -4,6 +4,9 @@ SHELL = /bin/sh
 # Default C++ compiler
 CXX = g++
 
+# Default archiver
+AR = ar
+
 # Default distutils compiler
 DISTUTILS = python2 setup.py build_ext -i
 
@@ -23,7 +26,7 @@ libdir = $(DESTDIR)$(srcdir)/lib
 bindir = $(DESTDIR)$(srcdir)/bin
 
 # Default compiler flags for C
-CFLAGS = -Og -g -march=native -mtune=generic -pipe -fstack-protector \
+CFLAGS = -O3 -march=native -mtune=generic -pipe -fstack-protector \
 --param=ssp-buffer-size=4 -Wno-sign-compare -Wno-write-strings \
 -Wno-unused-function
 
@@ -31,7 +34,10 @@ CFLAGS = -Og -g -march=native -mtune=generic -pipe -fstack-protector \
 CXXFLAGS = -std=c++11
 
 # Default linker flags
-LD_FLAGS = -L$(libdir)
+LD_FLAGS = -L$(libdir) -Wl,-rpath=$(libdir)
+
+# Default archiver flags
+AR_FLAGS = rcs
 
 # Default Cython flags
 CYTHON_FLAGS = -2 --cplus
@@ -52,7 +58,7 @@ MYSQLPP_ALL = $(MYSQLPP_CFLAGS) $(MYSQLPP_LDFLAGS)
 
 # Compiler flags for compiling with Cython
 CYTHON_CFLAGS = -pthread -fwrapv -fno-strict-aliasing -I/usr/include/python2.7 
-CYTHON_LDFLAGS = -lpython2.7
+CYTHON_LDFLAGS = -lpython2.7 -Wl,-O1,--sort-common,--as-needed,-z,relro 
 CYTHON_ALL = $(CYTHON_CFLAGS) $(CYTHON_LDFLAGS)
 
 # All C flags required for normal compilation

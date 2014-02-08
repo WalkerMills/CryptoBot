@@ -13,16 +13,17 @@ OBJS = bots.o django_db.o interface.o reflection.o ta.o main.o
 BINS = main
 
 # Dynamic library names (targets)
-LIBS = libbots.so libdjango_db.so libinterface.so libreflection.so libta.so
+LIBS = libbots.so libdjango_db.so libinterface.so libreflection.so libta.so \
+libbots.a libdjango_db.a
 
 # Absolute file paths for object files
-OBJS_O = $(foreach obj, $(OBJS), $(libdir)/$(obj))
+OBJ_FILES = $(foreach obj, $(OBJS), $(libdir)/$(obj))
 
 # Absolute file paths for dynamic libraries
-LIBS_SO = $(foreach lib, $(LIBS), $(libdir)/$(lib))
+LIB_FILES = $(foreach lib, $(LIBS), $(libdir)/$(lib))
 
 # Absolute file paths for binary executables
-BINS_ = $(foreach bin, $(BINS), $(bindir)/$(bin))
+BIN_FILES = $(foreach bin, $(BINS), $(bindir)/$(bin))
 
 TEST = main
 
@@ -37,13 +38,13 @@ TEST = main
 
 install: ALL_CFLAGS += -DNDEBUG
 install: clean all
-	rm -f $(OBJS_O)
+	rm -f $(OBJ_FILES)
 	
 all: $(LIBS) $(BINS)
 
 # Clean up all files
 clean:
-	rm -f $(OBJS_O) $(LIBS_SO) $(BINS_)
+	rm -f $(OBJ_FILES) $(LIB_FILES) $(BIN_FILES)
 
 	@# If libdir is empty, remove it
 	if [[ -d $(libdir) && -z "`ls -A $(libdir)`" ]]; then \
@@ -69,7 +70,7 @@ mkbin:
 	test -d $(bindir) || mkdir $(bindir)
 
 %.cpp: %.pyx mklib
-	$(CYTHON) $(CYTHON_FLAGS) $< -o $(srcdir)/$@
+	$(CYTHON) $(CYTHON_FLAGS) $(srcdir)/$< -o $(srcdir)/$@
 
 bots.o: libdjango_db.so libreflection.so
 interface.o: libbots.so
@@ -84,7 +85,7 @@ ta.o: private ALL_CFLAGS += $(TA_CFLAGS)
 main.o: private ALL_CFLAGS += $(MYSQLPP_CFLAGS) $(TA_CFLAGS)
 
 %.o: %.cpp mklib 
-	$(CXX) $(ALL_CFLAGS) -fPIC -c $< -o $(libdir)/$@
+	$(CXX) $(ALL_CFLAGS) -fPIC -c $(srcdir)/$< -o $(libdir)/$@
 
 libinterface.so: private EXTRA_LDFLAGS = $(CYTHON_LDFLAGS) -lbots
 libbots.so: private EXTRA_LDFLAGS = -ldjango_db -lta
@@ -95,6 +96,9 @@ libta.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS)
 lib%.so: %.o
 	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,$@ $(libdir)/$< -o $(libdir)/$@ \
 	$(EXTRA_LDFLAGS)
+
+lib%.a: %.o
+	$(AR) rcs $(libdir)/$@ $(libdir)/$<
 
 main: libbots.so
 

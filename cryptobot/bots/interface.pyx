@@ -22,3 +22,4 @@ cdef class PyUser:
     def stop_bot(self, string name):
         self.thisptr.stop_bot(name)
 
+

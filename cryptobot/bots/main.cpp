@@ -8,6 +8,5 @@ int main() {
     u->create_bot(NAME);
     u->run_bot(NAME);
     u->stop_bot(NAME);
-    u->kill_bot(NAME);
     u->delete_bot(NAME);
 }
