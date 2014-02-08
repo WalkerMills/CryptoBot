@@ -8,6 +8,8 @@
 #define HOST "107.170.247.187"
 #define PID -1
 
+using namespace bots;
+
 
 rule::rule(action_t action, double amount) {
     this->action = action;
@@ -65,7 +67,7 @@ void bot::run() {
 
 user::user(std::string username) {
     this->username = username;
-    
+
     this->bots = new std::map<std::string, bot *>();
     this->trade_db = new db::trade();
     this->bot_db = new db::bot();

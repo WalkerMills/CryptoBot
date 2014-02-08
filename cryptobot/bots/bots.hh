@@ -8,6 +8,8 @@
 #include "django_db.hh"
 #include "ta.hh"
 
+namespace bots {
+
 class rule {
 private:
     enum action_t {buy, sell};
@@ -64,5 +66,7 @@ public:
 
     bool active(std::string name);
 };
+
+}
 
 #endif

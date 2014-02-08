@@ -13,13 +13,19 @@ OBJS = bots.o django_db.o interface.o reflection.o ta.o main.o
 BINS = main
 
 # Dynamic library names (targets)
-LIBS = libbots.so libdjango_db.so libinterface.so libreflection.so libta.so
+LIBS = libbots.so libdjango_db.so libreflection.so libta.so
+
+# Cython extension names (targets)
+EXTS = interface.so
 
 # Absolute file paths for object files
 OBJ_FILES = $(foreach obj, $(OBJS), $(libdir)/$(obj))
 
 # Absolute file paths for dynamic libraries
 LIB_FILES = $(foreach lib, $(LIBS), $(libdir)/$(lib))
+
+# Absolute file paths for Cython extensions
+EXT_FILES = $(foreach lib, $(EXTS), $(libdir)/$(lib))
 
 # Absolute file paths for binary executables
 BIN_FILES = $(foreach bin, $(BINS), $(bindir)/$(bin))
@@ -39,11 +45,11 @@ install: ALL_CFLAGS += -DNDEBUG
 install: clean all
 	rm -f $(OBJ_FILES)
 	
-all: $(LIBS) $(BINS)
+all: $(LIBS) $(EXTS) $(BINS)
 
 # Clean up all files
 clean:
-	rm -f $(OBJ_FILES) $(LIB_FILES) $(BIN_FILES)
+	rm -f $(OBJ_FILES) $(LIB_FILES) $(EXT_FILES) $(BIN_FILES)
 
 	@# If libdir is empty, remove it
 	if [[ -d $(libdir) && -z "`ls -A $(libdir)`" ]]; then \
@@ -86,13 +92,17 @@ main.o: private ALL_CFLAGS += $(MYSQLPP_CFLAGS) $(TA_CFLAGS)
 %.o: %.cpp mklib 
 	$(CXX) $(ALL_CFLAGS) -fPIC -c $(srcdir)/$< -o $(libdir)/$@
 
-libinterface.so: private EXTRA_LDFLAGS = $(CYTHON_LDFLAGS) -lbots
+interface.so: private EXTRA_LDFLAGS = $(CYTHON_LDFLAGS) -lbots
 libbots.so: private EXTRA_LDFLAGS = -ldjango_db -lta
 libdjango_db.so: private EXTRA_LDFLAGS = $(MYSQLPP_LDFLAGS)
 libreflection.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS) -lta
 libta.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS)
 
 lib%.so: %.o
+	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,$@ $(libdir)/$< -o $(libdir)/$@ \
+	$(EXTRA_LDFLAGS)
+
+%.so: %.o
 	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,$@ $(libdir)/$< -o $(libdir)/$@ \
 	$(EXTRA_LDFLAGS)
 
