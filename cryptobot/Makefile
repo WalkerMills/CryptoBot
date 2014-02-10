@@ -7,11 +7,7 @@
 include config.mk
 
 SRCS = $(foreach dir, $(srcdir), $(wildcard $(dir)/*.cpp)) \
-OBJS = $(patsubst src/%.cpp, %.o, $(SRC))
-
-LIBS = 
-EXTS = 
-BINS = 
+OBJS = $(patsubst src/%.cpp, lib/%.o, $(SRC))
 
 include $(addsuffix /module.mk, $(srcdir))
 
@@ -20,7 +16,7 @@ vpath %.pyx $(srcdir)
 vpath %.thrift $(srcdir)
 
 # Absolute file paths for dynamic libraries
-LIB_FILES = $(addprefix $(libdir)/, $(LIBS))
+LIB_FILES = $(addprefix $(libdir)/, $(OBJ))
 
 # Absolute file paths for Cython extensions
 EXT_FILES = $(addprefix $(libdir)/, $(EXTS))
@@ -36,20 +32,19 @@ BIN_FILES = $(addprefix $(bindir)/, $(BINS))
 .SUFFIXES: .c .h .cpp .hpp .o .so
 
 # Declare all phony targets
-.PHONY: all clean mkgen mklib mkbin install $(THRIFTS)
+.PHONY: all clean checkdir install $(libdir) $(bindir) $(THRIFTS)
 
 # Clean build of all (final) install targets
 install: clean all
 
 # All (final) targets
 all: checkdir $(THRIFTS) $(LIBS) $(EXTS) $(BINS)
-	$(RM) $(OBJ_FILES)
+	$(RM) $(libdir)/*.o
 
 # Clean up all files
 clean:
-	@echo $(THRIFTS) $(LIBS) $(EXTS) $(BINS)
 	@# Remove all make-generated files
-	$(RM) $(OBJS) $(LIB_FILES) $(EXT_FILES) $(EXT_LINKS) $(BIN_FILES)
+	$(RM) $(libdir)/*.o $(libdir)/*.so $(BIN_FILES)
 	@# Remove Python btyecode
 	for i in `find $(srcdir) -type f -iname *.pyc`; do \
 		$(RM) $i; \
@@ -77,21 +72,21 @@ $(THRIFTS): %: %.thrift
 	$(THRIFT) $(THRIFT_FLAGS) $< 
 
 # Object target dependencies
-bots.o: libdjango_db.so libreflection.so
-interface.o: libbots.so
-reflection.o: libta.so
+lib/bots.o: libdjango_db.so libreflection.so
+lib/interface.o: libbots.so
+lib/reflection.o: libta.so
 
 # Object target compilation flags
-bots.o: private ALL_CFLAGS += $(TA_CFLAGS) $(MYSQLPP_CFLAGS)
-client.o: private EXTRA_CFLAGS += $(THRIFT_CFLAGS)
-django_db.o: private ALL_CFLAGS += $(MYSQLPP_CFLAGS)
-interface.o: private ALL_CFLAGS += $(CYTHON_CFLAGS) $(MYSQLPP_CFLAGS) \
+lib/bots.o: private ALL_CFLAGS += $(TA_CFLAGS) $(MYSQLPP_CFLAGS)
+lib/client.o: private EXTRA_CFLAGS += $(THRIFT_CFLAGS)
+lib/django_db.o: private ALL_CFLAGS += $(MYSQLPP_CFLAGS)
+lib/interface.o: private ALL_CFLAGS += $(CYTHON_CFLAGS) $(MYSQLPP_CFLAGS) \
 $(TA_CFLAGS)
-reflection.o: private ALL_CFLAGS += $(TA_CFLAGS)
-server.o: private EXTRA_CFLAGS += $(THRIFT_CFLAGS)
-ta.o: private ALL_CFLAGS += $(TA_CFLAGS)
+lib/reflection.o: private ALL_CFLAGS += $(TA_CFLAGS)
+lib/server.o: private EXTRA_CFLAGS += $(THRIFT_CFLAGS)
+lib/ta.o: private ALL_CFLAGS += $(TA_CFLAGS)
 
-%.o: %.cpp
+lib/%.o: %.cpp
 	$(CXX) $(ALL_CXXFLAGS) $(EXTRA_CFLAGS) -fPIC -c $< -o $@
 
 # Library target linking flags
@@ -102,7 +97,7 @@ libreflection.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS) -lta
 libta.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS)
 
 # Implicit rule for compiling libraries from Thrift-generated code
-lib%.so: %.o
+lib%.so: lib/%.o
 	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,$(shell basename $@) \
 	$(foreach dep, $^, $(libdir)/$(shell basename $(dep))) \
 	-o $(libdir)/$(shell basename $@) $(EXTRA_LDFLAGS)
@@ -110,15 +105,15 @@ lib%.so: %.o
 # Any shared object not matching the C/C++ library naming convention is
 # assumed to be a Cython extension; shared objects must match the name of the
 # Cython interfaces to avoid runtime errors
-%.so: %.o
+%.so: lib/%.o
 	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,lib$@ $< -o $(libdir)/$@ \
 	$(EXTRA_LDFLAGS)
 
-server client: Bot.o bots_types.o bots_constants.o
+server client: lib/Bot.o lib/bots_types.o lib/bots_constants.o
 server client: private EXTRA_LDFLAGS += $(THRIFT_LDFLAGS)
 
 # Default rule for compiling binaries
-$(BINS): %: %.o
+$(BINS): %: lib/%.o
 	$(CXX) $(LD_FLAGS) $(foreach dep, $^, $(libdir)/$(shell basename $(dep))) \
 	-o $(bindir)/$@ $(EXTRA_LDFLAGS) 
 
