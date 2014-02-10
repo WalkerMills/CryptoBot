@@ -1,0 +1,1 @@
+THRIFTS += src/gen/bots
