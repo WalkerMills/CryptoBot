@@ -104,7 +104,7 @@ mkbin:
 # Generate C++ from our Thrift IDL files
 $(THRIFTS): %: %.thrift mkgen
 	$(THRIFT) $(THRIFT_FLAGS) $(srcdir)/$<
-	$(MAKE) -C $(gendir)
+	$(MAKE) -C $(gendir) all
 
 # Generate a C file from a Cython file
 %.c: %.pyx mklib

@@ -10,9 +10,9 @@ includedir = $(CURDIR)
 libdir = $(DESTDIR)$(srcdir)/../lib
 
 
-SRCS = BotClient.cpp bots_constants.cpp bots_types.cpp
-OBJS = $(patsubst %.cpp,%.o, $(GEN_SRC))
-LIBS = libbots_server.so libbots_client.so
+SRCS = Bot.cpp bot_client.cpp bot_server.cpp bots_constants.cpp bots_types.cpp
+OBJS = $(patsubst %.cpp,%.o, $(SRCS))
+LIBS = libbot_server.so libbot_client.so
 
 # Absolute file paths for source files
 SRC_FILES = $(foreach src, $(SRCS), $(srcdir)/$(src))
@@ -30,12 +30,12 @@ LIB_FILES = $(foreach lib, $(LIBS), $(libdir)/$(lib))
 install: clean all
 
 all: $(LIBS)
-	$(RM) $(OBJ_FILESB)
+	$(RM) $(OBJ_FILES)
 
 # Clean up all files
 clean:
 	@# Remove all make-generated files
-	$(RM) -f $(OBJ_FILES) $(LIB_FILES)
+	$(RM) $(OBJ_FILES) $(LIB_FILES)
 	@# If libdir is empty, remove it
 	if [[ -d $(libdir) && -z "`ls -A $(libdir)`" ]]; then \
 	    $(RM) -r $(libdir); \
@@ -53,7 +53,7 @@ mklib:
 libbots_server.so: private EXTRA_LDFLAGS += $(THRIFT_LDFLAGS)
 libbots_client.so: private EXTRA_LDFLAGS += $(THRIFT_LDFLAGS)
 
-# Implicit rule matching our Thrift service
-libbots_%.so: BotClient_%.o $(OBJS)
+# Implicit rule matching the C/C++ dynamic library naming convention
+lib%.so: %.o $(OBJS)
 	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,$@ \
 	$(foreach dep, $^, $(libdir)/$(dep)) -o $(libdir)/$@ $(EXTRA_LDFLAGS) 
