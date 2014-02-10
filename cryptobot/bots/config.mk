@@ -8,6 +8,9 @@ CXX = g++
 CYTHON = cython
 
 
+# Global directory for libraries
+global_libdir = $(shell realpath $(DESTDIR)../lib)/$(shell basename $(CURDIR))
+
 # Directory containing source files
 srcdir = $(CURDIR)
 
@@ -29,7 +32,8 @@ CFLAGS = -O3 -march=native -mtune=generic -pipe -fstack-protector \
 CXXFLAGS = -std=c++11 -Wno-write-strings
 
 # Default linker flags
-LD_FLAGS = -L$(libdir) -Wl,-O1,--sort-common,--as-needed,-z,relro 
+LD_FLAGS = -L$(libdir) -Wl,-O1,--sort-common,--as-needed,-z,relro \
+-Wl,-rpath,$(libdir)
 
 # Default Cython flags
 CYTHON_FLAGS = --cplus -2

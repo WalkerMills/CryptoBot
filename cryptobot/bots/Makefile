@@ -49,6 +49,8 @@ install: ALL_CFLAGS += -DNDEBUG
 
 # Clean previous build results, do a clean build, and remove any object files
 install: clean all
+	test -L $(global_libdir) || \
+	ln -s $(shell realpath $(libdir)) $(global_libdir)
 	rm -f $(OBJ_FILES)
 
 # All targets we actually want
@@ -120,10 +122,8 @@ lib%.so: %.o
 # assumed to be a Cython extension; shared objects must match the name of the
 # Cython interfaces to avoid runtime errors
 %.so: %.o
-	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,$@ $(libdir)/$< -o $(libdir)/$@ \
+	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,lib$@ $(libdir)/$< -o $(libdir)/$@ \
 	$(EXTRA_LDFLAGS)
-	@# Link the extension back to our source directory for use
-	ln -s $(libdir)/$@ $(srcdir)
 
 
 # Default rule for compiling binaries
