@@ -7,7 +7,7 @@
 include config.mk
 
 SRCS = $(foreach dir, $(srcdir), $(wildcard $(dir)/*.cpp)) \
-OBJS = $(patsubst src/%.cpp, lib/%.o, $(SRC))
+OBJS = $(patsubst src/%.cpp, %.o, $(SRC))
 
 LIBS = 
 EXTS = 
@@ -77,21 +77,21 @@ $(THRIFTS): %: %.thrift
 	$(THRIFT) $(THRIFT_FLAGS) $< 
 
 # Object target dependencies
-lib/bots.o: libdjango_db.so libreflection.so
-lib/interface.o: libbots.so
-lib/reflection.o: libta.so
+bots.o: libdjango_db.so libreflection.so
+interface.o: libbots.so
+reflection.o: libta.so
 
 # Object target compilation flags
-lib/bots.o: private ALL_CFLAGS += $(TA_CFLAGS) $(MYSQLPP_CFLAGS)
-lib/client.o: private EXTRA_CFLAGS += $(THRIFT_CFLAGS)
-lib/django_db.o: private ALL_CFLAGS += $(MYSQLPP_CFLAGS)
-lib/interface.o: private ALL_CFLAGS += $(CYTHON_CFLAGS) $(MYSQLPP_CFLAGS) \
+bots.o: private ALL_CFLAGS += $(TA_CFLAGS) $(MYSQLPP_CFLAGS)
+client.o: private EXTRA_CFLAGS += $(THRIFT_CFLAGS)
+django_db.o: private ALL_CFLAGS += $(MYSQLPP_CFLAGS)
+interface.o: private ALL_CFLAGS += $(CYTHON_CFLAGS) $(MYSQLPP_CFLAGS) \
 $(TA_CFLAGS)
-lib/reflection.o: private ALL_CFLAGS += $(TA_CFLAGS)
-lib/server.o: private EXTRA_CFLAGS += $(THRIFT_CFLAGS)
-lib/ta.o: private ALL_CFLAGS += $(TA_CFLAGS)
+reflection.o: private ALL_CFLAGS += $(TA_CFLAGS)
+server.o: private EXTRA_CFLAGS += $(THRIFT_CFLAGS)
+ta.o: private ALL_CFLAGS += $(TA_CFLAGS)
 
-lib/%.o: %.cpp
+%.o: %.cpp
 	$(CXX) $(ALL_CXXFLAGS) $(EXTRA_CFLAGS) -fPIC -c $< -o $@
 
 # Library target linking flags
@@ -102,7 +102,7 @@ libreflection.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS) -lta
 libta.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS)
 
 # Implicit rule for compiling libraries from Thrift-generated code
-lib%.so: lib/%.o
+lib%.so: %.o
 	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,$(shell basename $@) \
 	$(foreach dep, $^, $(libdir)/$(shell basename $(dep))) \
 	-o $(libdir)/$(shell basename $@) $(EXTRA_LDFLAGS)
@@ -110,15 +110,15 @@ lib%.so: lib/%.o
 # Any shared object not matching the C/C++ library naming convention is
 # assumed to be a Cython extension; shared objects must match the name of the
 # Cython interfaces to avoid runtime errors
-%.so: lib/%.o
+%.so: %.o
 	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,lib$@ $< -o $(libdir)/$@ \
 	$(EXTRA_LDFLAGS)
 
-server client: lib/Bot.o lib/bots_types.o lib/bots_constants.o
+server client: Bot.o bots_types.o bots_constants.o
 server client: private EXTRA_LDFLAGS += $(THRIFT_LDFLAGS)
 
 # Default rule for compiling binaries
-$(BINS): %: lib/%.o
+$(BINS): %: %.o
 	$(CXX) $(LD_FLAGS) $(foreach dep, $^, $(libdir)/$(shell basename $(dep))) \
 	-o $(bindir)/$@ $(EXTRA_LDFLAGS) 
 
