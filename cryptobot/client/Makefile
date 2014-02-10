@@ -8,7 +8,7 @@ SRCS = bots.cpp django_db.cpp interface.pyx reflection.cpp ta.cpp main.cpp
 HDRS = bots.hh django_db.hh reflection.hh ta.hh interface.pxd
 
 # Object file names (targets)
-OBJS = bots.o django_db.o interface.o reflection.o ta.o main.o
+OBJS = bots.o django_db.o interface.o reflection.o ta.o
 
 # Dynamic library names (targets)
 LIBS = libbots.so libdjango_db.so libreflection.so libta.so
@@ -51,23 +51,23 @@ install: ALL_CFLAGS += -DNDEBUG
 install: clean all
 	test -L $(global_libdir) || \
 	ln -s $(shell realpath $(libdir)) $(global_libdir)
-	rm -f $(OBJ_FILES)
+	$(RM) -f $(OBJ_FILES)
 
 # All targets we actually want
 all: $(LIBS) $(EXTS) $(BINS)
 
 # Clean up all files
 clean:
-	rm -f $(OBJ_FILES) $(LIB_FILES) $(EXT_FILES) $(EXT_LINKS) $(BIN_FILES)
+	$(RM) -f $(OBJ_FILES) $(LIB_FILES) $(EXT_FILES) $(EXT_LINKS) $(BIN_FILES)
 
 	@# If libdir is empty, remove it
 	if [[ -d $(libdir) && -z "`ls -A $(libdir)`" ]]; then \
-	    rm -rf $(libdir); \
+	    $(RM) -rf $(libdir); \
 	fi
 
 	@# If bindir is empty, remove it
 	if [[ -d $(bindir) && -z "`ls -A $(bindir)`" ]]; then \
-	    rm -rf $(bindir); \
+	    $(RM) -rf $(bindir); \
 	fi
 
 # Create directory for containing object files and libraries
