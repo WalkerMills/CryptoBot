@@ -44,7 +44,7 @@ public:
 // TODO: user routes bot control through control::network
 class user {
 private:
-    // TODO: control::network will use db::bot interface
+    db::trade *trade_db;
     db::bot *bot_db;
 
     std::string get_host();

@@ -6,21 +6,27 @@
 
 include config.mk
 
-SRCS = $(foreach dir, $(srcdir), $(wildcard $(dir)/*.cpp))
+SRCS = $(foreach dir, $(srcdir), $(wildcard $(dir)/*.cpp)) \
 OBJS = $(patsubst src/%.cpp, lib/%.o, $(SRC))
 
 LIBS = 
-BINS = server client
+EXTS = 
+BINS = 
 
 include $(addsuffix /module.mk, $(srcdir))
 
 vpath %.cpp $(srcdir)
+vpath %.pyx $(srcdir)
+vpath %.thrift $(srcdir)
 
 # Absolute file paths for dynamic libraries
-LIB_FILES = $(foreach lib, $(LIBS), $(libdir)/$(lib))
+LIB_FILES = $(addprefix $(libdir)/, $(LIBS))
+
+# Absolute file paths for Cython extensions
+EXT_FILES = $(addprefix $(libdir)/, $(EXTS))
 
 # Absolute file paths for binary executables
-BIN_FILES = $(foreach bin, $(BINS), $(bindir)/$(bin))
+BIN_FILES = $(addprefix $(bindir)/, $(BINS))
 
 
 # Clear allowed target suffixes
@@ -41,8 +47,9 @@ all: checkdir $(THRIFTS) $(LIBS) $(EXTS) $(BINS)
 
 # Clean up all files
 clean:
+	@echo $(THRIFTS) $(LIBS) $(EXTS) $(BINS)
 	@# Remove all make-generated files
-	$(RM) $(OBJ_FILES) $(LIB_FILES) $(EXT_FILES) $(EXT_LINKS) $(BIN_FILES)
+	$(RM) $(OBJS) $(LIB_FILES) $(EXT_FILES) $(EXT_LINKS) $(BIN_FILES)
 	@# Remove Python btyecode
 	for i in `find $(srcdir) -type f -iname *.pyc`; do \
 		$(RM) $i; \
@@ -61,20 +68,51 @@ $(bindir):
 checkdir: $(libdir) $(bindir)
 
 
-# Generate C++ from our Thrift IDL files
+# Generate C++ file from a Cython file
+%.cpp: %.pyx
+	$(CYTHON) $(CYTHON_FLAGS) $< -o $@
+
+# Generate C++ from a Thrift IDL file
 $(THRIFTS): %: %.thrift
 	$(THRIFT) $(THRIFT_FLAGS) $< 
 
-lib/server.o lib/client.o: private EXTRA_CFLAGS += $(THRIFT_CFLAGS)
+# Object target dependencies
+lib/bots.o: libdjango_db.so libreflection.so
+lib/interface.o: libbots.so
+lib/reflection.o: libta.so
+
+# Object target compilation flags
+lib/bots.o: private ALL_CFLAGS += $(TA_CFLAGS) $(MYSQLPP_CFLAGS)
+lib/client.o: private EXTRA_CFLAGS += $(THRIFT_CFLAGS)
+lib/django_db.o: private ALL_CFLAGS += $(MYSQLPP_CFLAGS)
+lib/interface.o: private ALL_CFLAGS += $(CYTHON_CFLAGS) $(MYSQLPP_CFLAGS) \
+$(TA_CFLAGS)
+lib/reflection.o: private ALL_CFLAGS += $(TA_CFLAGS)
+lib/server.o: private EXTRA_CFLAGS += $(THRIFT_CFLAGS)
+lib/ta.o: private ALL_CFLAGS += $(TA_CFLAGS)
 
 lib/%.o: %.cpp
 	$(CXX) $(ALL_CXXFLAGS) $(EXTRA_CFLAGS) -fPIC -c $< -o $@
 
+# Library target linking flags
+interface.so: private EXTRA_LDFLAGS = $(CYTHON_LDFLAGS) -lbots
+libbots.so: private EXTRA_LDFLAGS = -ldjango_db -lta
+libdjango_db.so: private EXTRA_LDFLAGS = $(MYSQLPP_LDFLAGS)
+libreflection.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS) -lta
+libta.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS)
+
 # Implicit rule for compiling libraries from Thrift-generated code
-lib%.so: %.o
+lib%.so: lib/%.o
 	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,$(shell basename $@) \
 	$(foreach dep, $^, $(libdir)/$(shell basename $(dep))) \
 	-o $(libdir)/$(shell basename $@) $(EXTRA_LDFLAGS)
+
+# Any shared object not matching the C/C++ library naming convention is
+# assumed to be a Cython extension; shared objects must match the name of the
+# Cython interfaces to avoid runtime errors
+%.so: lib/%.o
+	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,lib$@ $< -o $(libdir)/$@ \
+	$(EXTRA_LDFLAGS)
 
 server client: lib/Bot.o lib/bots_types.o lib/bots_constants.o
 server client: private EXTRA_LDFLAGS += $(THRIFT_LDFLAGS)

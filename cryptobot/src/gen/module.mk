@@ -1,1 +1,1 @@
-THRIFTS += src/gen/bots
+THRIFTS += bots

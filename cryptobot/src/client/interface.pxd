@@ -2,7 +2,7 @@ from libcpp cimport bool
 from libcpp.string cimport string
 
 
-cdef extern from "bots.hh" namespace "bots":
+cdef extern from "../server/bots.hh" namespace "bots":
     cdef cppclass user:
         user(string)
         void create_bot(string)
