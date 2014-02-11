@@ -1,7 +1,9 @@
 #ifndef __SERVER_HH__
 #define __SERVER_HH__
 
-#include "../gen/Bot.h"
+#include "Bot.h"
+
+#define TPORT 9090
 
 
 class BotHandler : virtual public server::BotIf {

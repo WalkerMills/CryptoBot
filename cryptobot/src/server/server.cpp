@@ -44,8 +44,6 @@ void BotHandler::stop_bot(const std::string& username,
 
 
 int main(int argc, char **argv) {
-    int port = 9090;
-
     shared_ptr<BotHandler> handler(new BotHandler());
     shared_ptr<TProcessor> processor(new BotProcessor(handler));
     shared_ptr<TProtocolFactory> protocolFactory(
@@ -56,7 +54,8 @@ int main(int argc, char **argv) {
     shared_ptr<PosixThreadFactory> threadFactory = shared_ptr<PosixThreadFactory>(new PosixThreadFactory());
     threadManager->threadFactory(threadFactory);
     threadManager->start();
-    TNonblockingServer server(processor, protocolFactory, port, threadManager);
+    TNonblockingServer server(processor, protocolFactory, TPORT, 
+                              threadManager);
     server.serve();
     return 0;
 }

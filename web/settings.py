@@ -58,19 +58,19 @@ WSGI_APPLICATION = 'web.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'django_db',
         'USER': 'django',
         'PASSWORD': 'testpass',
         'HOST': '107.170.247.187',
-        'PORT': '3306',
+        'PORT': '5432',
     }
 }
 
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
+        'LOCATION': '107.170.247.187:11211',
     }
 }
 

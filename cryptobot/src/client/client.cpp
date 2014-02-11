@@ -1,8 +1,8 @@
-#include "Bot.h"
-
 #include <thrift/protocol/TCompactProtocol.h>
 #include <thrift/transport/TBufferTransports.h>
 #include <thrift/transport/TSocket.h>
+
+#include "Bot.h"
 
 using namespace apache::thrift;
 using namespace apache::thrift::protocol;
@@ -19,6 +19,18 @@ int main(int argc, char **argv) {
     server::BotClient client(protocol);
     transport->open();
     client.create_bot("test", "test_bot");
+    transport->close();
+
+    transport->open();
+    client.run_bot("test", "test_bot");
+    transport->close();
+
+    transport->open();
+    client.stop_bot("test", "test_bot");
+    transport->close();
+
+    transport->open();
+    client.delete_bot("test", "test_bot");
     transport->close();
 
     return 0;
