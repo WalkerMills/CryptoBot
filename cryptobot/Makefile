@@ -110,7 +110,7 @@ lib%.so: lib/%.o
 	$(EXTRA_LDFLAGS)
 
 server client: lib/Bot.o lib/bots_types.o lib/bots_constants.o
-server client: private EXTRA_LDFLAGS += $(THRIFT_LDFLAGS)
+server client: private EXTRA_LDFLAGS += $(THRIFT_LDFLAGS) -lthriftnb -levent
 
 # Default rule for compiling binaries
 $(BINS): %: lib/%.o
