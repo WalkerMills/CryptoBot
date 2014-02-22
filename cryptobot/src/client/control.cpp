@@ -1,7 +1,7 @@
 #include "control.hh"
 #include "server.hh"
 
-using namespace sontrol;
+using namespace control;
 
 
 host::host(std::string domain) {

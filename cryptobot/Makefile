@@ -44,9 +44,9 @@ all: checkdir $(THRIFTS) $(LIBS) $(EXTS) $(BINS)
 # Clean up all files
 clean:
 	@# Remove all make-generated files
-	$(RM) $(libdir)/*.o $(libdir)/*.so $(BIN_FILES)
+	$(RM) $(gendir)/*.{cpp,h} $(libdir)/*.o $(libdir)/*.so $(BIN_FILES)
 	@# Remove Python btyecode
-	for i in `find $(srcdir) -type f -iname *.pyc`; do \
+	for i in `find . -type f -iname "*.pyc"`; do \
 		$(RM) $i; \
 	done
 
