@@ -2,9 +2,9 @@
 
 Algorithmic cryptocurrency trading platform
 
-## Dependencies
+## Installation
 
-CryptoBot depends on some C++ libraries/tools (installed through your OS package manager) and some Python modules (installed through pip, the Python package manager); also requires Make >= 3.8. Servers require additional dependencies, but the settings for the Django project handle connections to the remote server(s) from development machines, so they don't need to be installed on all clients. On Arch Linux,
+CryptoBot depends on some C++ libraries/tools (installed through your OS package manager) and some Python modules (installed through pip, the Python package manager); also requires Make >= 3.8. Servers require additional dependencies, but the settings for the Django project handle connections to the remote server(s) from development machines, so they don't need to be installed on all clients. To install on Arch Linux,
 
 ```
 $ git clone git@github.com:WalkerMills/CryptoBot.git cryptobot
@@ -63,7 +63,9 @@ Now, enable and start the Apache and Memcached daemons
 
 ```
 # systemctl enable httpd
+# systemctl start httpd
 # systemctl enable memcached
+# systemctl start memcached
 ```
 
 
