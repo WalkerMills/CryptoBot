@@ -26,7 +26,7 @@ gendir = src/gen
 
 
 # Default compiler flags (for C and C++)
-CFLAGS = -O3 -march=native -mtune=generic -pipe -fstack-protector \
+CFLAGS = -O3 -mtune=generic -pipe -fstack-protector \
 --param=ssp-buffer-size=4 -Wno-sign-compare -Wno-unused-function
 
 # Default compiler flags for C++
