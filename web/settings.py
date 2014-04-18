@@ -26,6 +26,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+USE_TZ = False
 
 # Application definition
 
@@ -58,12 +59,15 @@ WSGI_APPLICATION = 'web.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_db',
-        'USER': 'django',
-        'PASSWORD': 'testpass',
+        'ENGINE': 'django_pynuodb',
+        'NAME': 'djangoDB',
+        'DOMAIN_USER': 'cryptobot',    # domain credentials
+        'DOMAIN_PASSWORD': 'NoFags',
+        'DBA_USER': 'dba',    # database credentials
+        'DBA_PASSWORD': 'dba',
+        # 'SCHEMA': 'user',    # optional, defaults to 'user' schema
         'HOST': '107.170.247.187',
-        'PORT': '5432',
+        'PORT': '48004',
     }
 }
 
@@ -91,15 +95,13 @@ PASSWORD_HASHERS = (
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-US'
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_L10N = True
-
-USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
