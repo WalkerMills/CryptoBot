@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "django_db.hh"
+#include "nuodbi.hh"
 #include "ta.hh"
 
 namespace bots {
@@ -27,43 +27,53 @@ public:
 };
 
 class bot {
-public:
-    std::string owner;
-    std::string name;
-    std::vector<rule *> *rules;
+private:
+    db::bot *bot_db;
+    db::trade *trade_db;
 
-    bot(std::string owner, std::string name);
+    void update_work();
+
+public:
+    std::vector<rule *> *rules;
+    int id;
+
+    bot();
+    bot(int bid);
+    bot(int uid, char *name);
     ~bot();
 
     void insert_rule(rule *r);
     void delete_rule(int index);
 
+    int uid();
+    char *name();
+    int work();
+    
     void run();
+    void stop();
+    char *host();
 };
 
 // TODO: user routes bot control through control::network
 class user {
 private:
-    db::trade *trade_db;
+    int id;
     db::bot *bot_db;
 
-    std::string get_host();
+    void insert(bot *b);
 
 public:
-    std::string username;
-    std::map<std::string, bot *> *bots;
+    std::map<char *, bot *> *bots;
 
+    user(int uid);
     user(std::string username);
     ~user();
 
-    void insert_bot(bot *b);
-    void create_bot(std::string name);
-    void delete_bot(std::string name);
+    void create(std::string name);
+    void remove(std::string name);
 
-    void run_bot(std::string name);
-    void stop_bot(std::string name);
-
-    void kill_bot(std::string name);
+    void run(std::string name);
+    void stop(std::string name);
 
     bool active(std::string name);
 };

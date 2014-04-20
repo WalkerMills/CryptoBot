@@ -1,1 +1,1 @@
-LIBS += libdjango_db.so
+LIBS += libnuodbi.so

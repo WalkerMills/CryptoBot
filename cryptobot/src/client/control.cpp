@@ -4,14 +4,14 @@
 using namespace control;
 
 
-host::host(std::string domain) {
+host::host(char *domain) {
     this->domain = domain;
     this->port = TPORT;
     this->initialize();
     this->connected = false;
 }
 
-host::host(std::string domain, int port) {
+host::host(char *domain, int port) {
     this->domain = domain;
     this->port = port;
     this->initialize();
@@ -56,6 +56,16 @@ server::BotClient *host::client() {
 }
 
 network::network() {
-    this->hosts = new std::deque<host *>();
-    this->bot_db = new db::bot();
+    this->host_db = new db::host();
+}
+
+network::~network() {
+    delete this->host_db;
+}
+
+server::BotClient *network::route() {
+    char *domain = host_db->next();
+    host *h = new host(domain);
+
+    return h->client();
 }

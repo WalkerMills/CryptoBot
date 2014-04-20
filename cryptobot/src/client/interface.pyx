@@ -12,15 +12,15 @@ cdef class User:
     def __dealloc__(self):
         del self.thisptr
 
-    def create_bot(self, string name):
-        self.thisptr.create_bot(name)
-    def delete_bot(self, string name):
-        self.thisptr.delete_bot(name)
+    def create(self, string name):
+        self.thisptr.create(name)
+    def remove(self, string name):
+        self.thisptr.remove(name)
 
-    def run_bot(self, string name):
-        self.thisptr.run_bot(name)
-    def stop_bot(self, string name):
-        self.thisptr.stop_bot(name)
+    def run(self, string name):
+        self.thisptr.run(name)
+    def stop(self, string name):
+        self.thisptr.stop(name)
 
     def active(self, string name):
         return self.thisptr.active(name)

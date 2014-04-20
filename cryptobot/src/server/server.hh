@@ -10,11 +10,8 @@ class BotHandler : virtual public server::BotIf {
 public:
     BotHandler();
 
-    void create_bot(const std::string& username, const std::string& name);
-    void delete_bot(const std::string& username, const std::string& name);
-
-    void run_bot(const std::string& username, const std::string& name);
-    void stop_bot(const std::string& username, const std::string& name);
+    void run(const int32_t id);
+    void stop(const int32_t id);
 };
 
 #endif

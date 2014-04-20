@@ -5,9 +5,9 @@ from libcpp.string cimport string
 cdef extern from "../server/bots.hh" namespace "bots":
     cdef cppclass user:
         user(string)
-        void create_bot(string)
-        void delete_bot(string)
-        void run_bot(string)
-        void stop_bot(string)
+        void create(string)
+        void remove(string)
+        void run(string)
+        void stop(string)
         bool active(string)
 

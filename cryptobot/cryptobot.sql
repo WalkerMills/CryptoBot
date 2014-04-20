@@ -1,7 +1,6 @@
 DROP TABLE IF EXISTS cryptobot_uses;
-DROP TABLE IF EXISTS cryptobot_owns;
-DROP TABLE IF EXISTS cryptobot_runs;
 DROP TABLE IF EXISTS cryptobot_key;
+DROP TABLE IF EXISTS cryptobot_runs;
 DROP TABLE IF EXISTS cryptobot_bot;
 DROP TABLE IF EXISTS cryptobot_host;
 DROP TABLE IF EXISTS cryptobot_trade;
@@ -28,25 +27,18 @@ CREATE TABLE cryptobot_uses(
 
 CREATE TABLE cryptobot_bot(
     id INT NOT NULL GENERATED ALWAYS AS IDENTITY,
+    uid INT NOT NULL,
     name VARCHAR(24) NOT NULL,
+    work INT NOT NULL,
 
     PRIMARY KEY (id)
-);
-
-CREATE TABLE cryptobot_owns(
-    id INT NOT NULL GENERATED ALWAYS AS IDENTITY,
-    uid INT NOT NULL,
-    bid INT NOT NULL,
-
-    PRIMARY KEY (id),
-    UNIQUE (uid, bid),
+    UNIQUE (uid, name),
     FOREIGN KEY (uid) REFERENCES auth_user(id),
-    FOREIGN KEY (bid) REFERENCES cryptobot_bot(id)
 );
 
 CREATE TABLE cryptobot_host(
     id INT NOT NULL GENERATED ALWAYS AS IDENTITY,
-    addr INT NOT NULL,
+    addr STRING NOT NULL,
     workload INT NOT NULL,
 
     PRIMARY KEY (id)
@@ -56,6 +48,7 @@ CREATE TABLE cryptobot_runs(
     id INT NOT NULL GENERATED ALWAYS AS IDENTITY,
     hid INT NOT NULL,
     bid INT NOT NULL,
+    pid INT NOT NULL,
 
     PRIMARY KEY (id),
     UNIQUE (hid, bid),

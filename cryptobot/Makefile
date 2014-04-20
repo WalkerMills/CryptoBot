@@ -72,15 +72,14 @@ $(THRIFTS): %: %.thrift
 	$(THRIFT) $(THRIFT_FLAGS) $< 
 
 # Object target dependencies
-lib/bots.o: libdjango_db.so libreflection.so
+lib/bots.o: libnuodbi.so libreflection.so
 lib/interface.o: libbots.so
 lib/reflection.o: libta.so
 
 # Object target compilation flags
-lib/bots.o: private ALL_CFLAGS += $(TA_CFLAGS) $(MYSQLPP_CFLAGS)
+lib/bots.o: private ALL_CFLAGS += $(TA_CFLAGS)
 lib/client.o: private EXTRA_CFLAGS += $(THRIFT_CFLAGS)
-lib/django_db.o: private ALL_CFLAGS += $(MYSQLPP_CFLAGS)
-lib/interface.o: private ALL_CFLAGS += $(CYTHON_CFLAGS) $(MYSQLPP_CFLAGS) \
+lib/interface.o: private ALL_CFLAGS += $(CYTHON_CFLAGS) \
 $(TA_CFLAGS)
 lib/reflection.o: private ALL_CFLAGS += $(TA_CFLAGS)
 lib/server.o: private EXTRA_CFLAGS += $(THRIFT_CFLAGS)
@@ -91,8 +90,7 @@ lib/%.o: %.cpp
 
 # Library target linking flags
 interface.so: private EXTRA_LDFLAGS = $(CYTHON_LDFLAGS) -lbots
-libbots.so: private EXTRA_LDFLAGS = -ldjango_db -lta
-libdjango_db.so: private EXTRA_LDFLAGS = $(MYSQLPP_LDFLAGS)
+libbots.so: private EXTRA_LDFLAGS = -lnuodbi -lta
 libreflection.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS) -lta
 libta.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS)
 

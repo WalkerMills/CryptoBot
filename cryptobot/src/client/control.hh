@@ -9,7 +9,7 @@
 #include <thrift/transport/TSocket.h>
 
 #include "Bot.h"
-#include "django_db.hh"
+#include "nuodbi.hh"
 
 
 namespace control {
@@ -40,15 +40,14 @@ namespace control {
     // highest priority host object to generate an RPC client
     class network {
     private:
-        std::deque<host *> hosts;
-        db::bot bot_db;
+        db::host host_db;
 
     public:
         network();
         ~network();
 
-        void add_host(host *h);
-        void remove_host(std::string domain);
+        void add_host(char *domain);
+        void remove_host(char *domain);
 
         server::BotClient *route();
     };

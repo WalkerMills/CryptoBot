@@ -18,28 +18,14 @@ using namespace ::server;
 
 BotHandler::BotHandler() { }
 
-void BotHandler::create_bot(const std::string& username, 
-                            const std::string& name) {
+void BotHandler::run(const int32_t id) {
     // Your implementation goes here
-    printf("create_bot\n");
+    printf("run: %d\n", id);
 }
 
-void BotHandler::delete_bot(const std::string& username, 
-                            const std::string& name) {
+void BotHandler::stop(const int32_t id) {
     // Your implementation goes here
-    printf("delete_bot\n");
-}
-
-void BotHandler::run_bot(const std::string& username, 
-                         const std::string& name) {
-    // Your implementation goes here
-    printf("run_bot\n");
-}
-
-void BotHandler::stop_bot(const std::string& username, 
-                          const std::string& name) {
-    // Your implementation goes here
-    printf("stop_bot\n");
+    printf("stop: %d\n", id);
 }
 
 

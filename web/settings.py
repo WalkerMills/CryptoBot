@@ -65,7 +65,7 @@ DATABASES = {
         'DOMAIN_PASSWORD': 'NoFags',
         'DBA_USER': 'dba',    # database credentials
         'DBA_PASSWORD': 'dba',
-        # 'SCHEMA': 'user',    # optional, defaults to 'user' schema
+        'SCHEMA': 'user',    # optional, defaults to 'user' schema
         'HOST': '107.170.247.187',
         'PORT': '48004',
     }

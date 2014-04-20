@@ -1,12 +1,14 @@
+#include <iostream>
+#include <cstdlib>
+#include <cstring>
+
 #include <unistd.h>
 #include <signal.h>
 #include <sys/types.h>
 
 #include "bots.hh"
-#include "django_db.hh"
-
-#define HOST "107.170.247.187"
-#define PID -1
+#include "control.hh"
+#include "nuodbi.hh"
 
 using namespace bots;
 
@@ -37,14 +39,68 @@ void rule::trade() {
     }
 }
 
-bot::bot(std::string owner, std::string name) {
-    this->owner = owner;
-    this->name = name;
+
+bot::bot(int bid) {
     this->rules = new std::vector<rule *>();
+    this->id = bid;
+    this->bot_db = new db::bot();
+    this->trade_db = new db::trade();
+
+    NuoDB::PreparedStatement *stmt;
+    int result;
+
+    stmt = bot_db->connection->prepareStatement("SELECT * FROM ? WHERE id=?");
+    stmt->setString(1, bot_db->name);
+    stmt->setInt(2, this->id);
+    result = bot_db->update(stmt);
+
+    if ( result == 0 ) {
+        std::cerr << "Error: no bot found with id " << id << std::endl;
+        exit(EXIT_FAILURE); 
+    } else {
+        // TODO: load rules from serialized storage
+    }
+
+    delete bot_db;
+}
+
+bot::bot(int uid, char *name) {
+    this->rules = new std::vector<rule *>();
+    this->bot_db = new db::bot();
+    this->trade_db = new db::trade();
+    
+    bot_db->insert(uid, name, this->work());
+
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+
+    stmt = bot_db->connection->prepareStatement(
+        "SELECT id FROM ? WHERE uid=? AND name=?");
+    stmt->setString(1, BOT);
+    stmt->setInt(2, uid);
+    stmt->setString(3, name);
+    result = bot_db->query(stmt);
+
+    if ( ! result->next() ) {
+        std::cerr << "Error: no bot found with uid " << uid 
+                  << " named " << name << std::endl;
+        exit(EXIT_FAILURE); 
+    } else {
+        this->id = result->getInt(1);
+    }
+
+    result->close();
+    delete bot_db;
 }
 
 bot::~bot() {
     delete this->rules;
+    delete this->bot_db;
+    delete this->trade_db;
+}
+
+void bot::update_work() {
+    // TODO: calculate work based on a bot's rules
 }
 
 void bot::insert_rule(rule *r) {
@@ -55,116 +111,114 @@ void bot::delete_rule(int index) {
     this->rules->erase(this->rules->begin() + index);
 }
 
-void bot::run() {
-    while ( true ) {
-        for (int i = 0; i < this->rules->size(); i++) {
-            this->rules->at(i)->trade();
-        }
+int bot::uid() {
+    db::bot *bot_db = new db::bot();
+    NuoDB::ResultSet *result = bot_db->get(this->id);
+    int user;
 
-        sleep(5 * 1000);
+    if ( ! result->next() ) {
+        user = -1;
+    } else {
+        user = result->getInt(2);
     }
+
+    result->close();
+    delete bot_db;
+    return user;
 }
 
-user::user(std::string username) {
-    this->username = username;
+char *bot::name() {
+    db::bot *bot_db = new db::bot();
+    NuoDB::ResultSet *result = bot_db->get(this->id);
+    char *bot_name;
 
-    this->bots = new std::map<std::string, bot *>();
-    this->trade_db = new db::trade();
-    this->bot_db = new db::bot();
+    if ( ! result->next() ) {
+        bot_name = NULL;
+    } else {
+        bot_name = new char[strlen(result->getString(3)) + 1];
+        strcpy(bot_name, result->getString(3));
+    }
 
+    result->close();
+    delete bot_db;
+    return bot_name;
+}
+
+int bot::work() {
+    db::bot *bot_db = new db::bot();
+    NuoDB::ResultSet *result = bot_db->get(this->id);
+    int work;
+
+    if ( ! result->next() ) {
+        work = -1;
+    } else {
+        work = result->getInt(4);
+    }
+
+    result->close();
+    delete bot_db;
+    return work;
+}
+
+void bot::run() {
+    control::network *cluster = new control::network();
+    server::BotClient *client = cluster->route();
+
+    client->run(this->id);
+}
+
+void bot::stop() {
+    control::network *cluster = new control::network();
+    server::BotClient *client = cluster->route();
+
+    client->stop(this->id);
+}
+
+char *bot::host() {
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    char *hostname;
+    db::base *base_db = new db::base();
+
+    stmt = base_db->connection->prepareStatement(
+        "SELECT addr FROM ? JOIN ? ON (?.id = hid) WHERE bid=?");
+    stmt->setString(1, HOST);
+    stmt->setString(2, RUNS);
+    stmt->setString(3, HOST);
+    stmt->setInt(4, this->id);
+    result = base_db->query(stmt);
+
+    if ( ! result->next() ) {
+        hostname = NULL;
+    } else {
+        hostname = new char[strlen(result->getString(1)) + 1];
+        strcpy(hostname, result->getString(1));
+    }
+
+    result->close();
+    delete base_db;
+    return hostname;
+}
+
+
+user::user(int uid) {
 }
 
 user::~user() {
-    delete this->bots;
-    delete this->trade_db;
-    delete this->bot_db;
 }
 
-std::string user::get_host() {
-    return this->bot_db->get_host();
+void user::create(std::string name) {
 }
 
-void user::insert_bot(bot *b) {
-    std::pair<std::map<std::string, bot *>::iterator, bool> ret; 
-    ret = this->bots->emplace(b->name, b);
-
-    if ( !ret.second ) {
-        ret.first->second = b;
-    }
-
-    this->bot_db->insert(this->username, b->name, false, HOST, PID);
-    this->run_bot(b->name);
-    this->stop_bot(b->name);
+void user::remove(std::string name) {
 }
 
-void user::create_bot(std::string name) {
-    bot *b = new bot(this->username, name);
-
-    this->insert_bot(b);
+void user::run(std::string name) {
 }
 
-void user::delete_bot(std::string name) {
-    this->kill_bot(name);
-    this->bots->erase(name);
-    this->bot_db->erase(this->username, name);
-}
-
-void user::run_bot(std::string name) {
-    mysqlpp::StoreQueryResult res = this->bot_db->get(this->username, name);
-    mysqlpp::String pid_col = res[0]["pid"];
-
-    if ( this->active(name) ) {
-        return;
-    }
-
-    std::cerr << "PID is currently " << pid_col << std::endl;
-    if ( pid_col == mysqlpp::null ) {
-        pid_t forked = fork();
-
-        if ( forked == 0 ) {
-            this->bots->at(name)->run();
-        } else {
-            std::cerr << "Spawned new process " << forked << std::endl;
-            this->bot_db->start(this->username, name, forked);
-        }
-    } else {
-        pid_t pid = pid_col;
-        std::cerr << "Sending SIGCONT to " << pid << std::endl;
-        kill(pid, SIGCONT);
-
-        this->bot_db->start(this->username, name, pid);
-    }
-}
-
-void user::stop_bot(std::string name) {
-    mysqlpp::StoreQueryResult res = this->bot_db->get(this->username, name);
-    mysqlpp::String pid_col = res[0]["pid"];
-
-    pid_t pid = pid_col;
-    std::cerr << "Sending SIGSTOP to " << pid << std::endl;
-    kill(pid, SIGSTOP);
-
-    this->bot_db->stop(this->username, name);
-}
-
-void user::kill_bot(std::string name) {
-    mysqlpp::StoreQueryResult res = this->bot_db->get(this->username, name);
-    mysqlpp::String pid_col = res[0]["pid"];
-
-    pid_t pid = pid_col;
-    std::cerr << "Sending SIGKILL to " << pid << std::endl;
-    kill(pid, SIGKILL);
-
-    this->bot_db->stop(this->username, name);
+void user::stop(std::string name) {
 }
 
 bool user::active(std::string name) {
-    mysqlpp::StoreQueryResult res = this->bot_db->get(this->username, name);
-
-    if ( res ) {
-        bool state = res[0]["active"];
-        return state;
-    }
-
     return false;
 }
