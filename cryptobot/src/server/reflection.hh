@@ -13,6 +13,6 @@ public:
     static ta::ta *get(std::string name);
 };
 
-static ta::ta *reflect(std::string name);
+ta::ta *reflect(std::string name);
 
 #endif

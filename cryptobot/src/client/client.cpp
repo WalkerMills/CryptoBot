@@ -18,19 +18,11 @@ int main(int argc, char **argv) {
 
     server::BotClient client(protocol);
     transport->open();
-    client.create_bot("test", "test_bot");
+    client.run(-1);
     transport->close();
 
     transport->open();
-    client.run_bot("test", "test_bot");
-    transport->close();
-
-    transport->open();
-    client.stop_bot("test", "test_bot");
-    transport->close();
-
-    transport->open();
-    client.delete_bot("test", "test_bot");
+    client.stop(-1);
     transport->close();
 
     return 0;

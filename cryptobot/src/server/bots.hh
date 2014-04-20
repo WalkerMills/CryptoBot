@@ -22,6 +22,8 @@ public:
     rule(action_t action, double amount);
     ~rule();
 
+    void add_ind(std::string function);
+
     virtual bool test() = 0;
     virtual void trade() = 0;
 };

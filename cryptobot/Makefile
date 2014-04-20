@@ -90,7 +90,7 @@ lib/%.o: %.cpp
 
 # Library target linking flags
 interface.so: private EXTRA_LDFLAGS = $(CYTHON_LDFLAGS) -lbots
-libbots.so: private EXTRA_LDFLAGS = -lnuodbi -lta
+libbots.so: private EXTRA_LDFLAGS = -lnuodbi -lta -lreflection
 libreflection.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS) -lta
 libta.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS)
 

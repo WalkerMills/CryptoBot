@@ -9,6 +9,7 @@
 #include "bots.hh"
 #include "control.hh"
 #include "nuodbi.hh"
+#include "reflection.hh"
 
 using namespace bots;
 
@@ -25,8 +26,8 @@ rule::~rule() {
 }
 
 void rule::add_ind(std::string function) {
-    pointer = ta::ta *get(function);
-    this->indicators->push_back(pointer);
+    ta::ta *ind = reflect(function);
+    this->indicators->push_back(ind);
 }
 
 bool rule::test() {

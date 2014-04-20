@@ -327,7 +327,7 @@ ta::ta *ta_reflector::get(std::string name) {
     return ta_reflector::factory_map[name];
 }
 
-static ta::ta *reflect(std::string name) {
+ta::ta *reflect(std::string name) {
     return ta_reflector::get(name);
 }
 
