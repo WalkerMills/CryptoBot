@@ -12,7 +12,7 @@ $ cd cryptobot
 
 # pacman -S cython python2-pip
 # yaourt -S ta-lib thrift thrift-cpp
-# pip2 install bcrypt cffi django pycrypto requests
+# pip2 install bcrypt cffi django pycrypto requests pynuodb django-pynuodb
 
 # pacman -U deps/nuodb*.tar.xz
 # source /etc/profile
@@ -33,7 +33,7 @@ $ makepkg
 # pacman -U ./thrift-cpp*.tar.xz
 ```
 
-It requires NuoDB, Thrift, and Cython to compile from source; to run a server, you also need Apache, mod_wsgi, Memcached, and there are additional configuration steps.
+It requires NuoDB, Thrift, and Cython to compile from source; to run a server, you also need Apache, mod_wsgi, Memcached, and Django, and additional configuration is (probably) required
 
 ### Servers
 
