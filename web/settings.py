@@ -63,8 +63,8 @@ DATABASES = {
         'NAME': 'djangoDB',
         'DOMAIN_USER': 'cryptobot',    # domain credentials
         'DOMAIN_PASSWORD': 'NoFags',
-        'DBA_USER': 'dba',    # database credentials
-        'DBA_PASSWORD': 'dba',
+        'DBA_USER': 'cryptobot',    # database credentials
+        'DBA_PASSWORD': 'NoFags',
         'SCHEMA': 'user',    # optional, defaults to 'user' schema
         'HOST': '107.170.247.187',
         'PORT': '48004',
