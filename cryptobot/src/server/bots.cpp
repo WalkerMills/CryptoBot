@@ -24,6 +24,11 @@ rule::~rule() {
     delete this->indicators;
 }
 
+void rule::add_ind(std::string function) {
+    pointer = ta::ta *get(function);
+    this->indicators->push_back(pointer);
+}
+
 bool rule::test() {
     // TODO: test can retrieve market data
     return true;
