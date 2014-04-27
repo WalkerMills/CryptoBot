@@ -29,7 +29,7 @@ BIN_FILES = $(addprefix $(bindir)/, $(BINS))
 .SUFFIXES:
 
 # Set allowed target suffixes
-.SUFFIXES: .c .h .cpp .hpp .o .so
+.SUFFIXES: .c .h .cpp .hh .hpp .o .so
 
 # Declare all phony targets
 .PHONY: all clean checkdir install $(libdir) $(bindir) $(THRIFTS)
@@ -75,6 +75,7 @@ $(THRIFTS): %: %.thrift
 lib/bots.o: libnuodbi.so libreflection.so
 lib/interface.o: libbots.so
 lib/reflection.o: libta.so
+lib/Bot.o:
 
 # Object target compilation flags
 lib/bots.o: private ALL_CFLAGS += $(TA_CFLAGS)

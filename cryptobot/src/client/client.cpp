@@ -11,8 +11,15 @@ using namespace apache::thrift::transport;
 
 int main(int argc, char **argv) {
     int port = 9090;
+    char *host;
 
-    boost::shared_ptr<TSocket> socket(new TSocket("localhost", port));
+    if ( argc > 1 ) {
+        host = argv[1];
+    } else {
+        host = "localhost";
+    }
+
+    boost::shared_ptr<TSocket> socket(new TSocket(host, port));
     boost::shared_ptr<TTransport> transport(new TFramedTransport(socket));
     boost::shared_ptr<TProtocol> protocol(new TCompactProtocol(transport));
 
