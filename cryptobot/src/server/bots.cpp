@@ -14,21 +14,17 @@
 using namespace bots;
 
 
-rule::rule(action_t action, double amount) {
+rule::rule(action_t action, double amount, std::string indicator) {
     this->action = action;
     this->amount = amount;
 
-    this->indicators = new std::vector<ta::ta *>();
+    this->indicator = reflect(indicator);
 }
 
 rule::~rule() {
-    delete this->indicators;
+    delete this->indicator;
 }
 
-void rule::add_ind(std::string function) {
-    ta::ta *ind = reflect(function);
-    this->indicators->push_back(ind);
-}
 
 bool rule::test() {
     // TODO: test can retrieve market data

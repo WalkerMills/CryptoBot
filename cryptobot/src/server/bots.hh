@@ -10,19 +10,16 @@
 
 namespace bots {
 
-class rule {
-private:
-    enum action_t {buy, sell};
+typedef enum action_t {buy, sell, watch};
 
+class rule {
 public:
     action_t action;
     double amount;
-    std::vector<ta::ta *> *indicators;
+    ta::ta *indicator;
 
-    rule(action_t action, double amount);
+    rule(action_t action, double amount, std::string indicator);
     ~rule();
-
-    void add_ind(std::string function);
 
     virtual bool test() = 0;
     virtual void trade() = 0;
