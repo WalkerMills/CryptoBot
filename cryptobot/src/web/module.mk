@@ -1,0 +1,1 @@
+EXTS += interface.so

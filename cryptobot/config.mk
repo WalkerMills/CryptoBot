@@ -18,7 +18,7 @@ CYTHON = cython
 THRIFT = thrift
 
 
-MODULES = server client gen common
+MODULES = server client gen common web
 srcdir = $(addprefix src/, $(MODULES))
 libdir = lib
 bindir = bin
