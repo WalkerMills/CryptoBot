@@ -14,6 +14,7 @@
 #define OWNS "cryptobot_owns"
 #define HOST "cryptobot_host"
 #define RUNS "cryptobot_runs"
+#define RULE "cryptobot_rule"
 
 namespace db {
 
@@ -68,6 +69,13 @@ public:
     bot() : table(BOT) { }
 
     int insert(int uid, char *name, int work);
+};
+
+class rule : public table {
+public:
+    rule() : table(RULE) {}
+
+    int insert(int bid, char *rule);
 };
 
 class host : public table {

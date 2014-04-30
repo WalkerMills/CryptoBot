@@ -10,7 +10,7 @@
 
 namespace bots {
 
-typedef enum action_t {buy, sell, watch};
+enum action_t {buy, sell, watch};
 
 class rule {
 public:
@@ -29,6 +29,7 @@ class bot {
 private:
     db::bot *bot_db;
     db::trade *trade_db;
+    db::rule *rule_db;
 
     void update_work();
 
@@ -41,6 +42,7 @@ public:
     bot(int uid, char *name);
     ~bot();
 
+    void get_rule(int bid);
     void insert_rule(rule *r);
     void delete_rule(int index);
 

@@ -2,9 +2,10 @@
 #include <cstdlib>
 #include <cstring>
 
-#include <unistd.h>
+#include <jansson.h>
 #include <signal.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 #include "bots.hh"
 #include "control.hh"
@@ -70,7 +71,8 @@ bot::bot(int uid, char *name) {
     this->rules = new std::vector<rule *>();
     this->bot_db = new db::bot();
     this->trade_db = new db::trade();
-    
+    this->rule_db = new db::rule();
+
     bot_db->insert(uid, name, this->work());
 
     NuoDB::PreparedStatement *stmt;
@@ -103,6 +105,46 @@ bot::~bot() {
 
 void bot::update_work() {
     // TODO: calculate work based on a bot's rules
+}
+
+void bot::get_rule(int bid) {
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+
+    stmt = rule_db->connection->prepareStatement(
+        "SELECT id FROM ? WHERE bid=?");
+    stmt->setString(1, BOT);
+    stmt->setInt(2, bid);
+    result = rule_db->query(stmt);
+    char rulelist[10] = { 0 };
+
+    if ( result->next() ) {
+        strcpy(rulelist, result->getString(1));
+    } else {
+        std::cerr << "Error: no bot found with bid" << bid; 
+        exit(EXIT_FAILURE);
+    }
+
+    json_t *rs;
+    json_error_t error;
+
+    rs = json_loads(rulelist, 0, &error);
+    if (json_array_size(rs) == 1) {
+        json_t *data, *function, *params;
+        data = json_array_get(rs, 0);
+        
+        if ( !json_is_object(data)) {
+            std::cerr << "Error: data is not an object";
+            exit(EXIT_FAILURE);
+        }
+
+        function = json_object_get(rs, "function");
+        params = json_object_get(rs, "params");
+
+        std::cout << "function name" << json_string_value(function)
+                  << "parameters" << json_string_value(params);
+    } 
+
 }
 
 void bot::insert_rule(rule *r) {
