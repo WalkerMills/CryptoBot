@@ -121,12 +121,12 @@ void bot::add_rule(int bid, std::string function, double params[]) {
     result = rule_db->query(stmt);
 
     std::ostringstream os;
-    os << "{ " << "function: " << function << ",\n" << 
+    os << ",{ " << "function: " << function << ",\n" << 
        "params :" << params << "}]";
     std::string newrule = os.str();
-    int newlength = strlen(result->getString(1)) - sizeof(char);
-    std::string rulelist = std::string(result->getString(1)).
-                           substr(0, newlength);
+    int newlength = strlen(result->getString(1)) - 1;
+    std::string rulelist = 
+        std::string(result->getString(1)).substr(0, newlength);
     rulelist = rulelist.append(newrule);
 
     rule_db->insert(bid, rulelist.c_str());
@@ -141,10 +141,12 @@ void bot::get_rule(int bid) {
     stmt->setString(1, RULE);
     stmt->setInt(2, bid);
     result = rule_db->query(stmt);
-    char *rulelist = (char *) calloc(strlen(result->getString(1)) + 1,
-                                     sizeof(char));
+    char *rulelist = NULL;
+
 
     if ( result->next() ) {
+        rulelist = (char *) calloc(strlen(result->getString(1)) + 1,
+                                   sizeof(char));
         strcpy(rulelist, result->getString(1));
     } else {
         std::cerr << "Error: no bot found with bid" << bid; 
