@@ -30,7 +30,7 @@ CFLAGS = -O3 -mtune=generic -pipe -fstack-protector \
 --param=ssp-buffer-size=4 -Wno-sign-compare -Wno-unused-function
 
 # Default compiler flags for C++
-CXXFLAGS = -std=c++11 -Wno-write-strings
+CXXFLAGS = -std=c++11 -Wno-write-strings -DBOOST_NO_RVALUE_REFERENCES
 
 # Default linker flags
 LD_FLAGS = -L$(libdir) -Wl,-O1,--sort-common,--as-needed,-z,relro \
@@ -44,14 +44,9 @@ THRIFT_FLAGS = -out $(gendir) -I $(gendir) -strict --gen cpp
 
 
 # Compiler flags for compiling with Cython
-CYTHON_CFLAGS = -I/usr/include/python2.7 -Wno-strict-aliasing
+CYTHON_CFLAGS = -I/usr/include/python2.7 -Wno-strict-aliasing -fPIC
 # Linker flags for linking object files compiled from Cython-generated code
-CYTHON_LDFLAGS = -lpython2.7
-
-# Compiler flags for compiling with MySQL++
-MYSQLPP_CFLAGS = -I/usr/include/mysql -I/usr/include/mysql++ 
-# Linker flags for linking object files dependent on MySQL++
-MYSQLPP_LDFLAGS = -lmysqlpp -lmysqlclient
+CYTHON_LDFLAGS = -lpython2.7 
 
 # Compiler flags for compiling with TA-Lib
 TA_CFLAGS = -I/usr/include/ta-lib
