@@ -74,26 +74,29 @@ $(THRIFTS): %: %.thrift
 # Object target dependencies
 lib/bots.o: libnuodbi.so libreflection.so
 lib/interface.o: libbots.so
+lib/nuodbi.o: libreflection.so
 lib/reflection.o: libta.so
 lib/Bot.o:
 
 # Object target compilation flags
-lib/bots.o: private ALL_CFLAGS += $(TA_CFLAGS)
-lib/client.o: private EXTRA_CFLAGS += $(THRIFT_CFLAGS)
-lib/interface.o: private ALL_CFLAGS += $(CYTHON_CFLAGS) \
+lib/bots.o: ALL_CFLAGS += $(TA_CFLAGS)
+lib/client.o: EXTRA_CFLAGS = $(THRIFT_CFLAGS)
+lib/interface.o: ALL_CFLAGS += $(CYTHON_CFLAGS) \
 $(TA_CFLAGS)
-lib/reflection.o: private ALL_CFLAGS += $(TA_CFLAGS)
-lib/server.o: private EXTRA_CFLAGS += $(THRIFT_CFLAGS)
-lib/ta.o: private ALL_CFLAGS += $(TA_CFLAGS)
+lib/reflection.o: ALL_CFLAGS += $(TA_CFLAGS)
+lib/server.o: EXTRA_CFLAGS = $(THRIFT_CFLAGS)
+lib/ta.o: ALL_CFLAGS += $(TA_CFLAGS)
 
 lib/%.o: %.cpp
 	$(CXX) $(ALL_CXXFLAGS) $(EXTRA_CFLAGS) -fPIC -c $< -o $@
 
 # Library target linking flags
-interface.so: private EXTRA_LDFLAGS = $(CYTHON_LDFLAGS) -lbots
-libbots.so: private EXTRA_LDFLAGS = -lnuodbi -lta -lreflection
-libreflection.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS) -lta
-libta.so: private EXTRA_LDFLAGS = $(TA_LDFLAGS)
+libnuodi.so: EXTRA_LDFLAGS =
+interface.so: EXTRA_LDFLAGS = $(CYTHON_LDFLAGS) -lbots
+libbots.so: EXTRA_LDFLAGS = 
+# -lnuodbi -lta -lreflection
+libreflection.so: EXTRA_LDFLAGS = $(TA_LDFLAGS) -lta
+libta.so: EXTRA_LDFLAGS = $(TA_LDFLAGS)
 
 # Implicit rule for compiling libraries from Thrift-generated code
 lib%.so: lib/%.o
@@ -109,7 +112,7 @@ lib%.so: lib/%.o
 	$(EXTRA_LDFLAGS)
 
 server client: lib/Bot.o lib/bots_types.o lib/bots_constants.o
-server client: private EXTRA_LDFLAGS += $(THRIFT_LDFLAGS) -lthriftnb -levent
+server client: EXTRA_LDFLAGS += $(THRIFT_LDFLAGS) -lthriftnb -levent
 
 # Default rule for compiling binaries
 $(BINS): %: lib/%.o
