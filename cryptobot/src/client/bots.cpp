@@ -1,6 +1,9 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <string>
+#include <sstream>
+#include <iostream>
 
 #include <jansson.h>
 #include <signal.h>
@@ -107,16 +110,39 @@ void bot::update_work() {
     // TODO: calculate work based on a bot's rules
 }
 
+void bot::add_rule(int bid, std::string function, double params[]) {
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+
+    stmt = rule_db->connection->prepareStatement(
+        "SELECT id FROM ? WHERE bid=?");
+    stmt->setString(1, RULE);
+    stmt->setInt(2, bid);
+    result = rule_db->query(stmt);
+
+    std::ostringstream os;
+    os << "{ " << "function: " << function << ",\n" << 
+       "params :" << params << "}]";
+    std::string newrule = os.str();
+    int newlength = strlen(result->getString(1)) - sizeof(char);
+    std::string rulelist = std::string(result->getString(1)).
+                           substr(0, newlength);
+    rulelist = rulelist.append(newrule);
+
+    rule_db->insert(bid, rulelist.c_str());
+}
+
 void bot::get_rule(int bid) {
     NuoDB::PreparedStatement *stmt;
     NuoDB::ResultSet *result;
 
     stmt = rule_db->connection->prepareStatement(
         "SELECT id FROM ? WHERE bid=?");
-    stmt->setString(1, BOT);
+    stmt->setString(1, RULE);
     stmt->setInt(2, bid);
     result = rule_db->query(stmt);
-    char rulelist[10] = { 0 };
+    char *rulelist = (char *) calloc(strlen(result->getString(1)) + 1,
+                                     sizeof(char));
 
     if ( result->next() ) {
         strcpy(rulelist, result->getString(1));
@@ -129,7 +155,7 @@ void bot::get_rule(int bid) {
     json_error_t error;
 
     rs = json_loads(rulelist, 0, &error);
-    if (json_array_size(rs) == 1) {
+    for (int i = 0; i < json_array_size(rs); i++) {
         json_t *data, *function, *params;
         data = json_array_get(rs, 0);
         
@@ -143,6 +169,8 @@ void bot::get_rule(int bid) {
 
         std::cout << "function name" << json_string_value(function)
                   << "parameters" << json_string_value(params);
+    // TODO : For each rule and set of parameters, create the rule
+    //        and then add it to the rules vector. 
     } 
 
 }

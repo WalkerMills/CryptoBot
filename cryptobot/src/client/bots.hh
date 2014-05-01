@@ -3,6 +3,8 @@
 
 #include <map>
 #include <string>
+#include <sstream>
+#include <iostream>
 #include <vector>
 
 #include "nuodbi.hh"
@@ -42,6 +44,7 @@ public:
     bot(int uid, char *name);
     ~bot();
 
+    void add_rule(int bid, std::string function, double params[]);
     void get_rule(int bid);
     void insert_rule(rule *r);
     void delete_rule(int index);

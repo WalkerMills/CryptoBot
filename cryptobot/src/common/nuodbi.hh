@@ -75,7 +75,7 @@ class rule : public table {
 public:
     rule() : table(RULE) {}
 
-    int insert(int bid, char *rule);
+    int insert(int bid, const char *rule);
 };
 
 class host : public table {
