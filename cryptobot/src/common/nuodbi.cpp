@@ -12,8 +12,7 @@ base::base() {
     db_name.append(this->addr);
 
     this->connection = NuoDB::Connection::create(
-        db_name.c_str(), this->username, this->password, this->properties, 
-        this->opt, this->arg);
+        db_name.c_str(), this->username, this->password, this->properties);
 }
 
 base::~base() {

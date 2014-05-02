@@ -22,12 +22,10 @@ namespace db {
 class base {
 private:
     static constexpr char *name = "djangoDB";
-    static constexpr char *addr = "107.170.247.187";
-    static constexpr char *username = "dba";
-    static constexpr char *password = "dba";
-    static constexpr int properties = 1;
-    static constexpr char *opt = "schema";
-    static constexpr char *arg = "user";
+    static constexpr char *addr = "www.cryptobot.me";
+    static constexpr char *username = "admin";
+    static constexpr char *password = "NoFags";
+    static constexpr int properties = 0;
 
 public:
     NuoDB::Connection *connection;

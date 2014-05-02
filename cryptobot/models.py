@@ -24,9 +24,6 @@ class Uses(models.Model):
 
 
 # All existing bots
-#
-# TODO: serialize bot rules, create rules table
-#
 class Bot(models.Model):
     # Bot name
     name = models.CharField(max_length=24)
@@ -36,6 +33,14 @@ class Bot(models.Model):
 
     # Anticipated work for this bot
     work = models.IntegerField()
+
+# All existing rules for bots
+class Rule(models.Model):
+    # Bot id
+    bid = models.ForeignKey(Bot, to_field='id')
+
+    # JSON-ified rule specification [{function: params}]
+    params = models.TextField()
 
 # All nodes in the computing cluster for running bots
 class Host(models.Model):
@@ -67,4 +72,3 @@ class Trade(models.Model):
 
     # Amount of Bitcoin
     amount = models.DecimalField(max_digits=20, decimal_places=12)
-

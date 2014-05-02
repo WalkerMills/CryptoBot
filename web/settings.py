@@ -60,23 +60,23 @@ WSGI_APPLICATION = 'web.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django_pynuodb',
-        'NAME': 'djangoDB',
+        'NAME': 'djangodb',
         'DOMAIN_USER': 'cryptobot',    # domain credentials
         'DOMAIN_PASSWORD': 'NoFags',
-        'DBA_USER': 'cryptobot',    # database credentials
+        'DBA_USER': 'admin',    # database credentials
         'DBA_PASSWORD': 'NoFags',
         'SCHEMA': 'user',    # optional, defaults to 'user' schema
-        'HOST': '107.170.247.187',
+        'HOST': 'www.cryptobot.me',
         'PORT': '48004',
     }
 }
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '107.170.247.187:11211',
-    }
-}
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#         'LOCATION': 'www.cryptobot.me:11211',
+#     }
+# }
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates')
