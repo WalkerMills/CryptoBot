@@ -91,25 +91,11 @@ bot::bot(int uid, char *name) {
     this->uid = uid;
     this->name = new char[strlen(name) + 1];
     strcpy(this->name, name);
-    this->work = -1;
-    this->rules = NULL;
+    this->work = 0;
+    this->rules = new std::vector<rule *>();
 
     // Create a new entry for this bot
-    NuoDB::ResultSet *result = 
-        bot_db->create(this->uid, this->name, this->work);
-
-    // Check our results
-    if ( ! result->next() ) {
-        std::cerr << "Error: no bot found with uid " << uid 
-                  << " named " << name << std::endl;
-        exit(EXIT_FAILURE); 
-    } else {
-        // Store the auto-generated id
-        this->id = result->getInt(1);
-    }
-
-    // Clean up
-    result->close();
+    this->id = bot_db->create(this->uid, this->name, this->work);
 }
 
 bot::~bot() {
@@ -134,7 +120,7 @@ void bot::store_rules() {
     std::stringbuf *buf = oss.rdbuf();
 
     // Read the size of the stream and rewind
-    std::streamsize size = buf->pubseekoff(0, oss.end);
+    unsigned size = buf->pubseekoff(0, oss.end);
     buf->pubseekoff(0, oss.beg);
     
     // Read the contents of the buffer into a string

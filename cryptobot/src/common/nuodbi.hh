@@ -11,7 +11,6 @@
 
 #define TRADE "cryptobot_trade"
 #define BOT "cryptobot_bot"
-#define OWNS "cryptobot_owns"
 #define RULE "cryptobot_rule"
 #define HOST "cryptobot_host"
 #define RUNS "cryptobot_runs"
@@ -26,7 +25,9 @@ private:
     static constexpr char *addr = "www.cryptobot.me";
     static constexpr char *username = "admin";
     static constexpr char *password = "NoFags";
-    static constexpr int properties = 0;
+    static constexpr int properties = 1;
+    static constexpr char *opt = "schema";
+    static constexpr char *arg = "django";
 
 public:
     NuoDB::Connection *connection;
@@ -67,7 +68,7 @@ public:
     trade() : table(TRADE) { }
 
     int insert(int tid, double price, double amount);
-    NuoDB::ResultSet *create(int tid, double price, double amount);
+    int create(int tid, double price, double amount);
 };
 
 
@@ -76,15 +77,15 @@ public:
     bot() : table(BOT) { }
 
     int insert(int uid, char *name, int work);
-    NuoDB::ResultSet *create(int uid, char *name, int work);
+    int create(int uid, char *name, int work);
 };
 
 class rule : public table {
 public:
     rule() : table(RULE) {}
 
-    int insert(int bid, char *params, size_t size);
-    NuoDB::ResultSet *create(int bid, char *params, size_t size);
+    int insert(int bid, char *params, unsigned size);
+    int create(int bid, char *params, unsigned size);
 };
 
 class host : public table {
@@ -92,7 +93,7 @@ public:
     host() : table(HOST) { }
 
     int insert(char *addr, int load);
-    NuoDB::ResultSet *create(char *addr, int load);
+    int create(char *addr, int load);
     char *next();
 };
 
@@ -101,7 +102,7 @@ public:
     runs() : table(RUNS) { }
 
     int insert(int hid, int bid, int pid);
-    NuoDB::ResultSet *create(int hid, int bid, int pid);
+    int create(int hid, int bid, int pid);
 };
 
 }

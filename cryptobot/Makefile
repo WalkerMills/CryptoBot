@@ -79,7 +79,8 @@ lib/control.o: libnuodbi.so
 lib/bots.o: libcontrol.so libreflection.so
 lib/interface.o: libbots.so
 lib/worker.o: libnuodbi.so libbots.so
-
+lib/client.o: libbots.so
+lib/server.o: libbots.so
 lib/Bot.o:
 
 # Object target compilation flags 
