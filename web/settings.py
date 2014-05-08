@@ -65,7 +65,7 @@ DATABASES = {
         'DOMAIN_PASSWORD': 'NoFags',
         'DBA_USER': 'admin',    # database credentials
         'DBA_PASSWORD': 'NoFags',
-        'SCHEMA': 'user',    # optional, defaults to 'user' schema
+        'SCHEMA': 'django',    # optional, defaults to 'user' schema
         'HOST': 'www.cryptobot.me',
         'PORT': '48004',
     }

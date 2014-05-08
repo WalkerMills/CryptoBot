@@ -16,6 +16,9 @@
 
 using namespace bots;
 
+rule::rule() {
+    this->indicator = NULL;
+}
 
 rule::rule(action_t action, double amount, std::string indicator) {
     this->action = action;

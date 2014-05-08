@@ -17,16 +17,25 @@ namespace bots {
 enum action_t {buy, sell, watch};
 
 class rule {
+private:
+    friend class boost::serialization::access;
+
+    template<class archive>
+    void serialize(archive &ar, const unsigned version) {
+        ar & action & amount & indicator;
+    }
+
 public:
     action_t action;
     double amount;
     ta::ta *indicator;
 
+    rule();
     rule(action_t action, double amount, std::string indicator);
     ~rule();
 
-    virtual bool test() = 0;
-    virtual void trade() = 0;
+    virtual bool test();
+    virtual void trade();
 };
 
 class bot {

@@ -118,7 +118,7 @@ client: lib/Bot.o lib/bots_types.o lib/bots_constants.o
 server: lib/Bot.o lib/bots_types.o lib/bots_constants.o lib/worker.o
 
 # Binary target linking flags
-client: EXTRA_LDFLAGS := $(THRIFT_LDFLAGS) -lthriftnb -levent
+client: EXTRA_LDFLAGS := $(THRIFT_LDFLAGS) -lthriftnb -levent -lbots
 server: EXTRA_LDFLAGS := $(THRIFT_LDFLAGS) $(SERIAL_LDFLAGS) \
 -lthriftnb -levent -lbots -lnuodbi
 
