@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
 
     server::BotClient client(protocol);
     transport->open();
-    client.run(-1);
+    client.run(-1, false);
     transport->close();
 
     transport->open();

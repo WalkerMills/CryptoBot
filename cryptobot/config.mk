@@ -43,18 +43,21 @@ CYTHON_FLAGS = --cplus -2
 THRIFT_FLAGS = -out $(gendir) -I $(gendir) -strict --gen cpp
 
 
-# Compiler flags for compiling with Cython
+# Flags for compiling and linking against Cython
 CYTHON_CFLAGS = -I/usr/include/python2.7 -Wno-strict-aliasing -fPIC
-# Linker flags for linking object files compiled from Cython-generated code
 CYTHON_LDFLAGS = -lpython2.7 
 
-# Compiler flags for compiling with TA-Lib
-TA_CFLAGS = -I/usr/include/ta-lib
-# Linker flags for linking object files dependent on TA-Lib
+# Flags for linking against NuoDB
+NUODB_LDFLAGS = -L/opt/nuodb/lib64 -lNuoRemote
+
+# Flags for linking against boost::serialization
+SERIAL_LDFLAGS = -lboost_serialization
+
+# Flags for linking against TA-Lib
 TA_LDFLAGS = -lta_lib
 
 # Flags for compiling and linking against Thrift
-THRIFT_CFLAGS = -I/usr/include/thrift -DHAVE_INTTYPES_H -DHAVE_NETINET_IN_H
+THRIFT_CFLAGS = -DHAVE_INTTYPES_H -DHAVE_NETINET_IN_H
 THRIFT_LDFLAGS = -lthrift
 
 # All C compiler flaga for normal compilation

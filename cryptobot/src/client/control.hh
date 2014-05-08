@@ -10,13 +10,14 @@
 
 #include "Bot.h"
 #include "nuodbi.hh"
+#include "server.hh"
 
 
 namespace control {
     // host class acts as an RPC client factory
     class host {
     private:
-        std::string domain;
+        char *domain;
         int port;
         boost::shared_ptr<apache::thrift::transport::TSocket> socket;
         boost::shared_ptr<apache::thrift::transport::TTransport> transport;
@@ -28,8 +29,8 @@ namespace control {
         void disconnect();
 
     public:
-        host(std::string domain);
-        host(std::string domain, int port);
+        host(char *domain);
+        host(char *domain, int port);
         ~host();
 
         bool active();
@@ -40,7 +41,7 @@ namespace control {
     // highest priority host object to generate an RPC client
     class network {
     private:
-        db::host host_db;
+        db::host *host_db;
 
     public:
         network();

@@ -7,6 +7,8 @@
 #include <iostream>
 #include <vector>
 
+#include <boost/serialization/vector.hpp>
+
 #include "nuodbi.hh"
 #include "ta.hh"
 
@@ -29,33 +31,39 @@ public:
 
 class bot {
 private:
+    friend class boost::serialization::access;
+
     db::bot *bot_db;
     db::trade *trade_db;
     db::rule *rule_db;
 
+    template<class archive>
+    void serialize(archive &ar, const std::vector<rule *> &rules, 
+              const unsigned version) {
+        ar & rules;
+    }
+
     void update_work();
+    void store_rules();
+    void get_rules();
 
 public:
-    std::vector<rule *> *rules;
     int id;
+    char *name;
+    int uid;
+    int work;
+    std::vector<rule *> *rules;
 
     bot();
     bot(int bid);
     bot(int uid, char *name);
     ~bot();
 
-    void add_rule(int bid, std::string function, double params[]);
-    void get_rule(int bid);
     void insert_rule(rule *r);
     void delete_rule(int index);
 
-    int uid();
-    char *name();
-    int work();
-    
-    void run();
+    void run(bool trade);
     void stop();
-    char *host();
 };
 
 // TODO: user routes bot control through control::network

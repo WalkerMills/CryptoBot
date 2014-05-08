@@ -1,18 +1,27 @@
+#include <cstdlib>
+#include <cstring>
+
 #include "control.hh"
-#include "server.hh"
+
+
+using namespace apache::thrift;
+using namespace apache::thrift::protocol;
+using namespace apache::thrift::transport;
 
 using namespace control;
 
 
 host::host(char *domain) {
-    this->domain = domain;
+    this->domain = new char[strlen(domain) + 1];
+    strcpy(this->domain, domain);
     this->port = TPORT;
     this->initialize();
     this->connected = false;
 }
 
 host::host(char *domain, int port) {
-    this->domain = domain;
+    this->domain = new char[strlen(domain) + 1];
+    strcpy(this->domain, domain);
     this->port = port;
     this->initialize();
     this->connected = false;
@@ -21,15 +30,16 @@ host::host(char *domain, int port) {
 host::~host() {
     this->disconnect();
 
-    delete this->protocol;
-    delete this->transport;
-    delete this->socket;
+    delete this->domain;
 }
 
 void host::initialize() {
-    this->socket = new TSocket(this->domain, this->port);
-    this->transport = new TFramedTransport(socket);
-    this->protocol = new TCompactProtocol(transport);
+    this->socket = 
+        boost::shared_ptr<TSocket>(new TSocket(this->domain, this->port));
+    this->transport = 
+        boost::shared_ptr<TTransport>(new TFramedTransport(this->socket));
+    this->protocol = 
+        boost::shared_ptr<TProtocol>(new TCompactProtocol(this->transport));
 }
 
 void host::connect() {
@@ -49,10 +59,10 @@ bool host::active() {
 }
 
 server::BotClient *host::client() {
-    server::BotClient *client = new server::BotClient(this->transport);
+    server::BotClient *client = new server::BotClient(this->protocol);
     this->connect();
 
-    return client
+    return client;
 }
 
 network::network() {

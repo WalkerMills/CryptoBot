@@ -10,7 +10,7 @@ class BotHandler : virtual public server::BotIf {
 public:
     BotHandler();
 
-    void run(const int32_t id);
+    void run(const int32_t id, const bool trade);
     void stop(const int32_t id);
 };
 

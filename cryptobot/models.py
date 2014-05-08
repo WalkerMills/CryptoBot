@@ -40,7 +40,7 @@ class Rule(models.Model):
     bid = models.ForeignKey(Bot, to_field='id')
 
     # JSON-ified rule specification [{function: params}]
-    params = models.TextField()
+    params = models.BinaryField()
 
 # All nodes in the computing cluster for running bots
 class Host(models.Model):

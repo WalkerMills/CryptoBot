@@ -3,8 +3,8 @@
 #include <thrift/protocol/TCompactProtocol.h>
 #include <thrift/server/TNonblockingServer.h>
 
-#include "Bot.h"
 #include "server.hh"
+#include "worker.hh"
 
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::concurrency;
@@ -18,9 +18,9 @@ using namespace ::server;
 
 BotHandler::BotHandler() { }
 
-void BotHandler::run(const int32_t id) {
-    // Your implementation goes here
-    printf("run: %d\n", id);
+void BotHandler::run(const int32_t id, const bool trade) {
+    worker *helper = new worker(id, trade);
+    helper->run();
 }
 
 void BotHandler::stop(const int32_t id) {

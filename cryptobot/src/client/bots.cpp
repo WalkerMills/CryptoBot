@@ -1,19 +1,18 @@
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <cstdlib>
 #include <cstring>
-#include <string>
-#include <sstream>
-#include <iostream>
 
-#include <jansson.h>
-#include <signal.h>
-#include <sys/types.h>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/vector.hpp>
 #include <unistd.h>
 
 #include "bots.hh"
 #include "control.hh"
-#include "nuodbi.hh"
 #include "reflection.hh"
+#include "nuodbi.hh"
 
 using namespace bots;
 
@@ -32,213 +31,174 @@ rule::~rule() {
 
 bool rule::test() {
     // TODO: test can retrieve market data
-    return true;
+    std::cout << "ping" << std::endl;
+    usleep(3000);
+
+    return false;
 }
 
 void rule::trade() {
-    // TODO: trade takes action based on test (customize rules by 
-    // subclassing rule)
-    if (this->test()) {
-        return;
-    } else {
-        return;
-    }
+    // TODO: trade makes a trade
 }
 
+bot::bot() {
 
+}
+
+// Interface constructor for existing bots
 bot::bot(int bid) {
-    this->rules = new std::vector<rule *>();
-    this->id = bid;
-    this->bot_db = new db::bot();
-    this->trade_db = new db::trade();
-
-    NuoDB::PreparedStatement *stmt;
-    int result;
-
-    stmt = bot_db->connection->prepareStatement("SELECT * FROM ? WHERE id=?");
-    stmt->setString(1, bot_db->name);
-    stmt->setInt(2, this->id);
-    result = bot_db->update(stmt);
-
-    if ( result == 0 ) {
-        std::cerr << "Error: no bot found with id " << id << std::endl;
-        exit(EXIT_FAILURE); 
-    } else {
-        // TODO: load rules from serialized storage
-    }
-
-    delete bot_db;
-}
-
-bot::bot(int uid, char *name) {
-    this->rules = new std::vector<rule *>();
+    // Initialize database connections and store id
     this->bot_db = new db::bot();
     this->trade_db = new db::trade();
     this->rule_db = new db::rule();
 
-    bot_db->insert(uid, name, this->work());
+    this->id = bid;
 
-    NuoDB::PreparedStatement *stmt;
-    NuoDB::ResultSet *result;
+    // Find this bot's entry
+    NuoDB::ResultSet *result = bot_db->get(this->id);
 
-    stmt = bot_db->connection->prepareStatement(
-        "SELECT id FROM ? WHERE uid=? AND name=?");
-    stmt->setString(1, BOT);
-    stmt->setInt(2, uid);
-    stmt->setString(3, name);
-    result = bot_db->query(stmt);
+    // Check our results
+    if ( ! result->next() ) {
+        std::cerr << "Error: no bot found with id " << id << std::endl;
+        exit(EXIT_FAILURE); 
+    } else {
+        // Cache this bot's information
+        this->uid = result->getInt(3);
+        std::string tmp = result->getString(2);
+        this->name = new char[tmp.size() + 1];
+        strcpy(this->name, tmp.c_str());
 
+        // Retrieve this bot's rules and update its work 
+        this->get_rules();
+        this->update_work();
+    }
+
+    // Clean up
+    result->close();
+}
+
+// Interface constructor for new bots
+bot::bot(int uid, char *name) {
+    // Initialize database connections
+    this->bot_db = new db::bot();
+    this->trade_db = new db::trade();
+    this->rule_db = new db::rule();
+
+    // Initialize bot attributes
+    this->uid = uid;
+    this->name = new char[strlen(name) + 1];
+    strcpy(this->name, name);
+    this->work = -1;
+    this->rules = NULL;
+
+    // Create a new entry for this bot
+    NuoDB::ResultSet *result = 
+        bot_db->create(this->uid, this->name, this->work);
+
+    // Check our results
     if ( ! result->next() ) {
         std::cerr << "Error: no bot found with uid " << uid 
                   << " named " << name << std::endl;
         exit(EXIT_FAILURE); 
     } else {
+        // Store the auto-generated id
         this->id = result->getInt(1);
     }
 
+    // Clean up
     result->close();
-    delete bot_db;
 }
 
 bot::~bot() {
     delete this->rules;
     delete this->bot_db;
     delete this->trade_db;
+    delete this->name;
+    delete this->rules;
 }
 
 void bot::update_work() {
     // TODO: calculate work based on a bot's rules
 }
 
-void bot::add_rule(int bid, std::string function, double params[]) {
-    NuoDB::PreparedStatement *stmt;
-    NuoDB::ResultSet *result;
+void bot::store_rules() {
+    // Store the rules vector in the archive
+    std::ostringstream oss;
+    boost::archive::text_oarchive oa(oss);
+    oa & this->rules;
+    
+    // Read the underlying stream buffer
+    std::stringbuf *buf = oss.rdbuf();
 
-    stmt = rule_db->connection->prepareStatement(
-        "SELECT id FROM ? WHERE bid=?");
-    stmt->setString(1, RULE);
-    stmt->setInt(2, bid);
-    result = rule_db->query(stmt);
+    // Read the size of the stream and rewind
+    std::streamsize size = buf->pubseekoff(0, oss.end);
+    buf->pubseekoff(0, oss.beg);
+    
+    // Read the contents of the buffer into a string
+    char *contents = new char[size];
+    buf->sgetn(contents, size);
 
-    std::ostringstream os;
-    os << ",{ " << "function: " << function << ",\n" << 
-       "params :" << params << "}]";
-    std::string newrule = os.str();
-    int newlength = strlen(result->getString(1)) - 1;
-    std::string rulelist = 
-        std::string(result->getString(1)).substr(0, newlength);
-    rulelist = rulelist.append(newrule);
+    // Write archive as binary data to NouDB
+    int result = this->rule_db->insert(this->id, contents, size);
 
-    rule_db->insert(bid, rulelist.c_str());
-}
-
-void bot::get_rule(int bid) {
-    NuoDB::PreparedStatement *stmt;
-    NuoDB::ResultSet *result;
-
-    stmt = rule_db->connection->prepareStatement(
-        "SELECT id FROM ? WHERE bid=?");
-    stmt->setString(1, RULE);
-    stmt->setInt(2, bid);
-    result = rule_db->query(stmt);
-    char *rulelist = NULL;
-
-
-    if ( result->next() ) {
-        rulelist = (char *) calloc(strlen(result->getString(1)) + 1,
-                                   sizeof(char));
-        strcpy(rulelist, result->getString(1));
-    } else {
-        std::cerr << "Error: no bot found with bid" << bid; 
+    if ( result == 0 ) {
+        std::cerr << "Error: no rules found for bot with id " << this->id
+                  << std::endl;
         exit(EXIT_FAILURE);
     }
+}
 
-    json_t *rs;
-    json_error_t error;
+void bot::get_rules() {
+    // Find this bot's row
+    NuoDB::ResultSet *result = rule_db->get(this->id);
 
-    rs = json_loads(rulelist, 0, &error);
-    for (int i = 0; i < json_array_size(rs); i++) {
-        json_t *data, *function, *params;
-        data = json_array_get(rs, 0);
-        
-        if ( !json_is_object(data)) {
-            std::cerr << "Error: data is not an object";
-            exit(EXIT_FAILURE);
+    // Check our results
+    if ( ! result->next() ) {
+        std::cerr << "Error: no rules found for bot with id " << this->id
+                  << std::endl;
+        exit(EXIT_FAILURE);
+    } else {
+        // Read our archive bytestring into an input stream
+        std::string tmp = result->getString(2);
+        std::istringstream iss(tmp);
+        boost::archive::text_iarchive ia(iss);
+
+        // Delete any rules, if they exist
+        if ( this->rules ) {
+            delete this->rules;
         }
 
-        function = json_object_get(rs, "function");
-        params = json_object_get(rs, "params");
-
-        std::cout << "function name" << json_string_value(function)
-                  << "parameters" << json_string_value(params);
-    // TODO : For each rule and set of parameters, create the rule
-    //        and then add it to the rules vector. 
-    } 
-
+        // Read this bot's rules from the archive
+        ia & this->rules;
+    }
 }
 
 void bot::insert_rule(rule *r) {
+    // Update our rules, calculate the new work value
     this->rules->push_back(r);
+    this->update_work();
+
+    // Write through to the database
+    this->store_rules();
 }
 
 void bot::delete_rule(int index) {
+    // Update our rules, calculate the new work value
     this->rules->erase(this->rules->begin() + index);
+    this->update_work();
+
+    // Write through to the database    
+    this->store_rules();
 }
 
-int bot::uid() {
-    db::bot *bot_db = new db::bot();
-    NuoDB::ResultSet *result = bot_db->get(this->id);
-    int user;
-
-    if ( ! result->next() ) {
-        user = -1;
-    } else {
-        user = result->getInt(2);
-    }
-
-    result->close();
-    delete bot_db;
-    return user;
-}
-
-char *bot::name() {
-    db::bot *bot_db = new db::bot();
-    NuoDB::ResultSet *result = bot_db->get(this->id);
-    char *bot_name;
-
-    if ( ! result->next() ) {
-        bot_name = NULL;
-    } else {
-        bot_name = new char[strlen(result->getString(3)) + 1];
-        strcpy(bot_name, result->getString(3));
-    }
-
-    result->close();
-    delete bot_db;
-    return bot_name;
-}
-
-int bot::work() {
-    db::bot *bot_db = new db::bot();
-    NuoDB::ResultSet *result = bot_db->get(this->id);
-    int work;
-
-    if ( ! result->next() ) {
-        work = -1;
-    } else {
-        work = result->getInt(4);
-    }
-
-    result->close();
-    delete bot_db;
-    return work;
-}
-
-void bot::run() {
+void bot::run(bool trade) {
     control::network *cluster = new control::network();
     server::BotClient *client = cluster->route();
 
-    client->run(this->id);
+    client->run(this->id, trade);
+
+    delete client;
+    delete cluster;
 }
 
 void bot::stop() {
@@ -246,34 +206,10 @@ void bot::stop() {
     server::BotClient *client = cluster->route();
 
     client->stop(this->id);
+
+    delete client;
+    delete cluster;
 }
-
-char *bot::host() {
-    NuoDB::PreparedStatement *stmt;
-    NuoDB::ResultSet *result;
-    char *hostname;
-    db::base *base_db = new db::base();
-
-    stmt = base_db->connection->prepareStatement(
-        "SELECT addr FROM ? JOIN ? ON (?.id = hid) WHERE bid=?");
-    stmt->setString(1, HOST);
-    stmt->setString(2, RUNS);
-    stmt->setString(3, HOST);
-    stmt->setInt(4, this->id);
-    result = base_db->query(stmt);
-
-    if ( ! result->next() ) {
-        hostname = NULL;
-    } else {
-        hostname = new char[strlen(result->getString(1)) + 1];
-        strcpy(hostname, result->getString(1));
-    }
-
-    result->close();
-    delete base_db;
-    return hostname;
-}
-
 
 user::user(int uid) {
 }

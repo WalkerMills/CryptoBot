@@ -72,31 +72,33 @@ $(THRIFTS): %: %.thrift
 	$(THRIFT) $(THRIFT_FLAGS) $< 
 
 # Object target dependencies
-lib/bots.o: libnuodbi.so libreflection.so
-lib/interface.o: libbots.so
-lib/nuodbi.o: libreflection.so
+lib/ta.o:
 lib/reflection.o: libta.so
+lib/nuodbi.o:
+lib/control.o: libnuodbi.so
+lib/bots.o: libcontrol.so libreflection.so
+lib/interface.o: libbots.so
+lib/worker.o: libnuodbi.so libbots.so
+
 lib/Bot.o:
 
-# Object target compilation flags
-lib/bots.o: ALL_CFLAGS += $(TA_CFLAGS)
-lib/client.o: EXTRA_CFLAGS = $(THRIFT_CFLAGS)
-lib/interface.o: ALL_CFLAGS += $(CYTHON_CFLAGS) \
-$(TA_CFLAGS)
-lib/reflection.o: ALL_CFLAGS += $(TA_CFLAGS)
-lib/server.o: EXTRA_CFLAGS = $(THRIFT_CFLAGS)
-lib/ta.o: ALL_CFLAGS += $(TA_CFLAGS)
+# Object target compilation flags 
+lib/interface.o: EXTRA_CFLAGS := $(CYTHON_CFLAGS)
+lib/client.o: EXTRA_CFLAGS := $(THRIFT_CFLAGS)
+lib/server.o: EXTRA_CFLAGS := $(THRIFT_CFLAGS)
+lib/worker.o: EXTRA_LDFLAGS := -lnuodbi -lbots
 
 lib/%.o: %.cpp
 	$(CXX) $(ALL_CXXFLAGS) $(EXTRA_CFLAGS) -fPIC -c $< -o $@
 
 # Library target linking flags
-libnuodi.so: EXTRA_LDFLAGS =
-interface.so: EXTRA_LDFLAGS = $(CYTHON_LDFLAGS) -lbots
-libbots.so: EXTRA_LDFLAGS = 
-# -lnuodbi -lta -lreflection
-libreflection.so: EXTRA_LDFLAGS = $(TA_LDFLAGS) -lta
-libta.so: EXTRA_LDFLAGS = $(TA_LDFLAGS)
+interface.so: EXTRA_LDFLAGS := $(CYTHON_LDFLAGS) -lbots
+libbots.so: EXTRA_LDFLAGS := $(SERIAL_LDFLAGS) \
+-lcontrol -lnuodbi -lta -lreflection
+libcontrol.so: EXTRA_LDFLAGS := -lnuodbi
+libnuodbi.so: EXTRA_LDFLAGS := $(NUODB_LDFLAGS)
+libreflection.so: EXTRA_LDFLAGS := -lta
+libta.so: EXTRA_LDFLAGS := $(TA_LDFLAGS)
 
 # Implicit rule for compiling libraries from Thrift-generated code
 lib%.so: lib/%.o
@@ -111,8 +113,14 @@ lib%.so: lib/%.o
 	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,lib$@ $< -o $(libdir)/$@ \
 	$(EXTRA_LDFLAGS)
 
-server client: lib/Bot.o lib/bots_types.o lib/bots_constants.o
-server client: EXTRA_LDFLAGS += $(THRIFT_LDFLAGS) -lthriftnb -levent
+# Binary target dependencies
+client: lib/Bot.o lib/bots_types.o lib/bots_constants.o
+server: lib/Bot.o lib/bots_types.o lib/bots_constants.o lib/worker.o
+
+# Binary target linking flags
+client: EXTRA_LDFLAGS := $(THRIFT_LDFLAGS) -lthriftnb -levent
+server: EXTRA_LDFLAGS := $(THRIFT_LDFLAGS) $(SERIAL_LDFLAGS) \
+-lthriftnb -levent -lbots -lnuodbi
 
 # Default rule for compiling binaries
 $(BINS): %: lib/%.o

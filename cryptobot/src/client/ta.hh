@@ -1,13 +1,30 @@
 #ifndef __TA_HH__
 #define __TA_HH__
 
-#include <ta_common.h>
+#undef MAX
+#undef MIN
+
+#include <boost/archive/text_oarchive.hpp>
+#include <ta-lib/ta_common.h>
 
 namespace ta {
 
 class ta { };
 
 class ACOS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -24,6 +41,19 @@ public:
 };
 
 class S_ACOS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -40,6 +70,22 @@ public:
 };
 
 class AD : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & inVolume;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -59,6 +105,22 @@ public:
 };
 
 class S_AD : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & inVolume;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -78,6 +140,20 @@ public:
 };
 
 class ADD : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal0;
+        ar & inReal1;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -95,6 +171,20 @@ public:
 };
 
 class S_ADD : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal0;
+        ar & inReal1;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -112,6 +202,24 @@ public:
 };
 
 class ADOSC : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & inVolume;
+        ar & optInFastPeriod; /* From 2 to 100000 */
+        ar & optInSlowPeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -133,6 +241,24 @@ public:
 };
 
 class S_ADOSC : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & inVolume;
+        ar & optInFastPeriod; /* From 2 to 100000 */
+        ar & optInSlowPeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -154,6 +280,22 @@ public:
 };
 
 class ADX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -173,6 +315,22 @@ public:
 };
 
 class S_ADX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -192,6 +350,22 @@ public:
 };
 
 class ADXR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -211,6 +385,22 @@ public:
 };
 
 class S_ADXR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -230,6 +420,22 @@ public:
 };
 
 class APO : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInFastPeriod; /* From 2 to 100000 */
+        ar & optInSlowPeriod; /* From 2 to 100000 */
+        ar & optInMAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -249,6 +455,22 @@ public:
 };
 
 class S_APO : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInFastPeriod; /* From 2 to 100000 */
+        ar & optInSlowPeriod; /* From 2 to 100000 */
+        ar & optInMAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -268,6 +490,22 @@ public:
 };
 
 class AROON : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outAroonDown;
+        ar & outAroonUp;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -287,6 +525,22 @@ public:
 };
 
 class S_AROON : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outAroonDown;
+        ar & outAroonUp;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -306,6 +560,21 @@ public:
 };
 
 class AROONOSC : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -324,6 +593,21 @@ public:
 };
 
 class S_AROONOSC : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -342,6 +626,19 @@ public:
 };
 
 class ASIN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -358,6 +655,19 @@ public:
 };
 
 class S_ASIN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -374,6 +684,19 @@ public:
 };
 
 class ATAN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -390,6 +713,19 @@ public:
 };
 
 class S_ATAN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -406,6 +742,22 @@ public:
 };
 
 class ATR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -425,6 +777,22 @@ public:
 };
 
 class S_ATR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -444,6 +812,22 @@ public:
 };
 
 class AVGPRICE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -463,6 +847,22 @@ public:
 };
 
 class S_AVGPRICE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -482,6 +882,25 @@ public:
 };
 
 class BBANDS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & optInNbDevUp; /* From TA_REAL_MIN to TA_REAL_MAX */
+        ar & optInNbDevDn; /* From TA_REAL_MIN to TA_REAL_MAX */
+        ar & optInMAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outRealUpperBand;
+        ar & outRealMiddleBand;
+        ar & outRealLowerBand;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -504,6 +923,25 @@ public:
 };
 
 class S_BBANDS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & optInNbDevUp; /* From TA_REAL_MIN to TA_REAL_MAX */
+        ar & optInNbDevDn; /* From TA_REAL_MIN to TA_REAL_MAX */
+        ar & optInMAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outRealUpperBand;
+        ar & outRealMiddleBand;
+        ar & outRealLowerBand;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -526,6 +964,21 @@ public:
 };
 
 class BETA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal0;
+        ar & inReal1;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -544,6 +997,21 @@ public:
 };
 
 class S_BETA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal0;
+        ar & inReal1;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -562,6 +1030,22 @@ public:
 };
 
 class BOP : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -581,6 +1065,22 @@ public:
 };
 
 class S_BOP : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -600,6 +1100,22 @@ public:
 };
 
 class CCI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -619,6 +1135,22 @@ public:
 };
 
 class S_CCI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -638,6 +1170,22 @@ public:
 };
 
 class CDL2CROWS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -657,6 +1205,22 @@ public:
 };
 
 class S_CDL2CROWS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -676,6 +1240,22 @@ public:
 };
 
 class CDL3BLACKCROWS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -695,6 +1275,22 @@ public:
 };
 
 class S_CDL3BLACKCROWS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -714,6 +1310,22 @@ public:
 };
 
 class CDL3INSIDE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -733,6 +1345,22 @@ public:
 };
 
 class S_CDL3INSIDE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -752,6 +1380,22 @@ public:
 };
 
 class CDL3LINESTRIKE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -771,6 +1415,22 @@ public:
 };
 
 class S_CDL3LINESTRIKE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -790,6 +1450,22 @@ public:
 };
 
 class CDL3OUTSIDE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -809,6 +1485,22 @@ public:
 };
 
 class S_CDL3OUTSIDE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -828,6 +1520,22 @@ public:
 };
 
 class CDL3STARSINSOUTH : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -847,6 +1555,22 @@ public:
 };
 
 class S_CDL3STARSINSOUTH : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -866,6 +1590,22 @@ public:
 };
 
 class CDL3WHITESOLDIERS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -885,6 +1625,22 @@ public:
 };
 
 class S_CDL3WHITESOLDIERS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -904,6 +1660,23 @@ public:
 };
 
 class CDLABANDONEDBABY : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInPenetration; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -924,6 +1697,23 @@ public:
 };
 
 class S_CDLABANDONEDBABY : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInPenetration; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -944,6 +1734,22 @@ public:
 };
 
 class CDLADVANCEBLOCK : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -963,6 +1769,22 @@ public:
 };
 
 class S_CDLADVANCEBLOCK : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -982,6 +1804,22 @@ public:
 };
 
 class CDLBELTHOLD : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1001,6 +1839,22 @@ public:
 };
 
 class S_CDLBELTHOLD : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1020,6 +1874,22 @@ public:
 };
 
 class CDLBREAKAWAY : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1039,6 +1909,22 @@ public:
 };
 
 class S_CDLBREAKAWAY : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1058,6 +1944,22 @@ public:
 };
 
 class CDLCLOSINGMARUBOZU : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1077,6 +1979,22 @@ public:
 };
 
 class S_CDLCLOSINGMARUBOZU : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1096,6 +2014,22 @@ public:
 };
 
 class CDLCONCEALBABYSWALL : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1115,6 +2049,22 @@ public:
 };
 
 class S_CDLCONCEALBABYSWALL : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1134,6 +2084,22 @@ public:
 };
 
 class CDLCOUNTERATTACK : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1153,6 +2119,22 @@ public:
 };
 
 class S_CDLCOUNTERATTACK : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1172,6 +2154,23 @@ public:
 };
 
 class CDLDARKCLOUDCOVER : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInPenetration; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1192,6 +2191,23 @@ public:
 };
 
 class S_CDLDARKCLOUDCOVER : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInPenetration; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1212,6 +2228,22 @@ public:
 };
 
 class CDLDOJI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1231,6 +2263,22 @@ public:
 };
 
 class S_CDLDOJI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1250,6 +2298,22 @@ public:
 };
 
 class CDLDOJISTAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1269,6 +2333,22 @@ public:
 };
 
 class S_CDLDOJISTAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1288,6 +2368,22 @@ public:
 };
 
 class CDLDRAGONFLYDOJI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1307,6 +2403,22 @@ public:
 };
 
 class S_CDLDRAGONFLYDOJI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1326,6 +2438,22 @@ public:
 };
 
 class CDLENGULFING : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1345,6 +2473,22 @@ public:
 };
 
 class S_CDLENGULFING : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1364,6 +2508,23 @@ public:
 };
 
 class CDLEVENINGDOJISTAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInPenetration; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1384,6 +2545,23 @@ public:
 };
 
 class S_CDLEVENINGDOJISTAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInPenetration; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1404,6 +2582,23 @@ public:
 };
 
 class CDLEVENINGSTAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInPenetration; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1424,6 +2619,23 @@ public:
 };
 
 class S_CDLEVENINGSTAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInPenetration; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1444,6 +2656,22 @@ public:
 };
 
 class CDLGAPSIDESIDEWHITE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1463,6 +2691,22 @@ public:
 };
 
 class S_CDLGAPSIDESIDEWHITE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1482,6 +2726,22 @@ public:
 };
 
 class CDLGRAVESTONEDOJI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1501,6 +2761,22 @@ public:
 };
 
 class S_CDLGRAVESTONEDOJI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1520,6 +2796,22 @@ public:
 };
 
 class CDLHAMMER : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1539,6 +2831,22 @@ public:
 };
 
 class S_CDLHAMMER : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1558,6 +2866,22 @@ public:
 };
 
 class CDLHANGINGMAN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1577,6 +2901,22 @@ public:
 };
 
 class S_CDLHANGINGMAN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1596,6 +2936,22 @@ public:
 };
 
 class CDLHARAMI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1615,6 +2971,22 @@ public:
 };
 
 class S_CDLHARAMI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1634,6 +3006,22 @@ public:
 };
 
 class CDLHARAMICROSS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1653,6 +3041,22 @@ public:
 };
 
 class S_CDLHARAMICROSS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1672,6 +3076,22 @@ public:
 };
 
 class CDLHIGHWAVE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1691,6 +3111,22 @@ public:
 };
 
 class S_CDLHIGHWAVE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1710,6 +3146,22 @@ public:
 };
 
 class CDLHIKKAKE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1729,6 +3181,22 @@ public:
 };
 
 class S_CDLHIKKAKE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1748,6 +3216,22 @@ public:
 };
 
 class CDLHIKKAKEMOD : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1767,6 +3251,22 @@ public:
 };
 
 class S_CDLHIKKAKEMOD : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1786,6 +3286,22 @@ public:
 };
 
 class CDLHOMINGPIGEON : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1805,6 +3321,22 @@ public:
 };
 
 class S_CDLHOMINGPIGEON : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1824,6 +3356,22 @@ public:
 };
 
 class CDLIDENTICAL3CROWS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1843,6 +3391,22 @@ public:
 };
 
 class S_CDLIDENTICAL3CROWS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1862,6 +3426,22 @@ public:
 };
 
 class CDLINNECK : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1881,6 +3461,22 @@ public:
 };
 
 class S_CDLINNECK : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1900,6 +3496,22 @@ public:
 };
 
 class CDLINVERTEDHAMMER : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1919,6 +3531,22 @@ public:
 };
 
 class S_CDLINVERTEDHAMMER : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1938,6 +3566,22 @@ public:
 };
 
 class CDLKICKING : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1957,6 +3601,22 @@ public:
 };
 
 class S_CDLKICKING : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1976,6 +3636,22 @@ public:
 };
 
 class CDLKICKINGBYLENGTH : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -1995,6 +3671,22 @@ public:
 };
 
 class S_CDLKICKINGBYLENGTH : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2014,6 +3706,22 @@ public:
 };
 
 class CDLLADDERBOTTOM : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2033,6 +3741,22 @@ public:
 };
 
 class S_CDLLADDERBOTTOM : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2052,6 +3776,22 @@ public:
 };
 
 class CDLLONGLEGGEDDOJI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2071,6 +3811,22 @@ public:
 };
 
 class S_CDLLONGLEGGEDDOJI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2090,6 +3846,22 @@ public:
 };
 
 class CDLLONGLINE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2109,6 +3881,22 @@ public:
 };
 
 class S_CDLLONGLINE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2128,6 +3916,22 @@ public:
 };
 
 class CDLMARUBOZU : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2147,6 +3951,22 @@ public:
 };
 
 class S_CDLMARUBOZU : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2166,6 +3986,22 @@ public:
 };
 
 class CDLMATCHINGLOW : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2185,6 +4021,22 @@ public:
 };
 
 class S_CDLMATCHINGLOW : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2204,6 +4056,23 @@ public:
 };
 
 class CDLMATHOLD : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInPenetration; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2224,6 +4093,23 @@ public:
 };
 
 class S_CDLMATHOLD : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInPenetration; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2244,6 +4130,23 @@ public:
 };
 
 class CDLMORNINGDOJISTAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInPenetration; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2264,6 +4167,23 @@ public:
 };
 
 class S_CDLMORNINGDOJISTAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInPenetration; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2284,6 +4204,23 @@ public:
 };
 
 class CDLMORNINGSTAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInPenetration; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2304,6 +4241,23 @@ public:
 };
 
 class S_CDLMORNINGSTAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInPenetration; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2324,6 +4278,22 @@ public:
 };
 
 class CDLONNECK : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2343,6 +4313,22 @@ public:
 };
 
 class S_CDLONNECK : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2362,6 +4348,22 @@ public:
 };
 
 class CDLPIERCING : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2381,6 +4383,22 @@ public:
 };
 
 class S_CDLPIERCING : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2400,6 +4418,22 @@ public:
 };
 
 class CDLRICKSHAWMAN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2419,6 +4453,22 @@ public:
 };
 
 class S_CDLRICKSHAWMAN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2438,6 +4488,22 @@ public:
 };
 
 class CDLRISEFALL3METHODS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2457,6 +4523,22 @@ public:
 };
 
 class S_CDLRISEFALL3METHODS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2476,6 +4558,22 @@ public:
 };
 
 class CDLSEPARATINGLINES : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2495,6 +4593,22 @@ public:
 };
 
 class S_CDLSEPARATINGLINES : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2514,6 +4628,22 @@ public:
 };
 
 class CDLSHOOTINGSTAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2533,6 +4663,22 @@ public:
 };
 
 class S_CDLSHOOTINGSTAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2552,6 +4698,22 @@ public:
 };
 
 class CDLSHORTLINE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2571,6 +4733,22 @@ public:
 };
 
 class S_CDLSHORTLINE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2590,6 +4768,22 @@ public:
 };
 
 class CDLSPINNINGTOP : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2609,6 +4803,22 @@ public:
 };
 
 class S_CDLSPINNINGTOP : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2628,6 +4838,22 @@ public:
 };
 
 class CDLSTALLEDPATTERN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2647,6 +4873,22 @@ public:
 };
 
 class S_CDLSTALLEDPATTERN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2666,6 +4908,22 @@ public:
 };
 
 class CDLSTICKSANDWICH : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2685,6 +4943,22 @@ public:
 };
 
 class S_CDLSTICKSANDWICH : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2704,6 +4978,22 @@ public:
 };
 
 class CDLTAKURI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2723,6 +5013,22 @@ public:
 };
 
 class S_CDLTAKURI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2742,6 +5048,22 @@ public:
 };
 
 class CDLTASUKIGAP : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2761,6 +5083,22 @@ public:
 };
 
 class S_CDLTASUKIGAP : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2780,6 +5118,22 @@ public:
 };
 
 class CDLTHRUSTING : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2799,6 +5153,22 @@ public:
 };
 
 class S_CDLTHRUSTING : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2818,6 +5188,22 @@ public:
 };
 
 class CDLTRISTAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2837,6 +5223,22 @@ public:
 };
 
 class S_CDLTRISTAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2856,6 +5258,22 @@ public:
 };
 
 class CDLUNIQUE3RIVER : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2875,6 +5293,22 @@ public:
 };
 
 class S_CDLUNIQUE3RIVER : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2894,6 +5328,22 @@ public:
 };
 
 class CDLUPSIDEGAP2CROWS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2913,6 +5363,22 @@ public:
 };
 
 class S_CDLUPSIDEGAP2CROWS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2932,6 +5398,22 @@ public:
 };
 
 class CDLXSIDEGAP3METHODS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2951,6 +5433,22 @@ public:
 };
 
 class S_CDLXSIDEGAP3METHODS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inOpen;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2970,6 +5468,19 @@ public:
 };
 
 class CEIL : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -2986,6 +5497,19 @@ public:
 };
 
 class S_CEIL : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3002,6 +5526,20 @@ public:
 };
 
 class CMO : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3019,6 +5557,20 @@ public:
 };
 
 class S_CMO : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3036,6 +5588,21 @@ public:
 };
 
 class CORREL : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal0;
+        ar & inReal1;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3054,6 +5621,21 @@ public:
 };
 
 class S_CORREL : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal0;
+        ar & inReal1;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3072,6 +5654,19 @@ public:
 };
 
 class COS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3088,6 +5683,19 @@ public:
 };
 
 class S_COS : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3104,6 +5712,19 @@ public:
 };
 
 class COSH : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3120,6 +5741,19 @@ public:
 };
 
 class S_COSH : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3136,6 +5770,20 @@ public:
 };
 
 class DEMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3153,6 +5801,20 @@ public:
 };
 
 class S_DEMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3170,6 +5832,20 @@ public:
 };
 
 class DIV : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal0;
+        ar & inReal1;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3187,6 +5863,20 @@ public:
 };
 
 class S_DIV : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal0;
+        ar & inReal1;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3204,6 +5894,22 @@ public:
 };
 
 class DX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3223,6 +5929,22 @@ public:
 };
 
 class S_DX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3242,6 +5964,20 @@ public:
 };
 
 class EMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3259,6 +5995,20 @@ public:
 };
 
 class S_EMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3276,6 +6026,19 @@ public:
 };
 
 class EXP : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3292,6 +6055,19 @@ public:
 };
 
 class S_EXP : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3308,6 +6084,19 @@ public:
 };
 
 class FLOOR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3324,6 +6113,19 @@ public:
 };
 
 class S_FLOOR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3340,6 +6142,19 @@ public:
 };
 
 class HT_DCPERIOD : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3356,6 +6171,19 @@ public:
 };
 
 class S_HT_DCPERIOD : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3372,6 +6200,19 @@ public:
 };
 
 class HT_DCPHASE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3388,6 +6229,19 @@ public:
 };
 
 class S_HT_DCPHASE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3404,6 +6258,20 @@ public:
 };
 
 class HT_PHASOR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInPhase;
+        ar & outQuadrature;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3421,6 +6289,20 @@ public:
 };
 
 class S_HT_PHASOR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInPhase;
+        ar & outQuadrature;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3438,6 +6320,20 @@ public:
 };
 
 class HT_SINE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outSine;
+        ar & outLeadSine;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3455,6 +6351,20 @@ public:
 };
 
 class S_HT_SINE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outSine;
+        ar & outLeadSine;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3472,6 +6382,19 @@ public:
 };
 
 class HT_TRENDLINE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3488,6 +6411,19 @@ public:
 };
 
 class S_HT_TRENDLINE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3504,6 +6440,19 @@ public:
 };
 
 class HT_TRENDMODE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3520,6 +6469,19 @@ public:
 };
 
 class S_HT_TRENDMODE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3536,6 +6498,20 @@ public:
 };
 
 class KAMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3553,6 +6529,20 @@ public:
 };
 
 class S_KAMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3570,6 +6560,20 @@ public:
 };
 
 class LINEARREG : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3587,6 +6591,20 @@ public:
 };
 
 class S_LINEARREG : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3604,6 +6622,20 @@ public:
 };
 
 class LINEARREG_ANGLE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3621,6 +6653,20 @@ public:
 };
 
 class S_LINEARREG_ANGLE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3638,6 +6684,20 @@ public:
 };
 
 class LINEARREG_INTERCEPT : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3655,6 +6715,20 @@ public:
 };
 
 class S_LINEARREG_INTERCEPT : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3672,6 +6746,20 @@ public:
 };
 
 class LINEARREG_SLOPE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3689,6 +6777,20 @@ public:
 };
 
 class S_LINEARREG_SLOPE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3706,6 +6808,19 @@ public:
 };
 
 class LN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3722,6 +6837,19 @@ public:
 };
 
 class S_LN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3738,6 +6866,19 @@ public:
 };
 
 class LOG10 : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3754,6 +6895,19 @@ public:
 };
 
 class S_LOG10 : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3770,6 +6924,21 @@ public:
 };
 
 class MA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & optInMAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3788,6 +6957,21 @@ public:
 };
 
 class S_MA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & optInMAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3806,6 +6990,24 @@ public:
 };
 
 class MACD : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInFastPeriod; /* From 2 to 100000 */
+        ar & optInSlowPeriod; /* From 2 to 100000 */
+        ar & optInSignalPeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outMACD;
+        ar & outMACDSignal;
+        ar & outMACDHist;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3827,6 +7029,24 @@ public:
 };
 
 class S_MACD : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInFastPeriod; /* From 2 to 100000 */
+        ar & optInSlowPeriod; /* From 2 to 100000 */
+        ar & optInSignalPeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outMACD;
+        ar & outMACDSignal;
+        ar & outMACDHist;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3848,6 +7068,27 @@ public:
 };
 
 class MACDEXT : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInFastPeriod; /* From 2 to 100000 */
+        ar & optInFastMAType;
+        ar & optInSlowPeriod; /* From 2 to 100000 */
+        ar & optInSlowMAType;
+        ar & optInSignalPeriod; /* From 1 to 100000 */
+        ar & optInSignalMAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outMACD;
+        ar & outMACDSignal;
+        ar & outMACDHist;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3872,6 +7113,27 @@ public:
 };
 
 class S_MACDEXT : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInFastPeriod; /* From 2 to 100000 */
+        ar & optInFastMAType;
+        ar & optInSlowPeriod; /* From 2 to 100000 */
+        ar & optInSlowMAType;
+        ar & optInSignalPeriod; /* From 1 to 100000 */
+        ar & optInSignalMAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outMACD;
+        ar & outMACDSignal;
+        ar & outMACDHist;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3896,6 +7158,22 @@ public:
 };
 
 class MACDFIX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInSignalPeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outMACD;
+        ar & outMACDSignal;
+        ar & outMACDHist;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3915,6 +7193,22 @@ public:
 };
 
 class S_MACDFIX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInSignalPeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outMACD;
+        ar & outMACDSignal;
+        ar & outMACDHist;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3934,6 +7228,22 @@ public:
 };
 
 class MAMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInFastLimit; /* From 0.01 to 0.99 */
+        ar & optInSlowLimit; /* From 0.01 to 0.99 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outMAMA;
+        ar & outFAMA;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3953,6 +7263,22 @@ public:
 };
 
 class S_MAMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInFastLimit; /* From 0.01 to 0.99 */
+        ar & optInSlowLimit; /* From 0.01 to 0.99 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outMAMA;
+        ar & outFAMA;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3972,6 +7298,23 @@ public:
 };
 
 class MAVP : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & inPeriods;
+        ar & optInMinPeriod; /* From 2 to 100000 */
+        ar & optInMaxPeriod; /* From 2 to 100000 */
+        ar & optInMAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -3992,6 +7335,23 @@ public:
 };
 
 class S_MAVP : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & inPeriods;
+        ar & optInMinPeriod; /* From 2 to 100000 */
+        ar & optInMaxPeriod; /* From 2 to 100000 */
+        ar & optInMAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4012,6 +7372,20 @@ public:
 };
 
 class MAX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4029,6 +7403,20 @@ public:
 };
 
 class S_MAX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4046,6 +7434,20 @@ public:
 };
 
 class MAXINDEX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4063,6 +7465,20 @@ public:
 };
 
 class S_MAXINDEX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4080,6 +7496,20 @@ public:
 };
 
 class MEDPRICE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4097,6 +7527,20 @@ public:
 };
 
 class S_MEDPRICE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4114,6 +7558,23 @@ public:
 };
 
 class MFI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & inVolume;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4134,6 +7595,23 @@ public:
 };
 
 class S_MFI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & inVolume;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4154,6 +7632,20 @@ public:
 };
 
 class MIDPOINT : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4171,6 +7663,20 @@ public:
 };
 
 class S_MIDPOINT : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4188,6 +7694,21 @@ public:
 };
 
 class MIDPRICE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4206,6 +7727,21 @@ public:
 };
 
 class S_MIDPRICE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4224,6 +7760,20 @@ public:
 };
 
 class MIN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4241,6 +7791,20 @@ public:
 };
 
 class S_MIN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4258,6 +7822,20 @@ public:
 };
 
 class MININDEX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4275,6 +7853,20 @@ public:
 };
 
 class S_MININDEX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outInteger;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4292,6 +7884,21 @@ public:
 };
 
 class MINMAX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outMin;
+        ar & outMax;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4310,6 +7917,21 @@ public:
 };
 
 class S_MINMAX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outMin;
+        ar & outMax;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4328,6 +7950,21 @@ public:
 };
 
 class MINMAXINDEX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outMinIdx;
+        ar & outMaxIdx;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4346,6 +7983,21 @@ public:
 };
 
 class S_MINMAXINDEX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outMinIdx;
+        ar & outMaxIdx;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4364,6 +8016,22 @@ public:
 };
 
 class MINUS_DI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4383,6 +8051,22 @@ public:
 };
 
 class S_MINUS_DI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4402,6 +8086,21 @@ public:
 };
 
 class MINUS_DM : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4420,6 +8119,21 @@ public:
 };
 
 class S_MINUS_DM : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4438,6 +8152,20 @@ public:
 };
 
 class MOM : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4455,6 +8183,20 @@ public:
 };
 
 class S_MOM : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4472,6 +8214,20 @@ public:
 };
 
 class MULT : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal0;
+        ar & inReal1;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4489,6 +8245,20 @@ public:
 };
 
 class S_MULT : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal0;
+        ar & inReal1;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4506,6 +8276,22 @@ public:
 };
 
 class NATR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4525,6 +8311,22 @@ public:
 };
 
 class S_NATR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4544,6 +8346,20 @@ public:
 };
 
 class OBV : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & inVolume;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4561,6 +8377,20 @@ public:
 };
 
 class S_OBV : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & inVolume;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4578,6 +8408,22 @@ public:
 };
 
 class PLUS_DI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4597,6 +8443,22 @@ public:
 };
 
 class S_PLUS_DI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4616,6 +8478,21 @@ public:
 };
 
 class PLUS_DM : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4634,6 +8511,21 @@ public:
 };
 
 class S_PLUS_DM : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4652,6 +8544,22 @@ public:
 };
 
 class PPO : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInFastPeriod; /* From 2 to 100000 */
+        ar & optInSlowPeriod; /* From 2 to 100000 */
+        ar & optInMAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4671,6 +8579,22 @@ public:
 };
 
 class S_PPO : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInFastPeriod; /* From 2 to 100000 */
+        ar & optInSlowPeriod; /* From 2 to 100000 */
+        ar & optInMAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4690,6 +8614,20 @@ public:
 };
 
 class ROC : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4707,6 +8645,20 @@ public:
 };
 
 class S_ROC : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4724,6 +8676,20 @@ public:
 };
 
 class ROCP : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4741,6 +8707,20 @@ public:
 };
 
 class S_ROCP : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4758,6 +8738,20 @@ public:
 };
 
 class ROCR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4775,6 +8769,20 @@ public:
 };
 
 class S_ROCR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4792,6 +8800,20 @@ public:
 };
 
 class ROCR100 : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4809,6 +8831,20 @@ public:
 };
 
 class S_ROCR100 : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4826,6 +8862,20 @@ public:
 };
 
 class RSI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4843,6 +8893,20 @@ public:
 };
 
 class S_RSI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4860,6 +8924,22 @@ public:
 };
 
 class SAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & optInAcceleration; /* From 0 to TA_REAL_MAX */
+        ar & optInMaximum; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4879,6 +8959,22 @@ public:
 };
 
 class S_SAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & optInAcceleration; /* From 0 to TA_REAL_MAX */
+        ar & optInMaximum; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4898,6 +8994,28 @@ public:
 };
 
 class SAREXT : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & optInStartValue; /* From TA_REAL_MIN to TA_REAL_MAX */
+        ar & optInOffsetOnReverse; /* From 0 to TA_REAL_MAX */
+        ar & optInAccelerationInitLong; /* From 0 to TA_REAL_MAX */
+        ar & optInAccelerationLong; /* From 0 to TA_REAL_MAX */
+        ar & optInAccelerationMaxLong; /* From 0 to TA_REAL_MAX */
+        ar & optInAccelerationInitShort; /* From 0 to TA_REAL_MAX */
+        ar & optInAccelerationShort; /* From 0 to TA_REAL_MAX */
+        ar & optInAccelerationMaxShort; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4923,6 +9041,28 @@ public:
 };
 
 class S_SAREXT : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & optInStartValue; /* From TA_REAL_MIN to TA_REAL_MAX */
+        ar & optInOffsetOnReverse; /* From 0 to TA_REAL_MAX */
+        ar & optInAccelerationInitLong; /* From 0 to TA_REAL_MAX */
+        ar & optInAccelerationLong; /* From 0 to TA_REAL_MAX */
+        ar & optInAccelerationMaxLong; /* From 0 to TA_REAL_MAX */
+        ar & optInAccelerationInitShort; /* From 0 to TA_REAL_MAX */
+        ar & optInAccelerationShort; /* From 0 to TA_REAL_MAX */
+        ar & optInAccelerationMaxShort; /* From 0 to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4948,6 +9088,19 @@ public:
 };
 
 class SIN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4964,6 +9117,19 @@ public:
 };
 
 class S_SIN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4980,6 +9146,19 @@ public:
 };
 
 class SINH : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -4996,6 +9175,19 @@ public:
 };
 
 class S_SINH : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5012,6 +9204,20 @@ public:
 };
 
 class SMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5029,6 +9235,20 @@ public:
 };
 
 class S_SMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5046,6 +9266,19 @@ public:
 };
 
 class SQRT : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5062,6 +9295,19 @@ public:
 };
 
 class S_SQRT : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5078,6 +9324,21 @@ public:
 };
 
 class STDDEV : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & optInNbDev; /* From TA_REAL_MIN to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5096,6 +9357,21 @@ public:
 };
 
 class S_STDDEV : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & optInNbDev; /* From TA_REAL_MIN to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5114,6 +9390,27 @@ public:
 };
 
 class STOCH : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInFastK_Period; /* From 1 to 100000 */
+        ar & optInSlowK_Period; /* From 1 to 100000 */
+        ar & optInSlowK_MAType;
+        ar & optInSlowD_Period; /* From 1 to 100000 */
+        ar & optInSlowD_MAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outSlowK;
+        ar & outSlowD;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5138,6 +9435,27 @@ public:
 };
 
 class S_STOCH : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInFastK_Period; /* From 1 to 100000 */
+        ar & optInSlowK_Period; /* From 1 to 100000 */
+        ar & optInSlowK_MAType;
+        ar & optInSlowD_Period; /* From 1 to 100000 */
+        ar & optInSlowD_MAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outSlowK;
+        ar & outSlowD;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5162,6 +9480,25 @@ public:
 };
 
 class STOCHF : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInFastK_Period; /* From 1 to 100000 */
+        ar & optInFastD_Period; /* From 1 to 100000 */
+        ar & optInFastD_MAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outFastK;
+        ar & outFastD;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5184,6 +9521,25 @@ public:
 };
 
 class S_STOCHF : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInFastK_Period; /* From 1 to 100000 */
+        ar & optInFastD_Period; /* From 1 to 100000 */
+        ar & optInFastD_MAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outFastK;
+        ar & outFastD;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5206,6 +9562,24 @@ public:
 };
 
 class STOCHRSI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & optInFastK_Period; /* From 1 to 100000 */
+        ar & optInFastD_Period; /* From 1 to 100000 */
+        ar & optInFastD_MAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outFastK;
+        ar & outFastD;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5227,6 +9601,24 @@ public:
 };
 
 class S_STOCHRSI : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & optInFastK_Period; /* From 1 to 100000 */
+        ar & optInFastD_Period; /* From 1 to 100000 */
+        ar & optInFastD_MAType;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outFastK;
+        ar & outFastD;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5248,6 +9640,20 @@ public:
 };
 
 class SUB : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal0;
+        ar & inReal1;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5265,6 +9671,20 @@ public:
 };
 
 class S_SUB : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal0;
+        ar & inReal1;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5282,6 +9702,20 @@ public:
 };
 
 class SUM : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5299,6 +9733,20 @@ public:
 };
 
 class S_SUM : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5316,6 +9764,21 @@ public:
 };
 
 class T3 : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & optInVFactor; /* From 0 to 1 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5334,6 +9797,21 @@ public:
 };
 
 class S_T3 : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & optInVFactor; /* From 0 to 1 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5352,6 +9830,19 @@ public:
 };
 
 class TAN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5368,6 +9859,19 @@ public:
 };
 
 class S_TAN : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5384,6 +9888,19 @@ public:
 };
 
 class TANH : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5400,6 +9917,19 @@ public:
 };
 
 class S_TANH : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5416,6 +9946,20 @@ public:
 };
 
 class TEMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5433,6 +9977,20 @@ public:
 };
 
 class S_TEMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5450,6 +10008,21 @@ public:
 };
 
 class TRANGE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5468,6 +10041,21 @@ public:
 };
 
 class S_TRANGE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5486,6 +10074,20 @@ public:
 };
 
 class TRIMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5503,6 +10105,20 @@ public:
 };
 
 class S_TRIMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5520,6 +10136,20 @@ public:
 };
 
 class TRIX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5537,6 +10167,20 @@ public:
 };
 
 class S_TRIX : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5554,6 +10198,20 @@ public:
 };
 
 class TSF : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5571,6 +10229,20 @@ public:
 };
 
 class S_TSF : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5588,6 +10260,21 @@ public:
 };
 
 class TYPPRICE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5606,6 +10293,21 @@ public:
 };
 
 class S_TYPPRICE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5624,6 +10326,24 @@ public:
 };
 
 class ULTOSC : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod1; /* From 1 to 100000 */
+        ar & optInTimePeriod2; /* From 1 to 100000 */
+        ar & optInTimePeriod3; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5645,6 +10365,24 @@ public:
 };
 
 class S_ULTOSC : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod1; /* From 1 to 100000 */
+        ar & optInTimePeriod2; /* From 1 to 100000 */
+        ar & optInTimePeriod3; /* From 1 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5666,6 +10404,21 @@ public:
 };
 
 class VAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & optInNbDev; /* From TA_REAL_MIN to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5684,6 +10437,21 @@ public:
 };
 
 class S_VAR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 1 to 100000 */
+        ar & optInNbDev; /* From TA_REAL_MIN to TA_REAL_MAX */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5702,6 +10470,21 @@ public:
 };
 
 class WCLPRICE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5720,6 +10503,21 @@ public:
 };
 
 class S_WCLPRICE : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5738,6 +10536,22 @@ public:
 };
 
 class WILLR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5757,6 +10571,22 @@ public:
 };
 
 class S_WILLR : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inHigh;
+        ar & inLow;
+        ar & inClose;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5776,6 +10606,20 @@ public:
 };
 
 class WMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5793,6 +10637,20 @@ public:
 };
 
 class S_WMA : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+        ar & inReal;
+        ar & optInTimePeriod; /* From 2 to 100000 */
+        ar & outBegIdx;
+        ar & outNBElement;
+        ar & outReal;
+    }
+
 public:
     int startIdx;
     int endIdx;
@@ -5810,18 +10668,35 @@ public:
 };
 
 class SetUnstablePeriod : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & id;
+        ar & unstablePeriod;
+    }
+
 public:
     TA_FuncUnstId id;
-    unsigned int unstablePeriod;
+    unsigned unstablePeriod;
 
     SetUnstablePeriod() { };
-    SetUnstablePeriod(TA_FuncUnstId id, unsigned int unstablePeriod);
-    SetUnstablePeriod *create(TA_FuncUnstId id, unsigned int unstablePeriod);
-    void update(TA_FuncUnstId id, unsigned int unstablePeriod);
+    SetUnstablePeriod(TA_FuncUnstId id, unsigned unstablePeriod);
+    SetUnstablePeriod *create(TA_FuncUnstId id, unsigned unstablePeriod);
+    void update(TA_FuncUnstId id, unsigned unstablePeriod);
     TA_RetCode run();
 };
 
 class SetCompatibility : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & value;
+    }
+
 public:
     TA_Compatibility value;
 
@@ -5833,6 +10708,17 @@ public:
 };
 
 class SetCandleSettings : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & settingType; 
+        ar & rangeType; 
+        ar & avgPeriod; 
+        ar & factor;
+    }
+
 public:
     TA_CandleSettingType settingType; 
     TA_RangeType rangeType; 
@@ -5847,6 +10733,14 @@ public:
 };
 
 class RestoreCandleDefaultSettings : public ta {
+private:
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned version) {
+        ar & settingType;
+    }
+
 public:
     TA_CandleSettingType settingType;
 
