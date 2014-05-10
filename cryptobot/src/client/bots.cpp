@@ -4,9 +4,8 @@
 #include <cstdlib>
 #include <cstring>
 
-#include <boost/archive/text_iarchive.hpp>
-#include <boost/archive/text_oarchive.hpp>
-#include <boost/serialization/vector.hpp>
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
 #include <unistd.h>
 
 #include "bots.hh"
@@ -103,7 +102,6 @@ bot::~bot() {
     delete this->bot_db;
     delete this->trade_db;
     delete this->name;
-    delete this->rules;
 }
 
 void bot::update_work() {
@@ -113,7 +111,7 @@ void bot::update_work() {
 void bot::store_rules() {
     // Store the rules vector in the archive
     std::ostringstream oss;
-    boost::archive::text_oarchive oa(oss);
+    boost::archive::binary_oarchive oa(oss);
     oa & this->rules;
     
     // Read the underlying stream buffer
@@ -127,7 +125,7 @@ void bot::store_rules() {
     char *contents = new char[size];
     buf->sgetn(contents, size);
 
-    // Write archive as binary data to NouDB
+    // Write archive as binary data to NuoDB
     int result = this->rule_db->insert(this->id, contents, size);
 
     if ( result == 0 ) {
@@ -135,6 +133,8 @@ void bot::store_rules() {
                   << std::endl;
         exit(EXIT_FAILURE);
     }
+
+    delete contents;
 }
 
 void bot::get_rules() {
@@ -150,7 +150,7 @@ void bot::get_rules() {
         // Read our archive bytestring into an input stream
         std::string tmp = result->getString(2);
         std::istringstream iss(tmp);
-        boost::archive::text_iarchive ia(iss);
+        boost::archive::binary_iarchive ia(iss);
 
         // Delete any rules, if they exist
         if ( this->rules ) {
@@ -181,25 +181,35 @@ void bot::delete_rule(int index) {
 }
 
 void bot::run(bool trade) {
+    std::cout << "Initializing cluster interface" << std::endl;
     control::network *cluster = new control::network();
-    server::BotClient *client = cluster->route();
+    std::cout << "Retrieving next host" << std::endl;
+    control::host *node = cluster->route();
+    std::cout << "Connecting Thrift client on " << node->domain << std::endl;
+    server::BotClient *client = node->client();
 
+    std::cout << "Sending request" << std::endl;
     client->run(this->id, trade);
 
     delete client;
+    delete node;
     delete cluster;
+    std::cout << "Done" << std::endl;
 }
 
 void bot::stop() {
     control::network *cluster = new control::network();
-    server::BotClient *client = cluster->route();
+    control::host *node = cluster->route();
+    server::BotClient *client = node->client();
 
     client->stop(this->id);
 
     delete client;
+    delete node;
     delete cluster;
 }
 
+// TODO: implement user class + hook it into Django/NuoDB
 user::user(int uid) {
 }
 

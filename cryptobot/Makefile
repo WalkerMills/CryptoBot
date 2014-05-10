@@ -82,6 +82,8 @@ lib/worker.o: libnuodbi.so libbots.so
 lib/client.o: libbots.so
 lib/server.o: libbots.so
 lib/Bot.o:
+lib/bots_types.o:
+lib/bots_constants.o:
 
 # Object target compilation flags 
 lib/interface.o: EXTRA_CFLAGS := $(CYTHON_CFLAGS)

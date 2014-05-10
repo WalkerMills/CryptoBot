@@ -1,9 +1,6 @@
 #ifndef __CONTROL_HH__
 #define __CONTROL_HH__
 
-#include <deque>
-#include <string>
-
 #include <thrift/protocol/TCompactProtocol.h>
 #include <thrift/transport/TBufferTransports.h>
 #include <thrift/transport/TSocket.h>
@@ -14,44 +11,48 @@
 
 
 namespace control {
-    // host class acts as an RPC client factory
-    class host {
-    private:
-        char *domain;
-        int port;
-        boost::shared_ptr<apache::thrift::transport::TSocket> socket;
-        boost::shared_ptr<apache::thrift::transport::TTransport> transport;
-        boost::shared_ptr<apache::thrift::protocol::TProtocol> protocol;
-        bool connected;
 
-        void initialize();
-        void connect();
-        void disconnect();
 
-    public:
-        host(char *domain);
-        host(char *domain, int port);
-        ~host();
+// host class acts as an RPC client factory
+class host {
+private:
+    int port;
+    boost::shared_ptr<apache::thrift::transport::TSocket> socket;
+    boost::shared_ptr<apache::thrift::transport::TTransport> transport;
+    boost::shared_ptr<apache::thrift::protocol::TProtocol> protocol;
+    bool connected;
 
-        bool active();
-        server::BotClient *client();
-    };
+    void initialize();
+    void connect();
+    void disconnect();
 
-    // network wraps host, and upon receiving a connection request, uses the
-    // highest priority host object to generate an RPC client
-    class network {
-    private:
-        db::host *host_db;
+public:
+    char *domain;
 
-    public:
-        network();
-        ~network();
+    host(char *domain);
+    host(char *domain, int port);
+    ~host();
 
-        void add_host(char *domain);
-        void remove_host(char *domain);
+    bool active();
+    server::BotClient *client();
+};
 
-        server::BotClient *route();
-    };
+// network wraps host, and upon receiving a connection request, uses the
+// highest priority host object to generate an RPC client
+class network {
+private:
+    db::host *host_db;
+
+public:
+    network();
+    ~network();
+
+    void add_host(char *domain);
+    void remove_host(char *domain);
+
+    host *route();
+};
+
 }
 
 #endif // __CONTROL_HH__

@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 
+#include <boost/serialization/access.hpp>
 #include <boost/serialization/vector.hpp>
 
 #include "nuodbi.hh"

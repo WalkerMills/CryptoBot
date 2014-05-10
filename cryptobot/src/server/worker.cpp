@@ -68,8 +68,7 @@ char *worker::host() {
         exit(EXIT_FAILURE);
     }
 
-    char *domain = (char *) calloc(strlen(info->ai_canonname) + 1, 
-                                   sizeof(char));
+    char *domain = new char[strlen(info->ai_canonname) + 1];
     strcpy(domain, info->ai_canonname);
     freeaddrinfo(info);
 

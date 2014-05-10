@@ -71,12 +71,12 @@ DATABASES = {
     }
 }
 
-# CACHES = {
-#     'default': {
-#         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-#         'LOCATION': 'www.cryptobot.me:11211',
-#     }
-# }
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'www.cryptobot.me:11211',
+    }
+}
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),

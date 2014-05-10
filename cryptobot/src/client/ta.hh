@@ -4,7 +4,7 @@
 #undef MAX
 #undef MIN
 
-#include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/access.hpp>
 #include <ta-lib/ta_common.h>
 
 namespace ta {

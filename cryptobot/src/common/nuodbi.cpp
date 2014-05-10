@@ -211,7 +211,11 @@ int rule::insert(int bid, char *params, unsigned size) {
     NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
         "INSERT INTO " RULE " (bid_id, params) VALUES (?, ?)");
     stmt->setInt(1, bid);
-    stmt->setBytes(2, size, params);
+
+    NuoDB::Blob *blob = this->connection->createBlob();
+    blob->setBytes(size, (const unsigned char *) params);
+    stmt->setBlob(2, blob);
+    blob->release();
 
     int result = this->update(this->connection, stmt);
     stmt->close();
@@ -224,7 +228,11 @@ int rule::create(int bid, char *params, unsigned size) {
         "INSERT INTO " RULE " (bid_id, params) VALUES (?, ?)",
         NuoDB::RETURN_GENERATED_KEYS);
     stmt->setInt(1, bid);
-    stmt->setBytes(2, size, params);
+
+    NuoDB::Blob *blob = this->connection->createBlob();
+    blob->setBytes(size, (const unsigned char *) params);
+    stmt->setBlob(2, blob);
+    blob->release();
 
     this->update(this->connection, stmt);
     NuoDB::ResultSet *result = stmt->getGeneratedKeys();
@@ -284,24 +292,23 @@ int host::create(char *addr, int load) {
 }
 
 char *host::next() {
-    NuoDB::PreparedStatement *stmt;
-    NuoDB::ResultSet *result;
     char *hostname;
 
-    stmt = this->connection->prepareStatement(
-        "SELECT addr FROM ? GROUP BY addr HAVING workload=MIN(workload)");
-    stmt->setString(1, this->model);
-    result = this->query(this->connection, stmt);
+    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
+        "SELECT addr FROM " HOST " GROUP BY addr "
+        "HAVING workload=MIN(workload)");
+    NuoDB::ResultSet *result = this->query(this->connection, stmt);
 
     if ( ! result->next() ) {
         std::cerr << "Error: no hosts found" << std::endl;
         exit(EXIT_FAILURE);
     } else {
-        hostname = new char[strlen(result->getString(1)) + 1];
-        strcpy(hostname, result->getString(1));
+        std::string tmp = result->getString(1);
+        hostname = new char[tmp.size() + 1];
+        strcpy(hostname, tmp.c_str());
     }
-
     result->close();
+
     return hostname;
 }
 

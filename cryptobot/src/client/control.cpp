@@ -73,9 +73,10 @@ network::~network() {
     delete this->host_db;
 }
 
-server::BotClient *network::route() {
+host *network::route() {
     char *domain = host_db->next();
     host *h = new host(domain);
 
-    return h->client();
+    delete domain;
+    return h;
 }
