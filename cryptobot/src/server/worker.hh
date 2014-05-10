@@ -18,6 +18,7 @@ public:
 
     char *host();
     void run();
+    void stop();
 };
 
 #endif // __WORKER_HH__

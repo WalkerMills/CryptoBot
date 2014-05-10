@@ -89,27 +89,22 @@ void worker::run() {
             }
         }
     } else {
-        db::runs *runs_db = new db::runs();
+        // Find this worker's current hostname and get its id
         char *hostname = this->host();
+        db::host *host_db = new db::host();
+        int hid = host_db->primary(hostname);
 
-        NuoDB::PreparedStatement *stmt = runs_db->connection->prepareStatement(
-            "SELECT hid FROM ? WHERE addr=?");
-        stmt->setString(1, HOST);
-        stmt->setString(2, hostname);
-
-        NuoDB::ResultSet *result = runs_db->query(runs_db->connection, stmt);
-
-        if ( ! result ) {
-            std::cerr << "Error: host " << hostname << "not found" 
-                      << std::endl;
-            exit(EXIT_FAILURE);
-        }
-
-        int hid = result->getInt(1);
-        runs_db->insert(hid, this->id, pid);
+        // Create an entry for this worker in the runs relation
+        db::runs *runs_db = new db::runs();
+        runs_db->create(hid, this->id, pid);
 
         delete hostname;
+        delete host_db;
         delete runs_db;
     }
 }
 
+void worker::stop() {
+    // TODO: implement function to stop worker (send kill signal) and update
+    //       records in the database
+}

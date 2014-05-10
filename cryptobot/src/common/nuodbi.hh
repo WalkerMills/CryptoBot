@@ -67,6 +67,7 @@ class trade : public table {
 public:
     trade() : table(TRADE) { }
 
+    int primary(int tid, double price, double amount);
     int insert(int tid, double price, double amount);
     int create(int tid, double price, double amount);
 };
@@ -76,6 +77,7 @@ class bot : public table {
 public:
     bot() : table(BOT) { }
 
+    int primary(int uid, char *name);
     int insert(int uid, char *name, int work);
     int create(int uid, char *name, int work);
 };
@@ -84,6 +86,7 @@ class rule : public table {
 public:
     rule() : table(RULE) {}
 
+    int primary(int bid);
     int insert(int bid, std::string);
     int create(int bid, std::string);
 };
@@ -92,6 +95,7 @@ class host : public table {
 public:
     host() : table(HOST) { }
 
+    int primary(char *addr);
     int insert(char *addr, int load);
     int create(char *addr, int load);
     char *next();
@@ -101,6 +105,7 @@ class runs : public table {
 public:
     runs() : table(RUNS) { }
 
+    int primary(int hid, int bid);
     int insert(int hid, int bid, int pid);
     int create(int hid, int bid, int pid);
 };

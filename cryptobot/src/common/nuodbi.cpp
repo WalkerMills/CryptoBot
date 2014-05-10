@@ -126,6 +126,36 @@ int table::erase(int id) {
 }
 
 
+// Trade relation interface methods
+int trade::primary(int tid, double price, double amount) {
+    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
+        "SELECT id FROM " TRADE " WHERE tid=? AND price=? AND amount=?",
+        NuoDB::RETURN_GENERATED_KEYS);
+    stmt->setInt(1, tid);
+    stmt->setDouble(2, price);
+    stmt->setDouble(3, amount);
+
+    if ( ! this->update(this->connection, stmt) ) {
+        stmt->close();
+        return 0;
+    }
+
+    NuoDB::ResultSet *result = stmt->getGeneratedKeys();
+    stmt->close();
+
+    // Check our results
+    if ( ! result->next() ) {
+        std::cerr << "Error: couldn't retrieve id" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    // Clean up and return the auto-generated id
+    int id = result->getInt(1);
+    result->close();
+
+    return id;
+}
+
 int trade::insert(int tid, double price, double amount) {
     NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
         "INSERT INTO " TRADE " (tid, price, amount) VALUES (?, ?, ?)");
@@ -140,6 +170,9 @@ int trade::insert(int tid, double price, double amount) {
 }
 
 int trade::create(int tid, double price, double amount) {
+    int id = this->primary(tid, price, amount);
+    if ( id ) return id;
+
     NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
         "INSERT INTO " TRADE " (tid, price, amount) VALUES (?, ?, ?)",
         NuoDB::RETURN_GENERATED_KEYS);
@@ -160,12 +193,41 @@ int trade::create(int tid, double price, double amount) {
     }
 
     // Clean up and return the auto-generated id
-    int bid = result->getInt(1);
+    id = result->getInt(1);
     result->close();
 
-    return bid;
+    return id;
 }
 
+
+// Bot relation interface methods
+int bot::primary(int uid, char *name) {
+    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
+        "SELECT id FROM " BOT " WHERE uid_id=? AND name=?",
+        NuoDB::RETURN_GENERATED_KEYS);
+    stmt->setInt(1, uid);
+    stmt->setString(2, name);
+
+    if ( ! this->update(this->connection, stmt) ) {
+        stmt->close();
+        return 0;
+    }
+
+    NuoDB::ResultSet *result = stmt->getGeneratedKeys();
+    stmt->close();
+
+    // Check our results
+    if ( ! result->next() ) {
+        std::cerr << "Error: couldn't retrieve id" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    // Clean up and return the auto-generated id
+    int id = result->getInt(1);
+    result->close();
+
+    return id;
+}
 
 int bot::insert(int uid, char *name, int work) {
     NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
@@ -181,6 +243,9 @@ int bot::insert(int uid, char *name, int work) {
 }
 
 int bot::create(int uid, char *name, int work) {
+    int id = this->primary(uid, name);
+    if ( id ) return id;
+
     NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
         "INSERT INTO " BOT " (uid_id, name, work) VALUES (?, ?, ?)",
         NuoDB::RETURN_GENERATED_KEYS);
@@ -200,12 +265,40 @@ int bot::create(int uid, char *name, int work) {
     }
 
     // Clean up and return the auto-generated id
-    int bid = result->getInt(1);
+    id = result->getInt(1);
     result->close();
 
-    return bid;
+    return id;
 }
 
+
+// Rule relation interface methods
+int rule::primary(int bid) {
+    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
+        "SELECT id FROM " RULE " WHERE bid_id=?", 
+        NuoDB::RETURN_GENERATED_KEYS);
+    stmt->setInt(1, bid);
+
+    if ( ! this->update(this->connection, stmt) ) {
+        stmt->close();
+        return 0;
+    }
+
+    NuoDB::ResultSet *result = stmt->getGeneratedKeys();
+    stmt->close();
+
+    // Check our results
+    if ( ! result->next() ) {
+        std::cerr << "Error: couldn't retrieve id" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    // Clean up and return the auto-generated id
+    int id = result->getInt(1);
+    result->close();
+
+    return id;
+}
 
 int rule::insert(int bid, std::string params) {
     NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
@@ -224,6 +317,9 @@ int rule::insert(int bid, std::string params) {
 }
 
 int rule::create(int bid, std::string params) {
+    int id = this->primary(bid);
+    if ( id ) return id;
+
     NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
         "INSERT INTO " RULE " (bid_id, params) VALUES (?, ?)",
         NuoDB::RETURN_GENERATED_KEYS);
@@ -246,12 +342,39 @@ int rule::create(int bid, std::string params) {
     }
 
     // Clean up and return the auto-generated id
-    int rid = result->getInt(1);
+    id = result->getInt(1);
     result->close();
 
-    return rid;
+    return id;
 }
 
+
+// Host databse interface methods
+int host::primary(char *addr) {
+    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
+        "SELECT FROM " HOST " WHERE addr=?", NuoDB::RETURN_GENERATED_KEYS);
+    stmt->setString(1, addr);
+
+    if ( ! this->update(this->connection, stmt) ) {
+        stmt->close();
+        return 0;
+    }
+
+    NuoDB::ResultSet *result = stmt->getGeneratedKeys();
+    stmt->close();
+
+    // Check our results
+    if ( ! result->next() ) {
+        std::cerr << "Error: couldn't retrieve id" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    // Clean up and return the auto-generated id
+    int id = result->getInt(1);
+    result->close();
+
+    return id;
+}
 
 int host::insert(char *addr, int load) {
     NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
@@ -267,6 +390,9 @@ int host::insert(char *addr, int load) {
 }
 
 int host::create(char *addr, int load) {
+    int id = this->primary(addr);
+    if ( id ) return id;
+
     NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
         "INSERT INTO " HOST " (addr, workload) VALUES (?, ?)",
         NuoDB::RETURN_GENERATED_KEYS);
@@ -279,16 +405,15 @@ int host::create(char *addr, int load) {
 
     // Check our results
     if ( ! result->next() ) {
-        std::cerr << "Error: no host named " << addr << " found with workload "
-                  << load << std::endl;
-        exit(EXIT_FAILURE); 
+        result->close();
+        return 0;
     }
 
     // Clean up and return the auto-generated id
-    int hid = result->getInt(1);
+    id = result->getInt(1);
     result->close();
 
-    return hid;
+    return id;
 }
 
 char *host::next() {
@@ -313,6 +438,34 @@ char *host::next() {
 }
 
 
+// Runs relation interface methods
+int runs::primary(int hid, int bid) {
+    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
+        "SELECT FROM " RUNS " WHERE hid_id=? AND bid_id=?");
+    stmt->setInt(1, hid);
+    stmt->setInt(2, bid);
+
+    if ( ! this->update(this->connection, stmt) ) {
+        stmt->close();
+        return 0;
+    }
+
+    NuoDB::ResultSet *result = stmt->getGeneratedKeys();
+    stmt->close();
+
+    // Check our results
+    if ( ! result->next() ) {
+        std::cerr << "Error: couldn't retrieve id" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    // Clean up and return the auto-generated id
+    int id = result->getInt(1);
+    result->close();
+
+    return id;
+}
+
 int runs::insert(int hid, int bid, int pid) {
     NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
         "INSERT INTO " RUNS " (hid_id, bid_id, pid) VALUES (?, ?, ?)");
@@ -327,6 +480,9 @@ int runs::insert(int hid, int bid, int pid) {
 }
 
 int runs::create(int hid, int bid, int pid) {
+    int id = this->primary(hid, bid);
+    if ( id ) return id;
+
     NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
         "INSERT INTO " RUNS " (hid_id, bid_id, pid) VALUES (?, ?, ?)",
         NuoDB::RETURN_GENERATED_KEYS);
@@ -346,9 +502,9 @@ int runs::create(int hid, int bid, int pid) {
     }
 
     // Clean up and return the auto-generated id
-    int rid = result->getInt(1);
+    id = result->getInt(1);
     result->close();
 
-    return rid;
+    return id;
 }
 
