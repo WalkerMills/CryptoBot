@@ -207,15 +207,15 @@ int bot::create(int uid, char *name, int work) {
 }
 
 
-int rule::insert(int bid, char *params, unsigned size) {
+int rule::insert(int bid, std::string params) {
     NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
         "INSERT INTO " RULE " (bid_id, params) VALUES (?, ?)");
     stmt->setInt(1, bid);
 
-    NuoDB::Blob *blob = this->connection->createBlob();
-    blob->setBytes(size, (const unsigned char *) params);
-    stmt->setBlob(2, blob);
-    blob->release();
+    NuoDB::Clob *clob = this->connection->createClob();
+    clob->appendChars(params.size(), params.c_str());
+    stmt->setClob(2, clob);
+    clob->release();
 
     int result = this->update(this->connection, stmt);
     stmt->close();
@@ -223,16 +223,16 @@ int rule::insert(int bid, char *params, unsigned size) {
     return result;
 }
 
-int rule::create(int bid, char *params, unsigned size) {
+int rule::create(int bid, std::string params) {
     NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
         "INSERT INTO " RULE " (bid_id, params) VALUES (?, ?)",
         NuoDB::RETURN_GENERATED_KEYS);
     stmt->setInt(1, bid);
 
-    NuoDB::Blob *blob = this->connection->createBlob();
-    blob->setBytes(size, (const unsigned char *) params);
-    stmt->setBlob(2, blob);
-    blob->release();
+    NuoDB::Clob *clob = this->connection->createClob();
+    clob->appendChars(params.size(), params.c_str());
+    stmt->setClob(2, clob);
+    clob->release();
 
     this->update(this->connection, stmt);
     NuoDB::ResultSet *result = stmt->getGeneratedKeys();

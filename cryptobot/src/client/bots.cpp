@@ -114,27 +114,14 @@ void bot::store_rules() {
     boost::archive::binary_oarchive oa(oss);
     oa & this->rules;
     
-    // Read the underlying stream buffer
-    std::stringbuf *buf = oss.rdbuf();
-
-    // Read the size of the stream and rewind
-    unsigned size = buf->pubseekoff(0, oss.end);
-    buf->pubseekoff(0, oss.beg);
-    
-    // Read the contents of the buffer into a string
-    char *contents = new char[size];
-    buf->sgetn(contents, size);
-
     // Write archive as binary data to NuoDB
-    int result = this->rule_db->insert(this->id, contents, size);
+    int result = this->rule_db->insert(this->id, oss.str());
 
     if ( result == 0 ) {
         std::cerr << "Error: no rules found for bot with id " << this->id
                   << std::endl;
         exit(EXIT_FAILURE);
     }
-
-    delete contents;
 }
 
 void bot::get_rules() {

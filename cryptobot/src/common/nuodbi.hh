@@ -84,8 +84,8 @@ class rule : public table {
 public:
     rule() : table(RULE) {}
 
-    int insert(int bid, char *params, unsigned size);
-    int create(int bid, char *params, unsigned size);
+    int insert(int bid, std::string);
+    int create(int bid, std::string);
 };
 
 class host : public table {

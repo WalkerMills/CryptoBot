@@ -1,6 +1,7 @@
+import base64
+
 from django.db import models
 from django.contrib.auth.models import User
-
 
 # All user (exchange) API keys
 class Key(models.Model):
@@ -39,8 +40,15 @@ class Rule(models.Model):
     # Bot id
     bid = models.ForeignKey(Bot, to_field='id')
 
-    # JSON-ified rule specification [{function: params}]
-    params = models.BinaryField()
+    _params = models.TextField(db_column='params', blank=True)
+
+    def set_params(self, params):
+        self._params = base64.encodestring(params)
+
+    def get_params(self):
+        return base64.decodestring(self._params)
+
+    params = property(get_params, set_params)
 
 # All nodes in the computing cluster for running bots
 class Host(models.Model):
