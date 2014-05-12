@@ -17,7 +17,6 @@ public:
     ~worker();
 
     void run();
-    void halt();
     char *host();
 
     static void stop(int id);

@@ -1,10 +1,11 @@
 #include <thrift/protocol/TCompactProtocol.h>
 #include <thrift/transport/TBufferTransports.h>
 #include <thrift/transport/TSocket.h>
+#include <unistd.h>
 
 #include "bots.hh"
 #include "Bot.h"
-#include "worker.hh"
+// #include "worker.hh"
 
 using namespace apache::thrift;
 using namespace apache::thrift::protocol;
@@ -16,7 +17,9 @@ int main(int argc, char **argv) {
     bots::rule *r = new bots::rule(bots::watch, 0.0, "SMA");
     b->insert_rule(r);
     b->run(false);
+    usleep(5000);
     b->stop();
+    // worker::stop(b->id);
 
     delete b;
 

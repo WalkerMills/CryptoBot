@@ -42,7 +42,6 @@ public:
 class bot {
 private:
     db::bot *bot_db;
-    db::trade *trade_db;
     db::rule *rule_db;
 
     void update_work();

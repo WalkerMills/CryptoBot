@@ -35,7 +35,7 @@ rule::~rule() {
 bool rule::test() {
     // TODO: test can retrieve market data
     std::cout << "ping" << std::endl;
-    usleep(3000);
+    // usleep(3000);
 
     return false;
 }
@@ -52,7 +52,6 @@ bot::bot() {
 bot::bot(int bid) {
     // Initialize database connections and store id
     this->bot_db = new db::bot();
-    this->trade_db = new db::trade();
     this->rule_db = new db::rule();
 
     this->id = bid;
@@ -84,7 +83,6 @@ bot::bot(int bid) {
 bot::bot(int uid, char *name) {
     // Initialize database connections
     this->bot_db = new db::bot();
-    this->trade_db = new db::trade();
     this->rule_db = new db::rule();
 
     // Initialize bot attributes
@@ -95,13 +93,13 @@ bot::bot(int uid, char *name) {
     this->rules = new std::vector<rule *>();
 
     // Create a new entry for this bot
-    this->id = bot_db->create_or_update(this->uid, this->name, this->work);
+    this->id = bot_db->get_or_create(this->uid, this->name, this->work);
 }
 
 bot::~bot() {
     delete this->rules;
     delete this->bot_db;
-    delete this->trade_db;
+    delete this->rule_db;
     delete this->name;
 }
 
@@ -158,9 +156,28 @@ void bot::delete_rule(int index) {
 void bot::run(bool trade) {
     control::network *cluster = new control::network();
     control::host *node = cluster->route();
-    server::BotClient *client = node->client();
+    server::BotClient *client = node->client();  
 
-    client->run(this->id, trade);
+    // Get the id of our node
+    db::host *host_db = new db::host();
+    const int hid = host_db->primary(node->domain);
+    delete host_db;
+
+    // Run this bot, if it's not already active
+    db::runs *runs_db = new db::runs();
+    try {
+        // Create a new entry in the runs database
+        runs_db->insert(hid, this->id, 0);
+
+        // Run this bot
+        client->run(this->id, trade);
+    } catch ( NuoDB::SQLException &e ) {
+        if ( e.getSqlcode() == -27 ) {
+            std::cerr << "Warning: bot " << this->id << " is already running" 
+                      << std::endl;
+        }
+    }
+    delete runs_db;
 
     delete client;
     delete node;
@@ -172,6 +189,7 @@ void bot::stop() {
     control::host *node = cluster->route();
     server::BotClient *client = node->client();
 
+    // Stop this bot
     client->stop(this->id);
 
     delete client;

@@ -3,6 +3,7 @@ import base64
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # All user (exchange) API keys
 class Key(models.Model):
     # Key name
@@ -14,6 +15,7 @@ class Key(models.Model):
     # Private key
     ciphertext = models.BinaryField(max_length=48)
 
+
 # Relates users to keys via unique id's
 class Uses(models.Model):
     # User id
@@ -22,6 +24,8 @@ class Uses(models.Model):
     # Key id
     kid = models.ForeignKey(Key, to_field='id')
 
+    class Meta:
+        unique_together = (("uid", "kid"),)
 
 
 # All existing bots
@@ -35,10 +39,14 @@ class Bot(models.Model):
     # Anticipated work for this bot
     work = models.IntegerField()
 
+    class Meta:
+        unique_together = (("name", "uid"),)
+
+
 # All existing rules for bots
 class Rule(models.Model):
     # Bot id
-    bid = models.ForeignKey(Bot, to_field='id')
+    bid = models.ForeignKey(Bot, to_field='id', unique=True)
 
     _params = models.TextField(db_column='params', blank=True)
 
@@ -50,13 +58,15 @@ class Rule(models.Model):
 
     params = property(get_params, set_params)
 
+
 # All nodes in the computing cluster for running bots
 class Host(models.Model):
     # IP address or domain name
-    addr = models.CharField(max_length=24)
+    addr = models.CharField(max_length=24, unique=True)
 
     # Total aggregate workload on the host
     workload = models.IntegerField()
+
 
 # Relates bots to their hosts
 class Runs(models.Model):
@@ -64,7 +74,7 @@ class Runs(models.Model):
     hid = models.ForeignKey(Host, to_field='id')
 
     # Bot id
-    bid = models.ForeignKey(Bot, to_field='id')
+    bid = models.ForeignKey(Bot, to_field='id', unique=True)
 
     # Bot's process id on the host
     pid = models.IntegerField()

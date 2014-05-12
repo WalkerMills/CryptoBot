@@ -117,8 +117,8 @@ lib%.so: lib/%.o
 	$(EXTRA_LDFLAGS)
 
 # Binary target dependencies
-client server: lib/Bot.o lib/bots_types.o lib/bots_constants.o lib/worker.o
-# server: lib/Bot.o lib/bots_types.o lib/bots_constants.o lib/worker.o
+client: lib/Bot.o lib/bots_types.o lib/bots_constants.o
+server: lib/Bot.o lib/bots_types.o lib/bots_constants.o lib/worker.o
 
 # Binary target linking flags
 client server: EXTRA_LDFLAGS := $(THRIFT_LDFLAGS) $(SERIAL_LDFLAGS) \

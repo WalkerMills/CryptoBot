@@ -95,7 +95,7 @@ public:
     int get_or_create(const int bid, const std::string rules);
     int create_or_update(const int bid, const std::string rules);
 
-    std::string params(int bid);
+    std::string params(const int bid);
 };
 
 class host : public table {
@@ -114,10 +114,12 @@ class runs : public table {
 public:
     runs() : table(RUNS) { }
 
-    int primary(const int hid, const int bid);
+    int primary(const int bid);
     int insert(const int hid, const int bid, const int pid);
     int get_or_create(const int hid, const int bid, const int pid);
     int create_or_update(const int hid, const int bid, const int pid);
+
+    int hid(const int bid);
 };
 
 }
