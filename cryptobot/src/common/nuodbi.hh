@@ -22,7 +22,7 @@ namespace db {
 class base {
 private:
     static constexpr char *name = "djangodb";
-    static constexpr char *addr = "www.cryptobot.me";
+    static constexpr char *hostname = "www.cryptobot.me";
     static constexpr char *username = "admin";
     static constexpr char *password = "NoFags";
     static constexpr int properties = 1;
@@ -36,9 +36,10 @@ public:
     ~base();
 
     // Helper functions for safe execution of statements over the connection
-    static int update(NuoDB::Connection *conn, NuoDB::PreparedStatement *stmt);
-    static NuoDB::ResultSet *query(NuoDB::Connection *conn, 
-                                   NuoDB::PreparedStatement *stmt);
+    NuoDB::PreparedStatement *prepare(const char *sql, int keys = 0);
+    // NuoDB::PreparedStatement *prepare(const char *sql);
+    int update(NuoDB::PreparedStatement *stmt);
+    NuoDB::ResultSet *query(NuoDB::PreparedStatement *stmt);
 
     // SELECT from a table by id
     NuoDB::ResultSet *get(char *table, int id);
@@ -67,9 +68,11 @@ class trade : public table {
 public:
     trade() : table(TRADE) { }
 
-    int primary(int tid, double price, double amount);
-    int insert(int tid, double price, double amount);
-    int create(int tid, double price, double amount);
+    int primary(const int tid, const double price, const double amount);
+    int insert(const int tid, const double price, const double amount);
+    int get_or_create(const int tid, const double price, const double amount);
+    int create_or_update(const int tid, const double price, 
+                         const double amount);
 };
 
 
@@ -77,27 +80,33 @@ class bot : public table {
 public:
     bot() : table(BOT) { }
 
-    int primary(int uid, char *name);
-    int insert(int uid, char *name, int work);
-    int create(int uid, char *name, int work);
+    int primary(const int uid, const char *name);
+    int insert(const int uid, const char *name, const int work);
+    int get_or_create(const int uid, const char *name, const int work);
+    int create_or_update(const int uid, const char *name, const int work);
 };
 
 class rule : public table {
 public:
     rule() : table(RULE) {}
 
-    int primary(int bid);
-    int insert(int bid, std::string);
-    int create(int bid, std::string);
+    int primary(const int bid);
+    int insert(const int bid, const std::string rules);
+    int get_or_create(const int bid, const std::string rules);
+    int create_or_update(const int bid, const std::string rules);
+
+    std::string params(int bid);
 };
 
 class host : public table {
 public:
     host() : table(HOST) { }
 
-    int primary(char *addr);
-    int insert(char *addr, int load);
-    int create(char *addr, int load);
+    int primary(const char *addr);
+    int insert(const char *addr, const int load);
+    int get_or_create(const char *addr, const int load);
+    int create_or_update(const char *addr, const int load);
+
     char *next();
 };
 
@@ -105,9 +114,10 @@ class runs : public table {
 public:
     runs() : table(RUNS) { }
 
-    int primary(int hid, int bid);
-    int insert(int hid, int bid, int pid);
-    int create(int hid, int bid, int pid);
+    int primary(const int hid, const int bid);
+    int insert(const int hid, const int bid, const int pid);
+    int get_or_create(const int hid, const int bid, const int pid);
+    int create_or_update(const int hid, const int bid, const int pid);
 };
 
 }

@@ -4,6 +4,7 @@
 
 #include "bots.hh"
 #include "Bot.h"
+#include "worker.hh"
 
 using namespace apache::thrift;
 using namespace apache::thrift::protocol;

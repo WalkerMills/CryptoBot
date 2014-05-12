@@ -117,13 +117,14 @@ lib%.so: lib/%.o
 	$(EXTRA_LDFLAGS)
 
 # Binary target dependencies
-client: lib/Bot.o lib/bots_types.o lib/bots_constants.o
-server: lib/Bot.o lib/bots_types.o lib/bots_constants.o lib/worker.o
+client server: lib/Bot.o lib/bots_types.o lib/bots_constants.o lib/worker.o
+# server: lib/Bot.o lib/bots_types.o lib/bots_constants.o lib/worker.o
 
 # Binary target linking flags
-client: EXTRA_LDFLAGS := $(THRIFT_LDFLAGS) -lthriftnb -levent -lbots
-server: EXTRA_LDFLAGS := $(THRIFT_LDFLAGS) $(SERIAL_LDFLAGS) \
+client server: EXTRA_LDFLAGS := $(THRIFT_LDFLAGS) $(SERIAL_LDFLAGS) \
 -lthriftnb -levent -lbots -lnuodbi
+# server: EXTRA_LDFLAGS := $(THRIFT_LDFLAGS) $(SERIAL_LDFLAGS) \
+# -lthriftnb -levent -lbots -lnuodbi
 
 # Default rule for compiling binaries
 $(BINS): %: lib/%.o

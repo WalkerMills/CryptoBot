@@ -41,17 +41,9 @@ public:
 
 class bot {
 private:
-    friend class boost::serialization::access;
-
     db::bot *bot_db;
     db::trade *trade_db;
     db::rule *rule_db;
-
-    template<class archive>
-    void serialize(archive &ar, const std::vector<rule *> &rules, 
-              const unsigned version) {
-        ar & rules;
-    }
 
     void update_work();
     void store_rules();

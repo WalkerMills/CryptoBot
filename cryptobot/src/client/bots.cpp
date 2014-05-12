@@ -4,8 +4,9 @@
 #include <cstdlib>
 #include <cstring>
 
-#include <boost/archive/binary_iarchive.hpp>
-#include <boost/archive/binary_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/vector.hpp>
 #include <unistd.h>
 
 #include "bots.hh"
@@ -63,17 +64,17 @@ bot::bot(int bid) {
     if ( ! result->next() ) {
         std::cerr << "Error: no bot found with id " << id << std::endl;
         exit(EXIT_FAILURE); 
-    } else {
-        // Cache this bot's information
-        this->uid = result->getInt(3);
-        std::string tmp = result->getString(2);
-        this->name = new char[tmp.size() + 1];
-        strcpy(this->name, tmp.c_str());
-
-        // Retrieve this bot's rules and update its work 
-        this->get_rules();
-        this->update_work();
     }
+
+    // Cache this bot's information
+    this->uid = result->getInt(3);
+    std::string tmp = result->getString(2);
+    this->name = new char[tmp.size() + 1];
+    strcpy(this->name, tmp.c_str());
+
+    // Retrieve this bot's rules and update its work 
+    this->get_rules();
+    this->update_work();
 
     // Clean up
     result->close();
@@ -94,7 +95,7 @@ bot::bot(int uid, char *name) {
     this->rules = new std::vector<rule *>();
 
     // Create a new entry for this bot
-    this->id = bot_db->create(this->uid, this->name, this->work);
+    this->id = bot_db->create_or_update(this->uid, this->name, this->work);
 }
 
 bot::~bot() {
@@ -109,44 +110,31 @@ void bot::update_work() {
 }
 
 void bot::store_rules() {
-    // Store the rules vector in the archive
+    // Serialize rules vector into a string
     std::ostringstream oss;
-    boost::archive::binary_oarchive oa(oss);
-    oa & this->rules;
+    boost::archive::text_oarchive oa(oss);
+    oa & BOOST_SERIALIZATION_NVP(*(this->rules));
+    const std::string &tmp = oss.str();
     
     // Write archive as binary data to NuoDB
-    int result = this->rule_db->insert(this->id, oss.str());
-
-    if ( result == 0 ) {
-        std::cerr << "Error: no rules found for bot with id " << this->id
-                  << std::endl;
-        exit(EXIT_FAILURE);
-    }
+    this->rule_db->create_or_update(this->id, tmp);
 }
 
 void bot::get_rules() {
-    // Find this bot's row
-    NuoDB::ResultSet *result = rule_db->get(this->id);
+    // Read our archive bytestring into an input stream
+    std::string tmp = rule_db->params(this->id);
+    std::istringstream iss(tmp);
+    boost::archive::text_iarchive ia(iss);
 
-    // Check our results
-    if ( ! result->next() ) {
-        std::cerr << "Error: no rules found for bot with id " << this->id
-                  << std::endl;
-        exit(EXIT_FAILURE);
-    } else {
-        // Read our archive bytestring into an input stream
-        std::string tmp = result->getString(2);
-        std::istringstream iss(tmp);
-        boost::archive::binary_iarchive ia(iss);
-
-        // Delete any rules, if they exist
-        if ( this->rules ) {
-            delete this->rules;
-        }
-
-        // Read this bot's rules from the archive
-        ia & this->rules;
+    // Delete any rules, if they exist
+    if ( this->rules ) {
+        delete this->rules;
     }
+
+    // Read this bot's rules from the archive
+    std::vector<bots::rule *> out;
+    ia >> BOOST_SERIALIZATION_NVP(out);
+    this->rules = new std::vector<bots::rule *>(out);
 }
 
 void bot::insert_rule(rule *r) {
@@ -168,20 +156,15 @@ void bot::delete_rule(int index) {
 }
 
 void bot::run(bool trade) {
-    std::cout << "Initializing cluster interface" << std::endl;
     control::network *cluster = new control::network();
-    std::cout << "Retrieving next host" << std::endl;
     control::host *node = cluster->route();
-    std::cout << "Connecting Thrift client on " << node->domain << std::endl;
     server::BotClient *client = node->client();
 
-    std::cout << "Sending request" << std::endl;
     client->run(this->id, trade);
 
     delete client;
     delete node;
     delete cluster;
-    std::cout << "Done" << std::endl;
 }
 
 void bot::stop() {

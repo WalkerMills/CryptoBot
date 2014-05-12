@@ -16,9 +16,11 @@ public:
     worker(int id, bool trade);
     ~worker();
 
-    char *host();
     void run();
-    void stop();
+    void halt();
+    char *host();
+
+    static void stop(int id);
 };
 
 #endif // __WORKER_HH__

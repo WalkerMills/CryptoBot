@@ -44,7 +44,7 @@ THRIFT_FLAGS = -out $(gendir) -I $(gendir) -strict --gen cpp
 
 
 # Flags for compiling and linking against Cython
-CYTHON_CFLAGS = -I/usr/include/python2.7 -Wno-strict-aliasing -fPIC
+CYTHON_CFLAGS = -I/usr/include/python2.7 -Wno-strict-aliasing
 CYTHON_LDFLAGS = -lpython2.7 
 
 # Flags for linking against NuoDB

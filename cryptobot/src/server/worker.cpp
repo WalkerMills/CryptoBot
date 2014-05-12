@@ -19,34 +19,12 @@
 worker::worker(int id, bool trade) {
     this->id = id;
     this->trade = trade;
-    db::rule *rule_db = new db::rule();
-
-    // Find this bot's row
-    NuoDB::ResultSet *result = rule_db->get(this->id);
-
-    // Check our results
-    if ( ! result->next() ) {
-        std::cerr << "Error: no rules found for bot with id " << this->id
-                  << std::endl;
-        exit(EXIT_FAILURE);
-    } else {
-        // Read our archive bytestring into an input stream
-        std::string tmp = result->getString(2);
-        std::istringstream iss(tmp);
-        boost::archive::text_iarchive ia(iss);
-
-        // Delete any rules, if they exist
-        if ( this->rules ) {
-            delete this->rules;
-        }
-
-        // Read this bot's rules from the archive
-        ia & this->rules;
-    }
+    this->rules = NULL;
 }
 
 worker::~worker() {
-    delete this->rules;
+    // Delete any rules, if they exist
+    if ( this->rules ) delete this->rules;
 }
 
 char *worker::host() {
@@ -72,16 +50,41 @@ char *worker::host() {
     strcpy(domain, info->ai_canonname);
     freeaddrinfo(info);
 
+    std::cout << "Current host: " << domain << std::endl;
     return domain;
 }
 
 void worker::run() {
+    // Fork child process to do work
     pid_t pid = fork();
 
     if ( pid == -1 ) {
         std::cerr << "Error: forking child process failed" << std::endl;
     } else if ( pid == 0 ) {
-        while ( true ) {
+        // Connect to rule database
+        db::rule *rule_db = new db::rule();
+
+        // Retrieve rule bytestring from the database and close connection
+        std::string tmp = rule_db->params(this->id);
+        delete rule_db;
+
+        // Load this worker's rule bytestring into an archive
+        std::stringstream iss;
+        iss << tmp;
+        boost::archive::text_iarchive ia(iss);
+
+        // Delete any rules, if they exist
+        if ( this->rules ) delete this->rules;
+
+        // Read this worker's rules from the archive
+        std::vector<bots::rule *> out;
+        ia >> BOOST_SERIALIZATION_NVP(out);
+        this->rules = new std::vector<bots::rule *>(out);
+
+        // Execute rules
+        // while ( true )
+        for ( unsigned j = 0; j < 5; ++j ) 
+        {
             for ( int i = 0; i < this->rules->size(); ++i ) {
                 if ( this->rules->at(i)->test() && this->trade ) {
                     this->rules->at(i)->trade();
@@ -90,21 +93,21 @@ void worker::run() {
         }
     } else {
         // Find this worker's current hostname and get its id
-        char *hostname = this->host();
+        const char *hostname = this->host();
         db::host *host_db = new db::host();
-        int hid = host_db->primary(hostname);
+        const int hid = host_db->primary(hostname);
+        delete hostname;
+        delete host_db;
 
         // Create an entry for this worker in the runs relation
         db::runs *runs_db = new db::runs();
-        runs_db->create(hid, this->id, pid);
-
-        delete hostname;
-        delete host_db;
+        runs_db->insert(hid, this->id, pid);
         delete runs_db;
     }
 }
 
-void worker::stop() {
+void worker::stop(int id) {
     // TODO: implement function to stop worker (send kill signal) and update
     //       records in the database
+    std::cerr << "Worker " << id << " received stop command" << std::endl;
 }

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <cstdlib>
 #include <cstring>
 
@@ -10,7 +11,7 @@ base::base() {
     // Concatenate name@addr for the NuoDB connection
     std::string db_name = this->name;
     db_name.append("@");
-    db_name.append(this->addr);
+    db_name.append(this->hostname);
 
     // Open the NuoDB connection
     this->connection = NuoDB::Connection::create(
@@ -23,23 +24,52 @@ base::~base() {
     this->connection->close();
 }
 
+// Safe NuoDB statement preparation; returns prepared statement
+NuoDB::PreparedStatement *base::prepare(const char *sql, int keys) {
+    NuoDB::PreparedStatement *stmt;
+
+    // Safely prepare our SQL command
+    try {
+        // Prepare SQL command
+        if ( ! keys ) {
+            stmt = this->connection->prepareStatement(sql);
+        } else {
+            // Pass auto-generated keys flag if given
+            stmt = this->connection->prepareStatement(sql, keys);
+        }
+
+    // If it fails, print some information and throw the error
+    } catch ( NuoDB::SQLException &e ) {
+        std::cerr << "Error: SQL error " << e.getSqlcode() << " "
+                  << e.getText() << std::endl;
+        throw;
+    }
+
+    return stmt;
+}
+
+// Prepare a statement without auto-generated keys flag
+// NuoDB::PreparedStatement *base::prepare(const char *sql) {
+//     return this->prepare(sql, 0);
+// }
+
 // Safe NuoDB update execution helper; returns number of rows
-int base::update(NuoDB::Connection *conn, NuoDB::PreparedStatement *stmt) {
+int base::update(NuoDB::PreparedStatement *stmt) {
     int result;
 
     // Safely execute our update
     try {
-        // Execute
+        // Update
         result = stmt->executeUpdate();
 
         // Commit changes and clean up the statement
-        conn->commit();
+        this->connection->commit();
 
     // If it fails, roll back the changes, and throw the error
-    } catch (NuoDB::SQLException &e) {
+    } catch ( NuoDB::SQLException &e ) {
         std::cerr << "Error: SQL error " << e.getSqlcode() << " "
                   << e.getText() << std::endl;
-        conn->rollback();
+        this->connection->rollback();
         throw;
     }
 
@@ -47,8 +77,7 @@ int base::update(NuoDB::Connection *conn, NuoDB::PreparedStatement *stmt) {
 }
 
 // Safe NuoDB query execution helper; returns resulting rows
-NuoDB::ResultSet *base::query(NuoDB::Connection *conn, 
-                              NuoDB::PreparedStatement *stmt) {
+NuoDB::ResultSet *base::query(NuoDB::PreparedStatement *stmt) {
     NuoDB::ResultSet *result;
 
     // Safely execute our query
@@ -57,13 +86,13 @@ NuoDB::ResultSet *base::query(NuoDB::Connection *conn,
         result = stmt->executeQuery();
 
         // Commit changes and clean up the statement
-        conn->commit();
+        this->connection->commit();
 
     // If it fails, roll back the changes, and throw the error
-    } catch (NuoDB::SQLException &e) {
+    } catch ( NuoDB::SQLException &e ) {
         std::cerr << "Error: SQL error " << e.getSqlcode() << " "
                   << e.getText() << std::endl;
-        conn->rollback();
+        this->connection->rollback();
         throw;
     }
 
@@ -72,39 +101,43 @@ NuoDB::ResultSet *base::query(NuoDB::Connection *conn,
 
 // Select a row from a table by id; returns row
 NuoDB::ResultSet *base::get(char *table, int id) {
+    std::stringstream ss;
     NuoDB::PreparedStatement *stmt;
     NuoDB::ResultSet *result;
 
-    // Select row from <table> with an id of <id>
-    stmt = this->connection->prepareStatement("SELECT * FROM ? WHERE id=?");
-    stmt->setString(1, table);
-    stmt->setInt(2, id);
+    // Prepare our query
+    ss << "SELECT * FROM " << table << " WHERE id=" << id;
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
 
     // Safely execute query and return the result
-    result = this->query(this->connection, stmt);
+    result = this->query(stmt);
     stmt->close();
+
     return result;
 }
 
 // Delete a row from a table by id; returns number of rows
 int base::erase(char *table, int id) {
+    std::stringstream ss;
     NuoDB::PreparedStatement *stmt;
     int result;
 
-    // Delete row from <table> with an id of <id>
-    stmt = this->connection->prepareStatement("DELETE FROM ? WHERE id=?");
-    stmt->setString(1, table);
-    stmt->setInt(2, id);
+    // Prepare our query
+    ss << "DELETE FROM " << table << " WHERE id=" << id;
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
 
     // Safely execute update and return the result
-    result = this->update(this->connection, stmt);
+    result = this->update(stmt);
     stmt->close();
+
     return result;
 }
 
 // Return the host of this database
 char *base::host() {
-    return this->addr;
+    return this->hostname;
 }
 
 table::table(char *model) : base() {
@@ -127,62 +160,102 @@ int table::erase(int id) {
 
 
 // Trade relation interface methods
-int trade::primary(int tid, double price, double amount) {
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "SELECT id FROM " TRADE " WHERE tid=? AND price=? AND amount=?",
-        NuoDB::RETURN_GENERATED_KEYS);
-    stmt->setInt(1, tid);
-    stmt->setDouble(2, price);
-    stmt->setDouble(3, amount);
+int trade::primary(const int tid, const double price, const double amount) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    int id;
 
-    if ( ! this->update(this->connection, stmt) ) {
-        stmt->close();
-        return 0;
-    }
+    // Prepare our query
+    ss << "SELECT id FROM " << this->model << " WHERE tid=" << tid 
+       << " AND price=" << price << " AND amount=" << amount;
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
 
-    NuoDB::ResultSet *result = stmt->getGeneratedKeys();
-    stmt->close();
+    // Safely execute query
+    result = this->query(stmt);
 
-    // Check our results
-    if ( ! result->next() ) {
-        std::cerr << "Error: couldn't retrieve id" << std::endl;
-        exit(EXIT_FAILURE);
-    }
+    // If no row was found, return an invalid id
+    if ( ! result->next() ) return 0;
 
-    // Clean up and return the auto-generated id
-    int id = result->getInt(1);
+    // Return the id of the result
+    id = result->getInt(1);
     result->close();
 
     return id;
 }
 
-int trade::insert(int tid, double price, double amount) {
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "INSERT INTO " TRADE " (tid, price, amount) VALUES (?, ?, ?)");
-    stmt->setInt(1, tid);
-    stmt->setDouble(2, price);
-    stmt->setDouble(3, amount);
+int trade::insert(const int tid, const double price, const double amount) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    int result;
 
-    int result = this->update(this->connection, stmt);
+    // Prepare our query
+    ss << "INSERT INTO " << this->model << " (tid, price, amount) VALUES ("
+       << tid << ", " << price << ", " << amount << ")";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    // Safely execute update and return the result
+    result = this->update(stmt);
     stmt->close();
 
     return result;
 }
 
-int trade::create(int tid, double price, double amount) {
+int trade::get_or_create(const int tid, const double price, 
+                         const double amount) {
+    // Check if this entry already exists
     int id = this->primary(tid, price, amount);
     if ( id ) return id;
 
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "INSERT INTO " TRADE " (tid, price, amount) VALUES (?, ?, ?)",
-        NuoDB::RETURN_GENERATED_KEYS);
-    stmt->setInt(1, tid);
-    stmt->setDouble(2, price);
-    stmt->setDouble(3, amount);
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
 
+    // Prepare our query
+    ss << "INSERT INTO " << this->model << " (tid, price, amount) VALUES ("
+       << tid << ", " << price << ", " << amount << ")";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str(), NuoDB::RETURN_GENERATED_KEYS);
 
-    this->update(this->connection, stmt);
-    NuoDB::ResultSet *result = stmt->getGeneratedKeys();
+    // Safely execute our update and return the id of the result
+    this->update(stmt);
+    result = stmt->getGeneratedKeys();
+    stmt->close();
+
+    // Check our results
+    if ( ! result->next() ) {
+        std::cerr << "Error: no trade found with at time " << tid 
+                  << " for " << amount << " BTC" << std::endl;
+        exit(EXIT_FAILURE); 
+    }
+
+    // Clean up and return the auto-generated id
+    id = result->getInt(1);
+    result->close();
+
+    return id;
+}
+
+int trade::create_or_update(const int tid, const double price,
+                            const double amount) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    int id;
+
+    // Prepare our query
+    ss << "INSERT INTO " << this->model << " (tid, price, amount) VALUES ("
+       << tid << ", " << price << ", " << amount << ") "
+          "ON DUPLICATE KEY UPDATE tid=VALUES(tid), price=VALUES(price), "
+          "amount=VALUES(amount)";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str(), NuoDB::RETURN_GENERATED_KEYS);
+
+    // Safely execute our update and return the id of the result
+    this->update(stmt);
+    result = stmt->getGeneratedKeys();
     stmt->close();
 
     // Check our results
@@ -201,60 +274,101 @@ int trade::create(int tid, double price, double amount) {
 
 
 // Bot relation interface methods
-int bot::primary(int uid, char *name) {
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "SELECT id FROM " BOT " WHERE uid_id=? AND name=?",
-        NuoDB::RETURN_GENERATED_KEYS);
-    stmt->setInt(1, uid);
-    stmt->setString(2, name);
+int bot::primary(const int uid, const char *name) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    int id;
 
-    if ( ! this->update(this->connection, stmt) ) {
-        stmt->close();
-        return 0;
-    }
+    // Prepare our query
+    ss << "SELECT id FROM " << this->model << " WHERE uid_id=" << uid 
+       << " AND name=\'" << name << "\'";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
 
-    NuoDB::ResultSet *result = stmt->getGeneratedKeys();
-    stmt->close();
+    // Safely execute query
+    result = this->query(stmt);
 
-    // Check our results
-    if ( ! result->next() ) {
-        std::cerr << "Error: couldn't retrieve id" << std::endl;
-        exit(EXIT_FAILURE);
-    }
+    // If no row was found, return an invalid id
+    if ( ! result->next() ) return 0;
 
-    // Clean up and return the auto-generated id
-    int id = result->getInt(1);
+    // Return the id of the result
+    id = result->getInt(1);
     result->close();
 
     return id;
 }
 
-int bot::insert(int uid, char *name, int work) {
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "INSERT INTO " BOT " (uid_id, name, work) VALUES (?, ?, ?)");
-    stmt->setInt(1, uid);
-    stmt->setString(2, name);
-    stmt->setInt(3, work);
+int bot::insert(const int uid, const char *name, const int work) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    int result;
 
-    int result = this->update(this->connection, stmt);
+    // Prepare our query
+    ss << "INSERT INTO " << this->model << " (uid_id, name, work) VALUES ("
+       << uid << ", \'" << name << "\', " << work << ")";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    // Safely execute update and return the result
+    result = this->update(stmt);
     stmt->close();
 
     return result;
 }
 
-int bot::create(int uid, char *name, int work) {
+int bot::get_or_create(const int uid, const char *name, const int work) {
+    // Check if this entry already exists
     int id = this->primary(uid, name);
+    std::cout << "got id " << id << " for bot (" << uid << ", " << name << ")" 
+              << std::endl;
     if ( id ) return id;
 
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "INSERT INTO " BOT " (uid_id, name, work) VALUES (?, ?, ?)",
-        NuoDB::RETURN_GENERATED_KEYS);
-    stmt->setInt(1, uid);
-    stmt->setString(2, name);
-    stmt->setInt(3, work);
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
 
-    this->update(this->connection, stmt);
-    NuoDB::ResultSet *result = stmt->getGeneratedKeys();
+    // Prepare our query
+    ss << "INSERT INTO " << this->model << " (uid_id, name, work) VALUES ("
+       << uid << ", \'" << name << "\', " << work << ")";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str(), NuoDB::RETURN_GENERATED_KEYS);
+
+    // Safely execute our update and return the id of the result
+    this->update(stmt);
+    result = stmt->getGeneratedKeys();
+    stmt->close();
+
+    // Check our results
+    if ( ! result->next() ) {
+        std::cerr << "Error: no bot found with uid " << uid 
+                  << " named " << name << std::endl;
+        exit(EXIT_FAILURE); 
+    }
+
+    // Clean up and return the auto-generated id
+    id = result->getInt(1);
+    result->close();
+
+    return id;
+}
+
+int bot::create_or_update(const int uid, const char *name, const int work) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    int id;
+
+    // Prepare our query
+    ss << "INSERT INTO " << this->model << " (uid_id, name, work) VALUES ("
+       << uid << ", \'" << name << "\', " << work << ")"
+          "ON DUPLICATE KEY UPDATE work=VALUES(work)";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str(), NuoDB::RETURN_GENERATED_KEYS);
+
+    // Safely execute our update and return the id of the result
+    this->update(stmt);
+    result = stmt->getGeneratedKeys();
     stmt->close();
 
     // Check our results
@@ -273,65 +387,75 @@ int bot::create(int uid, char *name, int work) {
 
 
 // Rule relation interface methods
-int rule::primary(int bid) {
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "SELECT id FROM " RULE " WHERE bid_id=?", 
-        NuoDB::RETURN_GENERATED_KEYS);
-    stmt->setInt(1, bid);
+int rule::primary(const int bid) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    int id;
 
-    if ( ! this->update(this->connection, stmt) ) {
-        stmt->close();
-        return 0;
-    }
+    // Prepare our query
+    ss << "SELECT id FROM " << this->model << " WHERE bid_id=" << bid;
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
 
-    NuoDB::ResultSet *result = stmt->getGeneratedKeys();
-    stmt->close();
+    // Safely execute query
+    result = this->query(stmt);
 
-    // Check our results
-    if ( ! result->next() ) {
-        std::cerr << "Error: couldn't retrieve id" << std::endl;
-        exit(EXIT_FAILURE);
-    }
+    // If no row was found, return an invalid id
+    if ( ! result->next() ) return 0;
 
-    // Clean up and return the auto-generated id
-    int id = result->getInt(1);
+    // Return the id of the result
+    id = result->getInt(1);
     result->close();
 
     return id;
 }
 
-int rule::insert(int bid, std::string params) {
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "INSERT INTO " RULE " (bid_id, params) VALUES (?, ?)");
-    stmt->setInt(1, bid);
+int rule::insert(const int bid, const std::string rules) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    int result;
 
+    // Prepare our query
+    ss << "INSERT INTO " << this->model << " (bid_id, params) VALUES ("
+       << bid << ", ?)";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str(),
+                                              NuoDB::RETURN_GENERATED_KEYS);
     NuoDB::Clob *clob = this->connection->createClob();
-    clob->appendChars(params.size(), params.c_str());
-    stmt->setClob(2, clob);
+    clob->setChars(rules.size(), rules.data());
+    stmt->setClob(1, clob);
     clob->release();
 
-    int result = this->update(this->connection, stmt);
+    // Safely execute update and return the result
+    result = this->update(stmt);
     stmt->close();
 
     return result;
 }
 
-int rule::create(int bid, std::string params) {
+int rule::get_or_create(const int bid, const std::string rules) {
+    // Check if this entry already exists
     int id = this->primary(bid);
     if ( id ) return id;
 
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "INSERT INTO " RULE " (bid_id, params) VALUES (?, ?)",
-        NuoDB::RETURN_GENERATED_KEYS);
-    stmt->setInt(1, bid);
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
 
+    // Prepare our query
+    ss << "INSERT INTO " << this->model << " (bid_id, params) VALUES ("
+       << bid << ", ?)";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str(), NuoDB::RETURN_GENERATED_KEYS);
     NuoDB::Clob *clob = this->connection->createClob();
-    clob->appendChars(params.size(), params.c_str());
-    stmt->setClob(2, clob);
+    clob->setChars(rules.size(), rules.data());
+    stmt->setClob(1, clob);
     clob->release();
 
-    this->update(this->connection, stmt);
-    NuoDB::ResultSet *result = stmt->getGeneratedKeys();
+    // Safely execute our update and return the id of the result
+    this->update(stmt);
+    result = stmt->getGeneratedKeys();
     stmt->close();
 
     // Check our results
@@ -348,65 +472,172 @@ int rule::create(int bid, std::string params) {
     return id;
 }
 
+int rule::create_or_update(const int bid, const std::string rules) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    int id;
 
-// Host databse interface methods
-int host::primary(char *addr) {
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "SELECT FROM " HOST " WHERE addr=?", NuoDB::RETURN_GENERATED_KEYS);
-    stmt->setString(1, addr);
+    // Prepare our query
+    ss << "INSERT INTO " << this->model << " (bid_id, params) VALUES ("
+       << bid << ", ?) ON DUPLICATE KEY UPDATE params=VALUES(params)";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str(), NuoDB::RETURN_GENERATED_KEYS);
+    NuoDB::Clob *clob = this->connection->createClob();
+    clob->setChars(rules.size(), rules.data());
+    stmt->setClob(1, clob);
+    clob->release();
 
-    if ( ! this->update(this->connection, stmt) ) {
-        stmt->close();
-        return 0;
-    }
-
-    NuoDB::ResultSet *result = stmt->getGeneratedKeys();
+    // Safely execute our update and return the id of the result
+    this->update(stmt);
+    result = stmt->getGeneratedKeys();
     stmt->close();
 
     // Check our results
     if ( ! result->next() ) {
-        std::cerr << "Error: couldn't retrieve id" << std::endl;
-        exit(EXIT_FAILURE);
+        std::cerr << "Error: no rules found for bot " << bid << std::endl;
+        exit(EXIT_FAILURE); 
     }
 
     // Clean up and return the auto-generated id
-    int id = result->getInt(1);
+    id = result->getInt(1);
     result->close();
 
     return id;
 }
 
-int host::insert(char *addr, int load) {
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "INSERT INTO " HOST " (addr, workload) VALUES (?, ?)",
-        NuoDB::RETURN_GENERATED_KEYS);
-    stmt->setString(1, addr);
-    stmt->setInt(2, load);
+std::string rule::params(const int bid) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    NuoDB::Clob *clob;
 
-    int result = this->update(this->connection, stmt);
+    // Prepare our query
+    ss << "SELECT params FROM " << this->model << " WHERE bid_id=" << bid;
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    // Safely execute query and return the result
+    result = this->query(stmt);
+
+    // Check our results
+    if ( ! result->next() ) {
+        std::cerr << "Error: no rules found for bot " << bid << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    // Extract NuoDB CLOB and prepare buffer
+    clob = result->getClob(1);
+    const int len = clob->length();
+    char *buf = new char[len];
+
+    // Copy the CLOB into a string and return the result
+    clob->getChars(0, len, buf);
+    std::string data(buf, len);
+    delete buf;
+
+    return data;
+}
+
+
+// Host databse interface methods
+int host::primary(const char *addr) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    int id;
+
+    // Prepare our query
+    ss << "SELECT id FROM " << this->model << " WHERE addr=\'" << addr << "\'";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    // Safely execute query
+    result = this->query(stmt);
+
+    // If no row was found, return an invalid id
+    if ( ! result->next() ) return 0;
+
+    // Return the id of the result
+    id = result->getInt(1);
+    result->close();
+
+    return id;
+}
+
+int host::insert(const char *addr, const int load) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    int result;
+
+    // Prepare our query
+    ss << "INSERT INTO " << this->model << " (addr, workload) VALUES (\'" 
+       << addr << "\', " << load << ")";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    // Safely execute update and return the result
+    result = this->update(stmt);
     stmt->close();
 
     return result;
 }
 
-int host::create(char *addr, int load) {
+int host::get_or_create(const char *addr, const int load) {
+    // Check if this entry already exists
     int id = this->primary(addr);
     if ( id ) return id;
 
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "INSERT INTO " HOST " (addr, workload) VALUES (?, ?)",
-        NuoDB::RETURN_GENERATED_KEYS);
-    stmt->setString(1, addr);
-    stmt->setInt(2, load);
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
 
-    this->update(this->connection, stmt);
-    NuoDB::ResultSet *result = stmt->getGeneratedKeys();
+    // Prepare our query
+    ss << "INSERT INTO " << this->model << " (addr, workload) VALUES (\'"
+       << addr << "\', " << load << ")";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str(), NuoDB::RETURN_GENERATED_KEYS);
+
+    // Safely execute update and return the id of the result
+    this->update(stmt);
+    result = stmt->getGeneratedKeys();
     stmt->close();
 
     // Check our results
     if ( ! result->next() ) {
-        result->close();
-        return 0;
+        std::cerr << "Error: no host " << addr << std::endl;
+        exit(EXIT_FAILURE); 
+    }
+
+    // Clean up and return the auto-generated id
+    id = result->getInt(1);
+    result->close();
+
+    return id;
+}
+
+int host::create_or_update(const char *addr, const int load) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    int id;
+
+    // Prepare our query
+    ss << "INSERT INTO " << this->model << " (addr, workload) VALUES (\'"
+       << addr << "\', " << load << ") ON DUPLICATE KEY UPDATE "
+          "load=VALUES(load)";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str(), NuoDB::RETURN_GENERATED_KEYS);
+
+    // Safely execute our update and return the id of the result
+    this->update(stmt);
+    result = stmt->getGeneratedKeys();
+    stmt->close();
+
+    // Check our results
+    if ( ! result->next() ) {
+        std::cerr << "Error: no host " << addr << std::endl;
+        exit(EXIT_FAILURE); 
     }
 
     // Clean up and return the auto-generated id
@@ -417,81 +648,131 @@ int host::create(char *addr, int load) {
 }
 
 char *host::next() {
-    char *hostname;
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    char *node = NULL;
 
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "SELECT addr FROM " HOST " GROUP BY addr "
-        "HAVING workload=MIN(workload)");
-    NuoDB::ResultSet *result = this->query(this->connection, stmt);
+    // Prepare our query
+    ss << "SELECT addr FROM " << this->model << " ORDER BY workload ASC "
+          "LIMIT 1";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
 
+    // Safely execute query and return the result
+    result = this->query(stmt);
+
+    // Check our results
     if ( ! result->next() ) {
         std::cerr << "Error: no hosts found" << std::endl;
         exit(EXIT_FAILURE);
-    } else {
-        std::string tmp = result->getString(1);
-        hostname = new char[tmp.size() + 1];
-        strcpy(hostname, tmp.c_str());
     }
+
+    // Copy the hostname from our result to a new string
+    const std::string &out = result->getString(1);
+    node = new char[out.size() + 1];
+    strcpy(node, out.c_str());
+
+    // Clean up and return hostname
     result->close();
 
-    return hostname;
+    return node;
 }
 
 
 // Runs relation interface methods
-int runs::primary(int hid, int bid) {
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "SELECT FROM " RUNS " WHERE hid_id=? AND bid_id=?");
-    stmt->setInt(1, hid);
-    stmt->setInt(2, bid);
+int runs::primary(const int hid, const int bid) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    int id;
 
-    if ( ! this->update(this->connection, stmt) ) {
-        stmt->close();
-        return 0;
-    }
+    // Prepare our query
+    ss << "SELECT id FROM " << this->model << " WHERE  hid_id=" << hid
+       << " AND bid_id=" << bid;
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
 
-    NuoDB::ResultSet *result = stmt->getGeneratedKeys();
-    stmt->close();
+    // Safely execute query
+    result = this->query(stmt);
 
-    // Check our results
-    if ( ! result->next() ) {
-        std::cerr << "Error: couldn't retrieve id" << std::endl;
-        exit(EXIT_FAILURE);
-    }
+    // If no row was found, return an invalid id
+    if ( ! result->next() ) return 0;
 
-    // Clean up and return the auto-generated id
-    int id = result->getInt(1);
+    // Return the id of the result
+    id = result->getInt(1);
     result->close();
 
     return id;
 }
 
-int runs::insert(int hid, int bid, int pid) {
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "INSERT INTO " RUNS " (hid_id, bid_id, pid) VALUES (?, ?, ?)");
-    stmt->setInt(1, hid);
-    stmt->setInt(2, bid);
-    stmt->setInt(3, pid);
+int runs::insert(const int hid, const int bid, const int pid) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    int result;
 
-    int result = this->update(this->connection, stmt);
+    // Prepare our query
+    ss << "INSERT INTO " << this->model << " (hid_id, bid_id, pid) VALUES ("
+       << hid << ", " << bid << ", " << pid << ")";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    // Safely execute update and return the result
+    result = this->update(stmt);
     stmt->close();
 
     return result;
 }
 
-int runs::create(int hid, int bid, int pid) {
+int runs::get_or_create(const int hid, const int bid, const int pid) {
     int id = this->primary(hid, bid);
     if ( id ) return id;
 
-    NuoDB::PreparedStatement *stmt = this->connection->prepareStatement(
-        "INSERT INTO " RUNS " (hid_id, bid_id, pid) VALUES (?, ?, ?)",
-        NuoDB::RETURN_GENERATED_KEYS);
-    stmt->setInt(1, hid);
-    stmt->setInt(2, bid);
-    stmt->setInt(3, pid);
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
 
-    this->update(this->connection, stmt);
-    NuoDB::ResultSet *result = stmt->getGeneratedKeys();
+    // Prepare our query
+    ss << "INSERT INTO " << this->model << " (hid_id, bid_id, pid) VALUES ("
+       << hid << ", " << bid << ", " << pid << ")";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str(), NuoDB::RETURN_GENERATED_KEYS);
+
+    // Safely execute update and return the id of the result
+    this->update(stmt);
+    result = stmt->getGeneratedKeys();
+    stmt->close();
+
+    // Check our results
+    if ( ! result->next() ) {
+        std::cerr << "Error: no bot found with hid " << hid << ", bid "
+                  << bid << ", " << pid << std::endl;
+        exit(EXIT_FAILURE); 
+    }
+
+    // Clean up and return the auto-generated id
+    id = result->getInt(1);
+    result->close();
+
+    return id;
+}
+
+int runs::create_or_update(const int hid, const int bid, const int pid) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    int id;
+
+    // Prepare our query
+    ss << "INSERT INTO " << this->model << " (hid_id, bid_id, pid) VALUES ("
+       << hid << ", " << bid << ", " << pid << ") ON DUPLICATE KEY UPDATE "
+          "hid_id=VALUES(hid_id), bid_id=VALUES(bid_id), pid=VALUES(pid)";
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str(), NuoDB::RETURN_GENERATED_KEYS);
+
+    // Safely execute our update and return the id of the result
+    this->update(stmt);
+    result = stmt->getGeneratedKeys();
     stmt->close();
 
     // Check our results

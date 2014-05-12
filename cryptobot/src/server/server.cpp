@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <thrift/concurrency/ThreadManager.h>
 #include <thrift/concurrency/PosixThreadFactory.h>
 #include <thrift/protocol/TCompactProtocol.h>
@@ -24,8 +26,7 @@ void BotHandler::run(const int32_t id, const bool trade) {
 }
 
 void BotHandler::stop(const int32_t id) {
-    // Your implementation goes here
-    printf("stop: %d\n", id);
+    worker::stop(id);
 }
 
 
