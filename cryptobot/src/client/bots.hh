@@ -3,8 +3,6 @@
 
 #include <map>
 #include <string>
-#include <sstream>
-#include <iostream>
 #include <vector>
 
 #include <boost/serialization/access.hpp>
@@ -12,6 +10,7 @@
 
 #include "nuodbi.hh"
 #include "ta.hh"
+
 
 namespace bots {
 

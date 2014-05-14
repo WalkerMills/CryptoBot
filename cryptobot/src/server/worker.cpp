@@ -51,7 +51,7 @@ void worker::run() {
 
         // Execute rules
         // while ( true )
-        // for ( unsigned j = 0; j < 5; ++j ) 
+        for ( unsigned j = 0; j < 10; ++j ) 
         {
             for ( int i = 0; i < this->rules->size(); ++i ) {
                 if ( this->rules->at(i)->test() && this->trade ) {
@@ -84,7 +84,8 @@ void worker::stop(int id) {
         std::cerr << "Warning: process " << pid << " not found" << std::endl;
     } else {
         // Stop the worker
-        kill(pid, SIGSTOP);
+        std::cerr << "Sending SIGTERM to process " << pid << std::endl;
+        kill(pid, SIGTERM);
     }
 
     // Remove the worker's row from the runs relation

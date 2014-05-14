@@ -1,18 +1,19 @@
+#include <chrono>
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <thread>
 #include <cstdlib>
 #include <cstring>
 
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
-#include <boost/serialization/vector.hpp>
-#include <unistd.h>
 
 #include "bots.hh"
 #include "control.hh"
 #include "reflection.hh"
 #include "nuodbi.hh"
+
 
 using namespace bots;
 
@@ -34,8 +35,8 @@ rule::~rule() {
 
 bool rule::test() {
     // TODO: test can retrieve market data
-    std::cout << "ping" << std::endl;
-    // usleep(3000);
+    // std::cout << "ping" << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
 
     return false;
 }
@@ -197,6 +198,8 @@ void bot::stop() {
     // Stop this bot
     control::host *node = new control::host(domain);
     server::BotClient *client = node->client();
+    std::cerr << "Sending stop command to " << domain << " for bot " 
+              << this->id << std::endl;
     client->stop(this->id);
     delete client;
     delete node;

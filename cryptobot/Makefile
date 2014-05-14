@@ -86,9 +86,10 @@ lib/bots_types.o:
 lib/bots_constants.o:
 
 # Object target compilation flags 
+lib/bots.o: EXTRA_CFLAGS := $(SERIAL_CFLAGS) -D_GLIBCXX_USE_NANOSLEEP
 lib/interface.o: EXTRA_CFLAGS := $(CYTHON_CFLAGS)
-lib/client.o: EXTRA_CFLAGS := $(THRIFT_CFLAGS)
-lib/server.o: EXTRA_CFLAGS := $(THRIFT_CFLAGS)
+lib/client.o: EXTRA_CFLAGS := $(THRIFT_CFLAGS) $(SERIAL_CFLAGS)
+lib/server.o: EXTRA_CFLAGS := $(THRIFT_CFLAGS) $(SERIAL_CFLAGS)
 lib/worker.o: EXTRA_LDFLAGS := -lnuodbi -lbots
 
 lib/%.o: %.cpp

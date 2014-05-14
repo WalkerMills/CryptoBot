@@ -30,7 +30,8 @@ CFLAGS = -O3 -mtune=generic -pipe -fstack-protector \
 --param=ssp-buffer-size=4 -Wno-sign-compare -Wno-unused-function
 
 # Default compiler flags for C++
-CXXFLAGS = -std=c++11 -Wno-write-strings -DBOOST_NO_RVALUE_REFERENCES
+CXXFLAGS = -std=c++11 -Wno-write-strings 
+
 
 # Default linker flags
 LD_FLAGS = -L$(libdir) -Wl,-O1,--sort-common,--as-needed,-z,relro \
@@ -51,6 +52,7 @@ CYTHON_LDFLAGS = -lpython2.7
 NUODB_LDFLAGS = -L/opt/nuodb/lib64 -lNuoRemote
 
 # Flags for linking against boost::serialization
+SERIAL_CFLAGS = -DBOOST_NO_RVALUE_REFERENCES
 SERIAL_LDFLAGS = -lboost_serialization
 
 # Flags for linking against TA-Lib
