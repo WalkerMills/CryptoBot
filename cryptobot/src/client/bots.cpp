@@ -178,23 +178,28 @@ void bot::run(bool trade) {
         }
     }
     delete runs_db;
-
     delete client;
     delete node;
     delete cluster;
 }
 
 void bot::stop() {
-    control::network *cluster = new control::network();
-    control::host *node = cluster->route();
-    server::BotClient *client = node->client();
+    // Find the id of this bot's (worker's) host
+    db::runs *runs_db = new db::runs();
+    const int hid = runs_db->hid(this->id);
+    delete runs_db;
+
+    // Find the corresponding domain name
+    db::host *host_db = new db::host();
+    char *domain = host_db->addr(hid);
+    delete host_db;
 
     // Stop this bot
+    control::host *node = new control::host(domain);
+    server::BotClient *client = node->client();
     client->stop(this->id);
-
     delete client;
     delete node;
-    delete cluster;
 }
 
 // TODO: implement user class + hook it into Django/NuoDB

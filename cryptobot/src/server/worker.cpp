@@ -5,6 +5,7 @@
 
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/vector.hpp>
+#include <signal.h>
 #include <sys/types.h>
 #include <unistd.h>
 
@@ -73,11 +74,22 @@ void worker::run() {
 
 void worker::stop(int id) {
     std::cerr << "Worker " << id << " received stop command" << std::endl;
+
     db::runs *runs_db = new db::runs();
+
+    // Find worker's pid
+    const int pid = runs_db->pid(id);
+    // Check if the specified process exists
+    if ( kill(pid, 0) == ESRCH ) {
+        std::cerr << "Warning: process " << pid << " not found" << std::endl;
+    } else {
+        // Stop the worker
+        kill(pid, SIGSTOP);
+    }
+
+    // Remove the worker's row from the runs relation
     const int rid = runs_db->primary(id);
     std::cerr << "Deleting row " << rid << " from runs relation" << std::endl;
     runs_db->erase(rid);
     delete runs_db;
-
-    // TODO: implement function to stop worker (send kill signal)
 }

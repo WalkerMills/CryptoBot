@@ -108,6 +108,7 @@ public:
     int create_or_update(const char *addr, const int load);
 
     char *next();
+    char *addr(const int hid);
 };
 
 class runs : public table {
@@ -120,6 +121,7 @@ public:
     int create_or_update(const int hid, const int bid, const int pid);
 
     int hid(const int bid);
+    int pid(const int bid);
 };
 
 }

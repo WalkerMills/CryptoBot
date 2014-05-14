@@ -242,7 +242,6 @@ int trade::create_or_update(const int tid, const double price,
                             const double amount) {
     std::stringstream ss;
     NuoDB::PreparedStatement *stmt;
-    NuoDB::ResultSet *result;
     int id;
 
     // Check if this entry already exists
@@ -267,7 +266,7 @@ int trade::create_or_update(const int tid, const double price,
 
     // If this row is new, return the generated id
     if ( ! id ) {
-        result = stmt->getGeneratedKeys();
+        NuoDB::ResultSet *result = stmt->getGeneratedKeys();
 
         // Check our results
         if ( ! result->next() ) {
@@ -578,7 +577,7 @@ std::string rule::params(const int bid) {
 }
 
 
-// Host databse interface methods
+// Host relation interface methods
 int host::primary(const char *addr) {
     std::stringstream ss;
     NuoDB::PreparedStatement *stmt;
@@ -713,10 +712,35 @@ char *host::next() {
     result = this->query(stmt);
 
     // Check our results
-    if ( ! result->next() ) {
-        std::cerr << "Error: no hosts found" << std::endl;
-        exit(EXIT_FAILURE);
-    }
+    if ( ! result->next() ) return NULL;
+
+    // Copy the hostname from our result to a new string
+    const std::string &out = result->getString(1);
+    node = new char[out.size() + 1];
+    strcpy(node, out.c_str());
+
+    // Clean up and return hostname
+    result->close();
+
+    return node;
+}
+
+char *host::addr(const int hid) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    char *node = NULL;
+
+    // Prepare our query
+    ss << "SELECT addr FROM " << this->model << " WHERE id=" << hid;
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    // Safely execute query
+    result = this->query(stmt);
+
+    // Check our results
+    if ( ! result->next() ) return NULL;
 
     // Copy the hostname from our result to a new string
     const std::string &out = result->getString(1);
@@ -872,4 +896,28 @@ int runs::hid(const int bid) {
     result->close();
 
     return hid;
+}
+
+int runs::pid(const int bid) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    int pid;
+
+    // Prepare our query
+    ss << "SELECT pid FROM " << this->model << " WHERE bid_id=" << bid;
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    // Safely execute query
+    result = this->query(stmt);
+
+    // If no row was found, return an invalid id
+    if ( ! result->next() ) return 0;
+
+    // Return the id of the result
+    pid = result->getInt(1);
+    result->close();
+
+    return pid;
 }
