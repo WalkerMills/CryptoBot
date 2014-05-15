@@ -14,7 +14,22 @@ private:
     friend class boost::serialization::access;
 
     template<class Archive>
-    void serialize(Archive &ar, const unsigned version) { }
+    void serialize(Archive &ar, const unsigned version) {
+        ar & startIdx;
+        ar & endIdx;
+    }
+
+public:
+    int startIdx;
+    int endIdx;
+
+    ta() : startIdx( 0 ), endIdx ( 0 ) { }
+    ta(int start, int end) : startIdx( start ), endIdx( end ) { }
+
+    void update_index(int start, int end) {
+        startIdx = start;
+        endIdx = end;
+    }
 };
 
 class ACOS : public ta {
@@ -23,8 +38,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -32,8 +45,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -52,8 +63,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -61,8 +70,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -81,8 +88,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -93,8 +98,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -116,8 +119,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -128,8 +129,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -151,8 +150,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal0;
         ar & inReal1;
         ar & outBegIdx;
@@ -161,8 +158,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal0;
     double *inReal1;
     int *outBegIdx;
@@ -182,8 +177,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal0;
         ar & inReal1;
         ar & outBegIdx;
@@ -192,8 +185,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal0;
     float *inReal1;
     int *outBegIdx;
@@ -213,8 +204,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -227,8 +216,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -252,8 +239,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -266,8 +251,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -291,8 +274,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -303,8 +284,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -326,8 +305,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -338,8 +315,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -361,8 +336,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -373,8 +346,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -396,8 +367,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -408,8 +377,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -431,8 +398,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInFastPeriod; /* From 2 to 100000 */
         ar & optInSlowPeriod; /* From 2 to 100000 */
@@ -443,8 +408,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInFastPeriod; /* From 2 to 100000 */
     int optInSlowPeriod; /* From 2 to 100000 */
@@ -466,8 +429,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInFastPeriod; /* From 2 to 100000 */
         ar & optInSlowPeriod; /* From 2 to 100000 */
@@ -478,8 +439,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInFastPeriod; /* From 2 to 100000 */
     int optInSlowPeriod; /* From 2 to 100000 */
@@ -501,8 +460,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & optInTimePeriod; /* From 2 to 100000 */
@@ -513,8 +470,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     int optInTimePeriod; /* From 2 to 100000 */
@@ -536,8 +491,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & optInTimePeriod; /* From 2 to 100000 */
@@ -548,8 +501,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     int optInTimePeriod; /* From 2 to 100000 */
@@ -571,8 +522,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & optInTimePeriod; /* From 2 to 100000 */
@@ -582,8 +531,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     int optInTimePeriod; /* From 2 to 100000 */
@@ -604,8 +551,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & optInTimePeriod; /* From 2 to 100000 */
@@ -615,8 +560,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     int optInTimePeriod; /* From 2 to 100000 */
@@ -637,8 +580,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -646,8 +587,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -666,8 +605,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -675,8 +612,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -695,8 +630,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -704,8 +637,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -724,8 +655,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -733,8 +662,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -753,8 +680,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -765,8 +690,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -788,8 +711,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -800,8 +721,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -823,8 +742,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -835,8 +752,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -858,8 +773,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -870,8 +783,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -893,8 +804,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & optInNbDevUp; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -908,8 +817,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     double optInNbDevUp; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -934,8 +841,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & optInNbDevUp; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -949,8 +854,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     double optInNbDevUp; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -975,8 +878,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal0;
         ar & inReal1;
         ar & optInTimePeriod; /* From 1 to 100000 */
@@ -986,8 +887,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal0;
     double *inReal1;
     int optInTimePeriod; /* From 1 to 100000 */
@@ -1008,8 +907,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal0;
         ar & inReal1;
         ar & optInTimePeriod; /* From 1 to 100000 */
@@ -1019,8 +916,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal0;
     float *inReal1;
     int optInTimePeriod; /* From 1 to 100000 */
@@ -1041,8 +936,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1053,8 +946,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -1076,8 +967,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1088,8 +977,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -1111,8 +998,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -1123,8 +1008,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -1146,8 +1029,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -1158,8 +1039,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -1181,8 +1060,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1193,8 +1070,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -1216,8 +1091,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1228,8 +1101,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -1251,8 +1122,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1263,8 +1132,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -1286,8 +1153,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1298,8 +1163,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -1321,8 +1184,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1333,8 +1194,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -1356,8 +1215,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1368,8 +1225,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -1391,8 +1246,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1403,8 +1256,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -1426,8 +1277,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1438,8 +1287,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -1461,8 +1308,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1473,8 +1318,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -1496,8 +1339,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1508,8 +1349,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -1531,8 +1370,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1543,8 +1380,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -1566,8 +1401,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1578,8 +1411,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -1601,8 +1432,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1613,8 +1442,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -1636,8 +1463,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1648,8 +1473,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -1671,8 +1494,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1684,8 +1505,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -1708,8 +1527,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1721,8 +1538,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -1745,8 +1560,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1757,8 +1570,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -1780,8 +1591,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1792,8 +1601,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -1815,8 +1622,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1827,8 +1632,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -1850,8 +1653,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1862,8 +1663,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -1885,8 +1684,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1897,8 +1694,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -1920,8 +1715,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1932,8 +1725,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -1955,8 +1746,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -1967,8 +1756,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -1990,8 +1777,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2002,8 +1787,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -2025,8 +1808,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2037,8 +1818,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -2060,8 +1839,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2072,8 +1849,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -2095,8 +1870,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2107,8 +1880,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -2130,8 +1901,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2142,8 +1911,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -2165,8 +1932,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2178,8 +1943,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -2202,8 +1965,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2215,8 +1976,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -2239,8 +1998,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2251,8 +2008,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -2274,8 +2029,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2286,8 +2039,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -2309,8 +2060,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2321,8 +2070,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -2344,8 +2091,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2356,8 +2101,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -2379,8 +2122,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2391,8 +2132,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -2414,8 +2153,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2426,8 +2163,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -2449,8 +2184,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2461,8 +2194,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -2484,8 +2215,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2496,8 +2225,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -2519,8 +2246,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2532,8 +2257,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -2556,8 +2279,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2569,8 +2290,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -2593,8 +2312,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2606,8 +2323,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -2630,8 +2345,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2643,8 +2356,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -2667,8 +2378,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2679,8 +2388,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -2702,8 +2409,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2714,8 +2419,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -2737,8 +2440,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2749,8 +2450,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -2772,8 +2471,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2784,8 +2481,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -2807,8 +2502,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2819,8 +2512,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -2842,8 +2533,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2854,8 +2543,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -2877,8 +2564,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2889,8 +2574,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -2912,8 +2595,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2924,8 +2605,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -2947,8 +2626,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2959,8 +2636,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -2982,8 +2657,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -2994,8 +2667,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -3017,8 +2688,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3029,8 +2698,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -3052,8 +2719,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3064,8 +2729,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -3087,8 +2750,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3099,8 +2760,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -3122,8 +2781,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3134,8 +2791,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -3157,8 +2812,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3169,8 +2822,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -3192,8 +2843,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3204,8 +2853,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -3227,8 +2874,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3239,8 +2884,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -3262,8 +2905,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3274,8 +2915,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -3297,8 +2936,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3309,8 +2946,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -3332,8 +2967,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3344,8 +2977,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -3367,8 +2998,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3379,8 +3008,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -3402,8 +3029,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3414,8 +3039,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -3437,8 +3060,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3449,8 +3070,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -3472,8 +3091,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3484,8 +3101,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -3507,8 +3122,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3519,8 +3132,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -3542,8 +3153,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3554,8 +3163,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -3577,8 +3184,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3589,8 +3194,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -3612,8 +3215,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3624,8 +3225,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -3647,8 +3246,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3659,8 +3256,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -3682,8 +3277,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3694,8 +3287,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -3717,8 +3308,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3729,8 +3318,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -3752,8 +3339,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3764,8 +3349,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -3787,8 +3370,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3799,8 +3380,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -3822,8 +3401,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3834,8 +3411,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -3857,8 +3432,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3869,8 +3442,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -3892,8 +3463,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3904,8 +3473,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -3927,8 +3494,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3939,8 +3504,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -3962,8 +3525,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -3974,8 +3535,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -3997,8 +3556,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4009,8 +3566,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -4032,8 +3587,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4044,8 +3597,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -4067,8 +3618,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4080,8 +3629,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -4104,8 +3651,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4117,8 +3662,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -4141,8 +3684,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4154,8 +3695,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -4178,8 +3717,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4191,8 +3728,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -4215,8 +3750,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4228,8 +3761,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -4252,8 +3783,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4265,8 +3794,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -4289,8 +3816,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4301,8 +3826,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -4324,8 +3847,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4336,8 +3857,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -4359,8 +3878,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4371,8 +3888,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -4394,8 +3909,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4406,8 +3919,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -4429,8 +3940,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4441,8 +3950,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -4464,8 +3971,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4476,8 +3981,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -4499,8 +4002,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4511,8 +4012,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -4534,8 +4033,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4546,8 +4043,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -4569,8 +4064,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4581,8 +4074,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -4604,8 +4095,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4616,8 +4105,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -4639,8 +4126,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4651,8 +4136,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -4674,8 +4157,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4686,8 +4167,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -4709,8 +4188,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4721,8 +4198,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -4744,8 +4219,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4756,8 +4229,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -4779,8 +4250,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4791,8 +4260,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -4814,8 +4281,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4826,8 +4291,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -4849,8 +4312,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4861,8 +4322,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -4884,8 +4343,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4896,8 +4353,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -4919,8 +4374,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4931,8 +4384,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -4954,8 +4405,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -4966,8 +4415,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -4989,8 +4436,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -5001,8 +4446,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -5024,8 +4467,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -5036,8 +4477,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -5059,8 +4498,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -5071,8 +4508,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -5094,8 +4529,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -5106,8 +4539,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -5129,8 +4560,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -5141,8 +4570,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -5164,8 +4591,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -5176,8 +4601,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -5199,8 +4622,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -5211,8 +4632,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -5234,8 +4653,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -5246,8 +4663,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -5269,8 +4684,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -5281,8 +4694,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -5304,8 +4715,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -5316,8 +4725,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -5339,8 +4746,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -5351,8 +4756,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -5374,8 +4777,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -5386,8 +4787,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -5409,8 +4808,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -5421,8 +4818,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inOpen;
     double *inHigh;
     double *inLow;
@@ -5444,8 +4839,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inOpen;
         ar & inHigh;
         ar & inLow;
@@ -5456,8 +4849,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inOpen;
     float *inHigh;
     float *inLow;
@@ -5479,8 +4870,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -5488,8 +4877,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -5508,8 +4895,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -5517,8 +4902,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -5537,8 +4920,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -5547,8 +4928,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -5568,8 +4947,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -5578,8 +4955,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -5599,8 +4974,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal0;
         ar & inReal1;
         ar & optInTimePeriod; /* From 1 to 100000 */
@@ -5610,8 +4983,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal0;
     double *inReal1;
     int optInTimePeriod; /* From 1 to 100000 */
@@ -5632,8 +5003,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal0;
         ar & inReal1;
         ar & optInTimePeriod; /* From 1 to 100000 */
@@ -5643,8 +5012,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal0;
     float *inReal1;
     int optInTimePeriod; /* From 1 to 100000 */
@@ -5665,8 +5032,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -5674,8 +5039,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -5694,8 +5057,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -5703,8 +5064,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -5723,8 +5082,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -5732,8 +5089,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -5752,8 +5107,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -5761,8 +5114,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -5781,8 +5132,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -5791,8 +5140,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -5812,8 +5159,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -5822,8 +5167,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -5843,8 +5186,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal0;
         ar & inReal1;
         ar & outBegIdx;
@@ -5853,8 +5194,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal0;
     double *inReal1;
     int *outBegIdx;
@@ -5874,8 +5213,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal0;
         ar & inReal1;
         ar & outBegIdx;
@@ -5884,8 +5221,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal0;
     float *inReal1;
     int *outBegIdx;
@@ -5905,8 +5240,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -5917,8 +5250,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -5940,8 +5271,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -5952,8 +5281,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -5975,8 +5302,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -5985,8 +5310,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -6006,8 +5329,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -6016,8 +5337,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -6037,8 +5356,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6046,8 +5363,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6066,8 +5381,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6075,8 +5388,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6095,8 +5406,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6104,8 +5413,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6124,8 +5431,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6133,8 +5438,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6153,8 +5456,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6162,8 +5463,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6182,8 +5481,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6191,8 +5488,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6211,8 +5506,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6220,8 +5513,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6240,8 +5531,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6249,8 +5538,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6269,8 +5556,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6279,8 +5564,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6300,8 +5583,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6310,8 +5591,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6331,8 +5610,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6341,8 +5618,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6362,8 +5637,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6372,8 +5645,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6393,8 +5664,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6402,8 +5671,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6422,8 +5689,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6431,8 +5696,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6451,8 +5714,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6460,8 +5721,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6480,8 +5739,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6489,8 +5746,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6509,8 +5764,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -6519,8 +5772,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -6540,8 +5791,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -6550,8 +5799,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -6571,8 +5818,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -6581,8 +5826,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -6602,8 +5845,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -6612,8 +5853,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -6633,8 +5872,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -6643,8 +5880,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -6664,8 +5899,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -6674,8 +5907,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -6695,8 +5926,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -6705,8 +5934,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -6726,8 +5953,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -6736,8 +5961,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -6757,8 +5980,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -6767,8 +5988,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -6788,8 +6007,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -6798,8 +6015,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -6819,8 +6034,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6828,8 +6041,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6848,8 +6059,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6857,8 +6066,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6877,8 +6084,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6886,8 +6091,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6906,8 +6109,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -6915,8 +6116,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -6935,8 +6134,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & optInMAType;
@@ -6946,8 +6143,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     TA_MAType optInMAType;
@@ -6968,8 +6163,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & optInMAType;
@@ -6979,8 +6172,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     TA_MAType optInMAType;
@@ -7001,8 +6192,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInFastPeriod; /* From 2 to 100000 */
         ar & optInSlowPeriod; /* From 2 to 100000 */
@@ -7015,8 +6204,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInFastPeriod; /* From 2 to 100000 */
     int optInSlowPeriod; /* From 2 to 100000 */
@@ -7040,8 +6227,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInFastPeriod; /* From 2 to 100000 */
         ar & optInSlowPeriod; /* From 2 to 100000 */
@@ -7054,8 +6239,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInFastPeriod; /* From 2 to 100000 */
     int optInSlowPeriod; /* From 2 to 100000 */
@@ -7079,8 +6262,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInFastPeriod; /* From 2 to 100000 */
         ar & optInFastMAType;
@@ -7096,8 +6277,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInFastPeriod; /* From 2 to 100000 */
     TA_MAType optInFastMAType;
@@ -7124,8 +6303,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInFastPeriod; /* From 2 to 100000 */
         ar & optInFastMAType;
@@ -7141,8 +6318,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInFastPeriod; /* From 2 to 100000 */
     TA_MAType optInFastMAType;
@@ -7169,8 +6344,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInSignalPeriod; /* From 1 to 100000 */
         ar & outBegIdx;
@@ -7181,8 +6354,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInSignalPeriod; /* From 1 to 100000 */
     int *outBegIdx;
@@ -7204,8 +6375,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInSignalPeriod; /* From 1 to 100000 */
         ar & outBegIdx;
@@ -7216,8 +6385,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInSignalPeriod; /* From 1 to 100000 */
     int *outBegIdx;
@@ -7239,8 +6406,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInFastLimit; /* From 0.01 to 0.99 */
         ar & optInSlowLimit; /* From 0.01 to 0.99 */
@@ -7251,8 +6416,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     double optInFastLimit; /* From 0.01 to 0.99 */
     double optInSlowLimit; /* From 0.01 to 0.99 */
@@ -7274,8 +6437,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInFastLimit; /* From 0.01 to 0.99 */
         ar & optInSlowLimit; /* From 0.01 to 0.99 */
@@ -7286,8 +6447,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     double optInFastLimit; /* From 0.01 to 0.99 */
     double optInSlowLimit; /* From 0.01 to 0.99 */
@@ -7309,8 +6468,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & inPeriods;
         ar & optInMinPeriod; /* From 2 to 100000 */
@@ -7322,8 +6479,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     double *inPeriods;
     int optInMinPeriod; /* From 2 to 100000 */
@@ -7346,8 +6501,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & inPeriods;
         ar & optInMinPeriod; /* From 2 to 100000 */
@@ -7359,8 +6512,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     float *inPeriods;
     int optInMinPeriod; /* From 2 to 100000 */
@@ -7383,8 +6534,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -7393,8 +6542,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -7414,8 +6561,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -7424,8 +6569,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -7445,8 +6588,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -7455,8 +6596,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -7476,8 +6615,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -7486,8 +6623,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -7507,8 +6642,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & outBegIdx;
@@ -7517,8 +6650,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     int *outBegIdx;
@@ -7538,8 +6669,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & outBegIdx;
@@ -7548,8 +6677,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     int *outBegIdx;
@@ -7569,8 +6696,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -7582,8 +6707,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -7606,8 +6729,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -7619,8 +6740,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -7643,8 +6762,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -7653,8 +6770,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -7674,8 +6789,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -7684,8 +6797,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -7705,8 +6816,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & optInTimePeriod; /* From 2 to 100000 */
@@ -7716,8 +6825,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     int optInTimePeriod; /* From 2 to 100000 */
@@ -7738,8 +6845,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & optInTimePeriod; /* From 2 to 100000 */
@@ -7749,8 +6854,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     int optInTimePeriod; /* From 2 to 100000 */
@@ -7771,8 +6874,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -7781,8 +6882,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -7802,8 +6901,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -7812,8 +6909,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -7833,8 +6928,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -7843,8 +6936,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -7864,8 +6955,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -7874,8 +6963,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -7895,8 +6982,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -7906,8 +6991,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -7928,8 +7011,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -7939,8 +7020,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -7961,8 +7040,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -7972,8 +7049,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -7994,8 +7069,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -8005,8 +7078,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -8027,8 +7098,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -8039,8 +7108,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -8062,8 +7129,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -8074,8 +7139,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -8097,8 +7160,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & optInTimePeriod; /* From 1 to 100000 */
@@ -8108,8 +7169,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     int optInTimePeriod; /* From 1 to 100000 */
@@ -8130,8 +7189,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & optInTimePeriod; /* From 1 to 100000 */
@@ -8141,8 +7198,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     int optInTimePeriod; /* From 1 to 100000 */
@@ -8163,8 +7218,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & outBegIdx;
@@ -8173,8 +7226,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     int *outBegIdx;
@@ -8194,8 +7245,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & outBegIdx;
@@ -8204,8 +7253,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     int *outBegIdx;
@@ -8225,8 +7272,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal0;
         ar & inReal1;
         ar & outBegIdx;
@@ -8235,8 +7280,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal0;
     double *inReal1;
     int *outBegIdx;
@@ -8256,8 +7299,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal0;
         ar & inReal1;
         ar & outBegIdx;
@@ -8266,8 +7307,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal0;
     float *inReal1;
     int *outBegIdx;
@@ -8287,8 +7326,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -8299,8 +7336,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -8322,8 +7357,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -8334,8 +7367,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -8357,8 +7388,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & inVolume;
         ar & outBegIdx;
@@ -8367,8 +7396,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     double *inVolume;
     int *outBegIdx;
@@ -8388,8 +7415,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & inVolume;
         ar & outBegIdx;
@@ -8398,8 +7423,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     float *inVolume;
     int *outBegIdx;
@@ -8419,8 +7442,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -8431,8 +7452,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -8454,8 +7473,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -8466,8 +7483,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -8489,8 +7504,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & optInTimePeriod; /* From 1 to 100000 */
@@ -8500,8 +7513,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     int optInTimePeriod; /* From 1 to 100000 */
@@ -8522,8 +7533,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & optInTimePeriod; /* From 1 to 100000 */
@@ -8533,8 +7542,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     int optInTimePeriod; /* From 1 to 100000 */
@@ -8555,8 +7562,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInFastPeriod; /* From 2 to 100000 */
         ar & optInSlowPeriod; /* From 2 to 100000 */
@@ -8567,8 +7572,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInFastPeriod; /* From 2 to 100000 */
     int optInSlowPeriod; /* From 2 to 100000 */
@@ -8590,8 +7593,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInFastPeriod; /* From 2 to 100000 */
         ar & optInSlowPeriod; /* From 2 to 100000 */
@@ -8602,8 +7603,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInFastPeriod; /* From 2 to 100000 */
     int optInSlowPeriod; /* From 2 to 100000 */
@@ -8625,8 +7624,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & outBegIdx;
@@ -8635,8 +7632,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     int *outBegIdx;
@@ -8656,8 +7651,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & outBegIdx;
@@ -8666,8 +7659,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     int *outBegIdx;
@@ -8687,8 +7678,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & outBegIdx;
@@ -8697,8 +7686,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     int *outBegIdx;
@@ -8718,8 +7705,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & outBegIdx;
@@ -8728,8 +7713,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     int *outBegIdx;
@@ -8749,8 +7732,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & outBegIdx;
@@ -8759,8 +7740,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     int *outBegIdx;
@@ -8780,8 +7759,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & outBegIdx;
@@ -8790,8 +7767,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     int *outBegIdx;
@@ -8811,8 +7786,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & outBegIdx;
@@ -8821,8 +7794,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     int *outBegIdx;
@@ -8842,8 +7813,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & outBegIdx;
@@ -8852,8 +7821,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     int *outBegIdx;
@@ -8873,8 +7840,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -8883,8 +7848,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -8904,8 +7867,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -8914,8 +7875,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -8935,8 +7894,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & optInAcceleration; /* From 0 to TA_REAL_MAX */
@@ -8947,8 +7904,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double optInAcceleration; /* From 0 to TA_REAL_MAX */
@@ -8970,8 +7925,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & optInAcceleration; /* From 0 to TA_REAL_MAX */
@@ -8982,8 +7935,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     double optInAcceleration; /* From 0 to TA_REAL_MAX */
@@ -9005,8 +7956,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & optInStartValue; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -9023,8 +7972,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double optInStartValue; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -9052,8 +7999,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & optInStartValue; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -9070,8 +8015,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     double optInStartValue; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -9099,8 +8042,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -9108,8 +8049,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -9128,8 +8067,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -9137,8 +8074,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -9157,8 +8092,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -9166,8 +8099,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -9186,8 +8117,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -9195,8 +8124,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -9215,8 +8142,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -9225,8 +8150,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -9246,8 +8169,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -9256,8 +8177,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -9277,8 +8196,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -9286,8 +8203,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -9306,8 +8221,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -9315,8 +8228,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -9335,8 +8246,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & optInNbDev; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -9346,8 +8255,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     double optInNbDev; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -9368,8 +8275,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & optInNbDev; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -9379,8 +8284,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     double optInNbDev; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -9401,8 +8304,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -9418,8 +8319,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -9446,8 +8345,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -9463,8 +8360,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -9491,8 +8386,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -9506,8 +8399,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -9532,8 +8423,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -9547,8 +8436,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -9573,8 +8460,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & optInFastK_Period; /* From 1 to 100000 */
@@ -9587,8 +8472,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int optInFastK_Period; /* From 1 to 100000 */
@@ -9612,8 +8495,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & optInFastK_Period; /* From 1 to 100000 */
@@ -9626,8 +8507,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int optInFastK_Period; /* From 1 to 100000 */
@@ -9651,8 +8530,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal0;
         ar & inReal1;
         ar & outBegIdx;
@@ -9661,8 +8538,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal0;
     double *inReal1;
     int *outBegIdx;
@@ -9682,8 +8557,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal0;
         ar & inReal1;
         ar & outBegIdx;
@@ -9692,8 +8565,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal0;
     float *inReal1;
     int *outBegIdx;
@@ -9713,8 +8584,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -9723,8 +8592,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -9744,8 +8611,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -9754,8 +8619,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -9775,8 +8638,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & optInVFactor; /* From 0 to 1 */
@@ -9786,8 +8647,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     double optInVFactor; /* From 0 to 1 */
@@ -9808,8 +8667,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & optInVFactor; /* From 0 to 1 */
@@ -9819,8 +8676,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     double optInVFactor; /* From 0 to 1 */
@@ -9841,8 +8696,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -9850,8 +8703,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -9870,8 +8721,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -9879,8 +8728,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -9899,8 +8746,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -9908,8 +8753,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -9928,8 +8771,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & outBegIdx;
         ar & outNBElement;
@@ -9937,8 +8778,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int *outBegIdx;
     int *outNBElement;
@@ -9957,8 +8796,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -9967,8 +8804,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -9988,8 +8823,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -9998,8 +8831,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -10019,8 +8850,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -10030,8 +8859,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -10052,8 +8879,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -10063,8 +8888,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -10085,8 +8908,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -10095,8 +8916,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -10116,8 +8935,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -10126,8 +8943,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -10147,8 +8962,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & outBegIdx;
@@ -10157,8 +8970,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     int *outBegIdx;
@@ -10178,8 +8989,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & outBegIdx;
@@ -10188,8 +8997,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     int *outBegIdx;
@@ -10209,8 +9016,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -10219,8 +9024,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -10240,8 +9043,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -10250,8 +9051,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -10271,8 +9070,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -10282,8 +9079,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -10304,8 +9099,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -10315,8 +9108,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -10337,8 +9128,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -10351,8 +9140,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -10376,8 +9163,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -10390,8 +9175,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -10415,8 +9198,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & optInNbDev; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -10426,8 +9207,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     double optInNbDev; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -10448,8 +9227,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 1 to 100000 */
         ar & optInNbDev; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -10459,8 +9236,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 1 to 100000 */
     double optInNbDev; /* From TA_REAL_MIN to TA_REAL_MAX */
@@ -10481,8 +9256,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -10492,8 +9265,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -10514,8 +9285,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -10525,8 +9294,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -10547,8 +9314,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -10559,8 +9324,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inHigh;
     double *inLow;
     double *inClose;
@@ -10582,8 +9345,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inHigh;
         ar & inLow;
         ar & inClose;
@@ -10594,8 +9355,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inHigh;
     float *inLow;
     float *inClose;
@@ -10617,8 +9376,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -10627,8 +9384,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     double *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -10648,8 +9403,6 @@ private:
 
     template<class Archive>
     void serialize(Archive &ar, const unsigned version) {
-        ar & startIdx;
-        ar & endIdx;
         ar & inReal;
         ar & optInTimePeriod; /* From 2 to 100000 */
         ar & outBegIdx;
@@ -10658,8 +9411,6 @@ private:
     }
 
 public:
-    int startIdx;
-    int endIdx;
     float *inReal;
     int optInTimePeriod; /* From 2 to 100000 */
     int *outBegIdx;
@@ -10670,90 +9421,6 @@ public:
     S_WMA(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     S_WMA *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     void update(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    TA_RetCode run();
-};
-
-class SetUnstablePeriod : public ta {
-private:
-    friend class boost::serialization::access;
-
-    template<class Archive>
-    void serialize(Archive &ar, const unsigned version) {
-        ar & id;
-        ar & unstablePeriod;
-    }
-
-public:
-    TA_FuncUnstId id;
-    unsigned unstablePeriod;
-
-    SetUnstablePeriod() { };
-    SetUnstablePeriod(TA_FuncUnstId id, unsigned unstablePeriod);
-    SetUnstablePeriod *create(TA_FuncUnstId id, unsigned unstablePeriod);
-    void update(TA_FuncUnstId id, unsigned unstablePeriod);
-    TA_RetCode run();
-};
-
-class SetCompatibility : public ta {
-private:
-    friend class boost::serialization::access;
-
-    template<class Archive>
-    void serialize(Archive &ar, const unsigned version) {
-        ar & value;
-    }
-
-public:
-    TA_Compatibility value;
-
-    SetCompatibility() { };
-    SetCompatibility(TA_Compatibility value);
-    SetCompatibility *create(TA_Compatibility value);
-    void update(TA_Compatibility value);
-    TA_RetCode run();
-};
-
-class SetCandleSettings : public ta {
-private:
-    friend class boost::serialization::access;
-
-    template<class Archive>
-    void serialize(Archive &ar, const unsigned version) {
-        ar & settingType; 
-        ar & rangeType; 
-        ar & avgPeriod; 
-        ar & factor;
-    }
-
-public:
-    TA_CandleSettingType settingType; 
-    TA_RangeType rangeType; 
-    int avgPeriod; 
-    double factor;
-
-    SetCandleSettings() { };
-    SetCandleSettings(TA_CandleSettingType settingType, TA_RangeType rangeType, int avgPeriod, double factor);
-    SetCandleSettings *create(TA_CandleSettingType settingType, TA_RangeType rangeType, int avgPeriod, double factor);
-    void update(TA_CandleSettingType settingType, TA_RangeType rangeType, int avgPeriod, double factor);
-    TA_RetCode run();
-};
-
-class RestoreCandleDefaultSettings : public ta {
-private:
-    friend class boost::serialization::access;
-
-    template<class Archive>
-    void serialize(Archive &ar, const unsigned version) {
-        ar & settingType;
-    }
-
-public:
-    TA_CandleSettingType settingType;
-
-    RestoreCandleDefaultSettings() { };
-    RestoreCandleDefaultSettings(TA_CandleSettingType settingType);
-    RestoreCandleDefaultSettings *create(TA_CandleSettingType settingType);
-    void update(TA_CandleSettingType settingType);
     TA_RetCode run();
 };
 
