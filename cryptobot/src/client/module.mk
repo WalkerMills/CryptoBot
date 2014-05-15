@@ -1,2 +1,2 @@
-LIBS += libbots.so libreflection.so libta.so libcontrol.so
+LIBS += libbots.so libcontrol.so
 BINS += client

@@ -8,14 +8,16 @@
 
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
+#include <boost/serialization/vector.hpp>
 
 #include "bots.hh"
 #include "control.hh"
 #include "reflection.hh"
+#include "rules.hh"
 #include "nuodbi.hh"
 
 
-using namespace bots;
+namespace bots {
 
 rule::rule() {
     this->indicator = NULL;
@@ -226,4 +228,6 @@ void user::stop(std::string name) {
 
 bool user::active(std::string name) {
     return false;
+}
+
 }

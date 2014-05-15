@@ -1,1 +1,1 @@
-LIBS += libnuodbi.so
+LIBS += libnuodbi.so libreflection.so librules.so libta.so

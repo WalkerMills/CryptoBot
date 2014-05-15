@@ -76,9 +76,10 @@ lib/ta.o:
 lib/reflection.o: libta.so
 lib/nuodbi.o:
 lib/control.o: libnuodbi.so
-lib/bots.o: libcontrol.so libreflection.so
+lib/rules.o: libta.so
+lib/bots.o: libcontrol.so libreflection.so librules.so
 lib/interface.o: libbots.so
-lib/worker.o: libnuodbi.so libbots.so
+lib/worker.o: libnuodbi.so librules.so
 lib/client.o: libbots.so
 lib/server.o: libbots.so
 lib/Bot.o:
@@ -87,10 +88,10 @@ lib/bots_constants.o:
 
 # Object target compilation flags 
 lib/bots.o: EXTRA_CFLAGS := $(SERIAL_CFLAGS) -D_GLIBCXX_USE_NANOSLEEP
-lib/interface.o: EXTRA_CFLAGS := $(CYTHON_CFLAGS)
 lib/client.o: EXTRA_CFLAGS := $(THRIFT_CFLAGS) $(SERIAL_CFLAGS)
+lib/interface.o: EXTRA_CFLAGS := $(CYTHON_CFLAGS)
 lib/server.o: EXTRA_CFLAGS := $(THRIFT_CFLAGS) $(SERIAL_CFLAGS)
-lib/worker.o: EXTRA_LDFLAGS := -lnuodbi -lbots
+lib/worker.o: EXTRA_LDFLAGS := $(SERIAL_CFLAGS)
 
 lib/%.o: %.cpp
 	$(CXX) $(ALL_CXXFLAGS) $(EXTRA_CFLAGS) -fPIC -c $< -o $@
@@ -98,10 +99,11 @@ lib/%.o: %.cpp
 # Library target linking flags
 interface.so: EXTRA_LDFLAGS := $(CYTHON_LDFLAGS) -lbots
 libbots.so: EXTRA_LDFLAGS := $(SERIAL_LDFLAGS) \
--lcontrol -lnuodbi -lta -lreflection
+-lcontrol -lnuodbi -lreflection -lrules
 libcontrol.so: EXTRA_LDFLAGS := -lnuodbi
 libnuodbi.so: EXTRA_LDFLAGS := $(NUODB_LDFLAGS)
 libreflection.so: EXTRA_LDFLAGS := -lta
+librules.so: EXTRA_LDFLAGS := -lta
 libta.so: EXTRA_LDFLAGS := $(TA_LDFLAGS)
 
 # Implicit rule for compiling libraries from Thrift-generated code
