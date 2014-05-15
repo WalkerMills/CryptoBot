@@ -1,11 +1,12 @@
 #ifndef __TA_HH__
 #define __TA_HH__
 
+#include <boost/serialization/access.hpp>
+#include <ta-lib/ta_common.h>
+
 #undef MAX
 #undef MIN
 
-#include <boost/serialization/access.hpp>
-#include <ta-lib/ta_common.h>
 
 namespace ta {
 
@@ -30,6 +31,9 @@ public:
         startIdx = start;
         endIdx = end;
     }
+
+    void update(...) { }
+    TA_RetCode run() { return (TA_RetCode) 0; }
 };
 
 class ACOS : public ta {
