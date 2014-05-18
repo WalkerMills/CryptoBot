@@ -35,7 +35,7 @@ CXXFLAGS = -std=c++11 -Wno-write-strings
 
 # Default linker flags
 LD_FLAGS = -L$(libdir) -Wl,-O1,--sort-common,--as-needed,-z,relro \
--Wl,-rpath,$(libdir)
+-Wl,-rpath,$(realpath $(libdir))
 
 # Default Cython flags
 CYTHON_FLAGS = --cplus -2
@@ -60,7 +60,8 @@ TA_LDFLAGS = -lta_lib
 
 # Flags for compiling and linking against Thrift
 THRIFT_CFLAGS = -DHAVE_INTTYPES_H -DHAVE_NETINET_IN_H
-THRIFT_LDFLAGS = -lthrift
+# THRIFT_LDFLAGS = -lthrift
+THRIFT_LDFLAGS = -lthrift -lthriftnb -levent
 
 # All C compiler flaga for normal compilation
 ALL_CFLAGS = -Wall $(addprefix -I, $(srcdir)) $(CFLAGS)

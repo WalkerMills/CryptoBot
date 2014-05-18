@@ -72,23 +72,24 @@ $(THRIFTS): %: %.thrift
 	$(THRIFT) $(THRIFT_FLAGS) $< 
 
 # Object target dependencies
-lib/ta.o:
-lib/reflection.o: libta.so
-lib/nuodbi.o:
-lib/control.o: libnuodbi.so
-lib/rules.o: libta.so
-lib/bots.o: libcontrol.so libreflection.so librules.so
-lib/interface.o: libbots.so
-lib/worker.o: libnuodbi.so librules.so
-lib/client.o: libbots.so
-lib/server.o: libbots.so
 lib/Bot.o:
-lib/bots_types.o:
+lib/bots.o: libcontrol.so libreflection.so librules.so
 lib/bots_constants.o:
+lib/bots_types.o:
+lib/client.o: libbots.so
+lib/control.o: libnuodbi.so
+lib/interface.o: libbots.so
+lib/nuodbi.o:
+lib/reflection.o: libta.so
+lib/rules.o: libta.so
+lib/server.o: librules.so
+lib/ta.o:
+lib/worker.o: libnuodbi.so librules.so
 
 # Object target compilation flags 
 lib/bots.o: EXTRA_CFLAGS := $(SERIAL_CFLAGS) -D_GLIBCXX_USE_NANOSLEEP
-lib/client.o: EXTRA_CFLAGS := $(THRIFT_CFLAGS) $(SERIAL_CFLAGS)
+lib/client.o: EXTRA_CFLAGS := -D_GLIBCXX_USE_NANOSLEEP
+lib/control.o: EXTRA_CFLAGS := $(THRIFT_CFLAGS)
 lib/interface.o: EXTRA_CFLAGS := $(CYTHON_CFLAGS)
 lib/server.o: EXTRA_CFLAGS := $(THRIFT_CFLAGS) $(SERIAL_CFLAGS)
 lib/worker.o: EXTRA_LDFLAGS := $(SERIAL_CFLAGS)
@@ -96,17 +97,20 @@ lib/worker.o: EXTRA_LDFLAGS := $(SERIAL_CFLAGS)
 lib/%.o: %.cpp
 	$(CXX) $(ALL_CXXFLAGS) $(EXTRA_CFLAGS) -fPIC -c $< -o $@
 
+# Library target dependencies
+libcontrol.so: lib/Bot.o lib/bots_types.o lib/bots_constants.o
+
 # Library target linking flags
 interface.so: EXTRA_LDFLAGS := $(CYTHON_LDFLAGS) -lbots
 libbots.so: EXTRA_LDFLAGS := $(SERIAL_LDFLAGS) \
 -lcontrol -lnuodbi -lreflection -lrules
-libcontrol.so: EXTRA_LDFLAGS := -lnuodbi
+libcontrol.so: EXTRA_LDFLAGS := $(THRIFT_LDFLAGS) -lnuodbi
 libnuodbi.so: EXTRA_LDFLAGS := $(NUODB_LDFLAGS)
 libreflection.so: EXTRA_LDFLAGS := -lta
-librules.so: EXTRA_LDFLAGS := -lta
+librules.so: EXTRA_LDFLAGS := $(SERIAL_LDFLAGS) -lta -lreflection
 libta.so: EXTRA_LDFLAGS := $(TA_LDFLAGS)
 
-# Implicit rule for compiling libraries from Thrift-generated code
+# Implicit rule for compiling libraries
 lib%.so: lib/%.o
 	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,$(shell basename $@) \
 	$(foreach dep, $^, $(libdir)/$(shell basename $(dep))) \
@@ -120,14 +124,12 @@ lib%.so: lib/%.o
 	$(EXTRA_LDFLAGS)
 
 # Binary target dependencies
-client: lib/Bot.o lib/bots_types.o lib/bots_constants.o
+client: librules.so libnuodbi.so
 server: lib/Bot.o lib/bots_types.o lib/bots_constants.o lib/worker.o
 
 # Binary target linking flags
-client server: EXTRA_LDFLAGS := $(THRIFT_LDFLAGS) $(SERIAL_LDFLAGS) \
--lthriftnb -levent -lbots -lnuodbi
-# server: EXTRA_LDFLAGS := $(THRIFT_LDFLAGS) $(SERIAL_LDFLAGS) \
-# -lthriftnb -levent -lbots -lnuodbi
+client: EXTRA_LDFLAGS := -lbots -lrules
+server: EXTRA_LDFLAGS := $(THRIFT_LDFLAGS) $(SERIAL_LDFLAGS) -lrules -lnuodbi
 
 # Default rule for compiling binaries
 $(BINS): %: lib/%.o

@@ -19,34 +19,6 @@
 
 namespace bots {
 
-rule::rule() {
-    this->indicator = NULL;
-}
-
-rule::rule(action_t action, double amount, std::string indicator) {
-    this->action = action;
-    this->amount = amount;
-
-    this->indicator = reflect(indicator);
-}
-
-rule::~rule() {
-    delete this->indicator;
-}
-
-
-bool rule::test() {
-    // TODO: test can retrieve market data
-    // std::cout << "ping" << std::endl;
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-
-    return false;
-}
-
-void rule::trade() {
-    // TODO: trade makes a trade
-}
-
 bot::bot() {
 
 }
@@ -197,12 +169,17 @@ void bot::stop() {
     char *domain = host_db->addr(hid);
     delete host_db;
 
+    if ( domain == NULL ) {
+        std::cerr << "Warning: no domain found for host " << hid << std::endl;
+    }
+
     // Stop this bot
     control::host *node = new control::host(domain);
     server::BotClient *client = node->client();
     std::cerr << "Sending stop command to " << domain << " for bot " 
               << this->id << std::endl;
     client->stop(this->id);
+    delete domain;
     delete client;
     delete node;
 }

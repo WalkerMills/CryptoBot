@@ -1,7 +1,7 @@
 #ifndef __CONTROL_HH__
 #define __CONTROL_HH__
 
-#include <thrift/protocol/TCompactProtocol.h>
+#include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/transport/TBufferTransports.h>
 #include <thrift/transport/TSocket.h>
 

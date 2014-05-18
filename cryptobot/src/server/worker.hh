@@ -12,11 +12,17 @@ private:
     bool trade;
     std::vector<bots::rule *> *rules;
 
+    // Fetch rules from the database
+    void fetch();
+
 public:
     worker(int id, bool trade);
     ~worker();
 
+    // Run this worker
     void run();
+
+    // Stop a worker
     static void stop(int id);
 };
 

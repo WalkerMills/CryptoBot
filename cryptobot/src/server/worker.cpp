@@ -24,6 +24,27 @@ worker::~worker() {
     if ( this->rules ) delete this->rules;
 }
 
+void worker::fetch() {
+    // Retrieve rule bytestring from the database
+    db::rule *rule_db = new db::rule();
+    std::string tmp = rule_db->params(this->id);
+    delete rule_db;
+
+    // Load this worker's rule bytestring into an archive
+    std::stringstream iss;
+    iss << tmp;
+    boost::archive::text_iarchive ia(iss);
+
+    // Delete any rules, if they exist
+    if ( this->rules ) delete this->rules;
+
+    // Read this worker's rules from the archive
+    std::vector<bots::rule *> out;
+    ia >> BOOST_SERIALIZATION_NVP(out);
+    this->rules = new std::vector<bots::rule *>(out);
+
+}
+
 void worker::run() {
     // Fork child process to do work
     pid_t pid = fork();
@@ -31,26 +52,10 @@ void worker::run() {
     if ( pid == -1 ) {
         std::cerr << "Error: forking child process failed" << std::endl;
     } else if ( pid == 0 ) {
-        // Retrieve rule bytestring from the database
-        db::rule *rule_db = new db::rule();
-        std::string tmp = rule_db->params(this->id);
-        delete rule_db;
+        // Update rules
+        this->fetch();
 
-        // Load this worker's rule bytestring into an archive
-        std::stringstream iss;
-        iss << tmp;
-        boost::archive::text_iarchive ia(iss);
-
-        // Delete any rules, if they exist
-        if ( this->rules ) delete this->rules;
-
-        // Read this worker's rules from the archive
-        std::vector<bots::rule *> out;
-        ia >> BOOST_SERIALIZATION_NVP(out);
-        this->rules = new std::vector<bots::rule *>(out);
-
-        // Execute rules
-        // while ( true )
+        // Execute rule set
         for ( unsigned j = 0; j < 10; ++j ) 
         {
             for ( int i = 0; i < this->rules->size(); ++i ) {
@@ -79,6 +84,13 @@ void worker::stop(int id) {
 
     // Find worker's pid
     const int pid = runs_db->pid(id);
+
+    // Remove the worker's row from the runs relation
+    const int rid = runs_db->primary(id);
+    std::cerr << "Deleting row " << rid << " from runs relation" << std::endl;
+    runs_db->erase(rid);
+    delete runs_db;
+
     // Check if the specified process exists
     if ( kill(pid, 0) == ESRCH ) {
         std::cerr << "Warning: process " << pid << " not found" << std::endl;
@@ -87,10 +99,4 @@ void worker::stop(int id) {
         std::cerr << "Sending SIGTERM to process " << pid << std::endl;
         kill(pid, SIGTERM);
     }
-
-    // Remove the worker's row from the runs relation
-    const int rid = runs_db->primary(id);
-    std::cerr << "Deleting row " << rid << " from runs relation" << std::endl;
-    runs_db->erase(rid);
-    delete runs_db;
 }

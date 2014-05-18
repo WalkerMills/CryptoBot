@@ -6,6 +6,8 @@
 #include "server.hh"
 #include "worker.hh"
 
+#define POOL 15
+
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::concurrency;
 using namespace ::apache::thrift::protocol;
@@ -32,11 +34,11 @@ int main(int argc, char **argv) {
     shared_ptr<BotHandler> handler(new BotHandler());
     shared_ptr<TProcessor> processor(new BotProcessor(handler));
     shared_ptr<TProtocolFactory> protocolFactory(
-        new TCompactProtocolFactory());
+        new TBinaryProtocolFactory());
 
     // using thread pool with maximum 15 threads to handle incoming requests
     shared_ptr<ThreadManager> threadManager = 
-        ThreadManager::newSimpleThreadManager(15);
+        ThreadManager::newSimpleThreadManager(POOL);
     shared_ptr<PosixThreadFactory> threadFactory = 
         shared_ptr<PosixThreadFactory>(new PosixThreadFactory());
     threadManager->threadFactory(threadFactory);

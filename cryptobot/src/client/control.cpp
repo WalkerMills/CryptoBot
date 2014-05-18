@@ -11,6 +11,7 @@ using namespace apache::thrift::transport;
 using namespace control;
 
 
+// Host interface
 host::host(char *domain) {
     this->domain = new char[strlen(domain) + 1];
     strcpy(this->domain, domain);
@@ -39,18 +40,20 @@ void host::initialize() {
     this->transport = 
         boost::shared_ptr<TTransport>(new TFramedTransport(this->socket));
     this->protocol = 
-        boost::shared_ptr<TProtocol>(new TCompactProtocol(this->transport));
+        boost::shared_ptr<TProtocol>(new TBinaryProtocol(this->transport));
 }
 
 void host::connect() {
     if ( ! this->connected ) {
         this->transport->open();
+        this->connected = true;
     }
 }
 
 void host::disconnect() {
     if ( this->connected ) {
         this->transport->close();
+        this->connected = false;
     }
 }
 
@@ -65,6 +68,8 @@ server::BotClient *host::client() {
     return client;
 }
 
+
+// Computing cluster interface
 network::network() {
     this->host_db = new db::host();
 }

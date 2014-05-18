@@ -8,9 +8,9 @@
 #include "ta.hh"
 
 
-namespace bots {
+enum action_t {WATCH, BUY, SELL};
 
-enum action_t {buy, sell, watch};
+namespace bots {
 
 class rule {
 private:
