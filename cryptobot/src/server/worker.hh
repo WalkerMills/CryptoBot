@@ -18,8 +18,7 @@ private:
 public:
     worker(int id, bool trade);
     ~worker();
-
-    // Run this worker
+	void add_rules(std::vector<bots::rule *> *rules); 
     void run();
 
     // Stop a worker

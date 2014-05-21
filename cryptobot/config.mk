@@ -26,7 +26,7 @@ gendir = src/gen
 
 
 # Default compiler flags (for C and C++)
-CFLAGS = -O3 -mtune=generic -pipe -fstack-protector \
+CFLAGS = -Og -g -mtune=generic -pipe -fstack-protector \
 --param=ssp-buffer-size=4 -Wno-sign-compare -Wno-unused-function
 
 # Default compiler flags for C++
@@ -43,6 +43,9 @@ CYTHON_FLAGS = --cplus -2
 # Default Thrift flags
 THRIFT_FLAGS = -out $(gendir) -I $(gendir) -strict --gen cpp
 
+
+# Flags for compiling and linking against ALGLIB
+ALGLIB_LDFLAGS = -lalglib
 
 # Flags for compiling and linking against Cython
 CYTHON_CFLAGS = -I/usr/include/python2.7 -Wno-strict-aliasing

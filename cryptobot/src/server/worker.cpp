@@ -42,28 +42,40 @@ void worker::fetch() {
     std::vector<bots::rule *> out;
     ia >> BOOST_SERIALIZATION_NVP(out);
     this->rules = new std::vector<bots::rule *>(out);
-
 }
 
 void worker::run() {
+    std::cout << "Worker run has begun" << std::endl;
     // Fork child process to do work
     pid_t pid = fork();
 
     if ( pid == -1 ) {
         std::cerr << "Error: forking child process failed" << std::endl;
     } else if ( pid == 0 ) {
-        // Update rules
-        this->fetch();
 
-        // Execute rule set
-        for ( unsigned j = 0; j < 10; ++j ) 
-        {
-            for ( int i = 0; i < this->rules->size(); ++i ) {
-                if ( this->rules->at(i)->test() && this->trade ) {
-                    this->rules->at(i)->trade();
-                }
-            }
-        }
+        // Retrieve rule bytestring from the database
+        db::rule *rule_db = new db::rule();
+        std::string tmp = rule_db->params(this->id);
+        delete rule_db;
+
+        // Load this worker's rule bytestring into an archive
+        std::stringstream iss;
+        iss << tmp;
+        boost::archive::text_iarchive ia(iss);
+
+        // Delete any rules, if they exist
+        if ( this->rules ) delete this->rules;
+
+        // Read this worker's rules from the archive
+        std::vector<bots::rule *> out;
+        ia >> BOOST_SERIALIZATION_NVP(out);
+        this->rules = new std::vector<bots::rule *>(out);
+
+        // Execute rules
+        std::cout << "The function is about to run" << std::endl;
+        double *result = this->rules->at(0)->run(0);
+        std::cout << "The result is: " << result[0] << std::endl;
+        std::cout << "started from the bottom" << std::endl;
 
         exit(EXIT_SUCCESS);
     } else {

@@ -83,10 +83,54 @@ class Runs(models.Model):
 # Stores trade data from Bitcoin exchanges
 class Trade(models.Model):
     # (Unix) timestamp
-    time = models.IntegerField()
+    tid = models.IntegerField()
 
     # Price (in USD) per bitcoin
     price = models.DecimalField(max_digits=17, decimal_places=12)
 
     # Amount of Bitcoin
     amount = models.DecimalField(max_digits=20, decimal_places=12)
+
+
+# Stores price data from Bitcoin exchanges - 15 min
+class Price_15(models.Model):
+    # (Unix) timestamp
+    tid = models.IntegerField(unique=True)
+
+    # Price (in USD) per bitcoin
+    price = models.DecimalField(max_digits=17, decimal_places=12)
+
+    # Amount of Bitcoin
+    amount = models.DecimalField(max_digits=20, decimal_places=12)
+
+    # StdDev (Measure of Variance) of each time period 
+    stddev = models.FloatField()
+
+# Stores price data from Bitcoin exchanges - 15 min
+class Price_30(models.Model):
+    # (Unix) timestamp
+    tid = models.IntegerField(unique=True)
+
+    # Price (in USD) per bitcoin
+    price = models.DecimalField(max_digits=17, decimal_places=12)
+
+    # Amount of Bitcoin
+    amount = models.DecimalField(max_digits=20, decimal_places=12)
+
+    # StdDev (Measure of Variance) of each time period 
+    stddev = models.FloatField()
+
+
+# Stores price data from Bitcoin exchanges - 15 min
+class Price_60(models.Model):
+    # (Unix) timestamp
+    tid = models.IntegerField(unique=True)
+
+    # Price (in USD) per bitcoin
+    price = models.DecimalField(max_digits=17, decimal_places=12)
+
+    # Amount of Bitcoin
+    amount = models.DecimalField(max_digits=20, decimal_places=12)
+
+    # StdDev (Measure of Variance) of each time period 
+    stddev = models.FloatField()

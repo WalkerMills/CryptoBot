@@ -10,10 +10,14 @@
 #include <nuodb/NuoDB.h>
 
 #define TRADE "cryptobot_trade"
-#define BOT "cryptobot_bot"
+#define PRICE "cryptobot_price"
+#define PRICE_15 "cryptobot_price_15"
+#define PRICE_30 "cryptobot_price_30"
+#define PRICE_60 "cryptobot_price_60"
 #define RULE "cryptobot_rule"
 #define HOST "cryptobot_host"
 #define RUNS "cryptobot_runs"
+#define BOT "cryptobot_bot"
 
 namespace db {
 
@@ -67,12 +71,40 @@ public:
 class trade : public table {
 public:
     trade() : table(TRADE) { }
+    trade(char *model) : table(model) { }
 
     int primary(const int tid, const double price, const double amount);
     int insert(const int tid, const double price, const double amount);
     int get_or_create(const int tid, const double price, const double amount);
     int create_or_update(const int tid, const double price, 
                          const double amount);
+};
+
+class price : public trade {
+public:
+    price() : trade(PRICE) { }
+    price(char *model) : trade(model) { }
+
+    int primary(const int tid);
+    NuoDB::ResultSet *get_range(const int begID, const int endID);
+    double get_amount(const int tid); 
+    double get_stddev(const int unix_tid); 
+    NuoDB::ResultSet *get_similar(const double var);
+};
+
+class price_15 : public price {
+public:
+    price_15() : price(PRICE_15) { }
+};
+
+class price_30 : public price {
+public:
+    price_30() : price(PRICE_30) { }
+};
+
+class price_60 : public price {
+public:
+    price_60() : price(PRICE_60) { }
 };
 
 

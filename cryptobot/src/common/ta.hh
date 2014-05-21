@@ -27,6 +27,14 @@ public:
     ta() : startIdx( 0 ), endIdx ( 0 ) { }
     ta(int start, int end) : startIdx( start ), endIdx( end ) { }
 
+    int start() {
+        return startIdx;
+    }
+
+    int end() {
+        return endIdx;
+    }
+
     void update_index(int start, int end) {
         startIdx = start;
         endIdx = end;

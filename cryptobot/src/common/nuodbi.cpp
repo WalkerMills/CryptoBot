@@ -285,6 +285,137 @@ int trade::create_or_update(const int tid, const double price,
 }
 
 
+// Price relation interface methods
+int price::primary(const int tid) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    int id;
+
+    // Prepare our query
+    ss << "SELECT id FROM " << this->model << " WHERE tid=" << tid;
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    // Safely execute query
+    result = this->query(stmt);
+
+    // If no row was found, return an invalid id
+    if ( ! result->next() ) return 0;
+
+    // Return the id of the result
+    id = result->getInt(1);
+    result->close();
+
+    return id;
+}
+
+NuoDB::ResultSet *price::get_range(const int begID, const int endID) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+
+    // Prepare our query
+    ss << "SELECT tid, price FROM " << this->model << " WHERE tid >= " 
+       << begID << " AND tid <= " << endID;
+
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    // Execute the update and return the rows we want
+    result = this->query(stmt);
+    stmt->close();
+
+    // Check our results
+    if ( ! result->next() ) {
+        std::cerr << "Error: No trades found in range  " << begID 
+                  << " to " << endID << std::endl;
+        exit(EXIT_FAILURE); 
+    }
+
+    // Pass the array
+    return result;
+}
+
+double price::get_stddev(const int tid) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+
+    ss << "SELECT stddev FROM " << this->model << " WHERE tid=" 
+       << tid;
+
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    result = this->query(stmt);
+    stmt->close();
+
+    if ( ! result->next() ) {
+        std::cerr << "Error: No time period found with this unix timestamp" 
+                  << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    double stddev = result->getDouble(1);
+    std::cout << "This is the stddev of the row: " << stddev << std::endl;
+
+    return stddev;
+}
+
+double price::get_amount(const int tid) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+
+    ss << "SELECT amount FROM " << this->model << " WHERE tid=" 
+       << tid;
+
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    result = this->query(stmt);
+    stmt->close();
+
+    if ( ! result->next() ) {
+        std::cerr << "Error: No time period found with this unix timestamp" 
+                  << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    double stddev = result->getDouble(1);
+    std::cout << "This is the amount of the row: " << stddev << std::endl;
+
+    return stddev;
+}
+
+NuoDB::ResultSet *price::get_similar(const double var) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+
+    double upper = var * 1.005;
+    double lower = var * 0.995;
+    
+    ss << "SELECT amount FROM " << this->model << " WHERE stddev >= " << lower 
+       << " AND stddev <= " << upper;
+
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    result = this->query(stmt);
+    stmt->close();
+
+    if ( ! result->next() ) {
+        std::cerr << "Error: No results found within given stddev range"  
+                  << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    return result;
+}
+
+
 // Bot relation interface methods
 int bot::primary(const int uid, const char *name) {
     std::stringstream ss;

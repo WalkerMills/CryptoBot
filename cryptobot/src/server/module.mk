@@ -1,1 +1,1 @@
-BINS += server
+BINS += server test
