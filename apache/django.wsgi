@@ -2,8 +2,8 @@
 
 import os
 import sys
-sys.path.append('/usr/local/django')
-sys.path.append('/usr/local/django/cryptobot')
+sys.path.append('/var/www/cryptobot')
+sys.path.append('/var/www/cryptobot/cryptobot')
 
 os.environ['DJANGO_SETTINGS_MODULE'] = 'web.settings'
 

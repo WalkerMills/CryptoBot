@@ -16,7 +16,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key uweb in production secret!
+# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'v$26(*5(c*a6%j1v*8w8@mt3-!1#7#8@2am4no8nmb%7zvv%ou'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -77,6 +77,8 @@ CACHES = {
         'LOCATION': 'www.cryptobot.me:11211',
     }
 }
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),

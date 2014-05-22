@@ -47,7 +47,7 @@ clean:
 	$(RM) $(gendir)/*.{cpp,h} $(libdir)/*.o $(libdir)/*.so $(BIN_FILES)
 	@# Remove Python btyecode
 	for i in `find . -type f -iname "*.pyc"`; do \
-		$(RM) $i; \
+		$(RM) "$$i"; \
 	done
 
 # Create directory for containing object files and libraries
