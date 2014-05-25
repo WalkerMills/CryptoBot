@@ -38,7 +38,7 @@ public:
     ~rule();
 
     void add_indicator(std::string indicator);
-
+    void set_period(int index, int period); 
     double *run(int index) { return NULL; }
     bool test() { return false; }
     void trade() { }
@@ -66,7 +66,7 @@ public:
     ta::SMA *get_indicator(int index);
     std::vector<std::pair<int, double>> *run(int index, timescale_t timescale);
     std::vector<int> *crossover(int ind1, int ind2, timescale_t scale);
-    std::vector<double> *return_similar(double unix_tid, timescale_t scale);
+    std::vector<std::pair<int, double>> *return_similar(double unix_tid, timescale_t scale);
     double t_test(double amount, std::vector<double> *data);
 };
 

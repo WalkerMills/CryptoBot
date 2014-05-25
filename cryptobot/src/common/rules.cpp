@@ -39,6 +39,9 @@ void rule::add_indicator(std::string indicator) {
     this->indicators->push_back(new_ta);
 }
 
+void rule::set_period(int index, int period) {
+    this->indicators->at(index)->optInTimePeriod = period;
+} 
 
 // SMA subclass
 sma::sma() {
@@ -169,6 +172,7 @@ std::vector<int> *sma::crossover(int index1, int index2, timescale_t scale) {
 
     int endind = std::min(data1->size(), data2->size());
     std::vector<int> *crosses = new std::vector<int>();
+    std::vector<int> *final_similars = new std::vector<int>();
     int i = 0;
 
     // Here, we set which dataset starts above the other. Then, we use
@@ -195,8 +199,32 @@ std::vector<int> *sma::crossover(int index1, int index2, timescale_t scale) {
         }
     }
 
+
+
+    for ( i = 0; i < crosses.size(); ++i ) {
+        // Get similar for each element
+        std::vector<double> *crossovers = this->return_similar(crosses->at(i).first, SIXTY);
+        int currInd = (crosses->at(i).first - this.start) / (3600);
+        double refSlope = resultData[currInd + 1] - resultData[currInd];  
+        double upSlope = refSlope * 1.25;
+        double downSlope = refSlope * 0.75;
+
+        for ( int j = 0; j < crossovers.size(); ++j ) {
+            int similarIndex = (crossovers->at(j).first - this.start) / 3600;
+            double simSlope = resultData[similarIndex + 1] - resultData[similarIndex];
+
+            if ( simSlope >= downSlope && simSlope <= upSlope ) {
+                final_similars->push_back(crosses->at(i).first);
+            }
+
+        }
+
+    }
+
+
+
     // We return the list of crossover points. 
-    return crosses;
+    return final_similars;
 }
 
 db::price *sma::resolve(timescale_t scale) {
@@ -223,7 +251,7 @@ db::price *sma::resolve(timescale_t scale) {
     return price_db;
 }
 
-std::vector<double> *sma::return_similar(double unix_tid, timescale_t scale) {
+std::vector<std::pair<int, double> *sma::return_similar(double unix_tid, timescale_t scale) {
     // Open price database
     db::price *price_db = this->resolve(scale);
 
@@ -232,13 +260,14 @@ std::vector<double> *sma::return_similar(double unix_tid, timescale_t scale) {
 
     // Get similar points from the dataset 
     NuoDB::ResultSet *similar = price_db->get_similar(stddev);
-    std::vector<double> *amounts = new std::vector<double>();
+    std::vector<std::pair<int, double>> *amounts = new std::vector<std::pair<int, double>>();
 
     // Read results into a vector
     while ( similar->next() ) {
-        double amount = similar->getDouble(1);
-        amounts->push_back(amount);
-    }
+        std::pair <int, double> datapair = 
+            std::make_pair(similar.getInt(1), similar.getDouble(2);
+        amounts->push_back(datapair);
+    }    
 
     // Clean up, return the results
     delete price_db;
