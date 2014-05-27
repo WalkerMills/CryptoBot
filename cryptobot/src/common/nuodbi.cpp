@@ -159,6 +159,60 @@ int table::erase(int id) {
 }
 
 
+// (Django) User relation interface methods
+int user::primary(const char *name) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    int id;
+
+    // Prepare our query
+    ss << "SELECT id FROM " << this->model << " WHERE username=" << name;
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    // Safely execute query
+    result = this->query(stmt);
+
+    // If no row was found, return an invalid id
+    if ( ! result->next() ) return 0;
+
+    // Return the id of the result
+    id = result->getInt(1);
+    result->close();
+
+    return id;
+}
+
+char *user::username(int uid) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+    char *name = NULL;
+
+    // Prepare our query
+    ss << "SELECT username FROM " << this->model << " WHERE id=" << uid;
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    // Safely execute query
+    result = this->query(stmt);
+
+    // Check our results
+    if ( ! result->next() ) return NULL;
+
+    // Copy the hostname from our result to a new string
+    const std::string &out = result->getString(1);
+    name = new char[out.size() + 1];
+    strcpy(name, out.c_str());
+
+    // Clean up and return hostname
+    result->close();
+
+    return name;
+}
+
+
 // Trade relation interface methods
 int trade::primary(const int tid, const double price, const double amount) {
     std::stringstream ss;
