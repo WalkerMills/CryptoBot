@@ -1,1 +1,1 @@
-__all__ = {'bots'}
+__all__ = {'bots', 'interface', 'libinterface'}

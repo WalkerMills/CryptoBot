@@ -5,8 +5,8 @@
 int main() {
     // std::vector<bots::rule *> *rules = new std::vector<bots::rule *>();
     bots::sma *r = new bots::sma(WATCH, 0.0);
-    r->add_sma(10);
-    r->add_sma(21); 
+    r->add_indicator(10);
+    r->add_indicator(21); 
     db::price *price_db = new db::price_60();
     ta::SMA *ind1 = r->get_indicator(0);
     ta::SMA *ind2 = r->get_indicator(1);

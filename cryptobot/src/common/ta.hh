@@ -40,6 +40,7 @@ public:
         endIdx = end;
     }
 
+    ta *create(...) { return new ta(); }
     void update(...) { }
     TA_RetCode run() { return (TA_RetCode) 0; }
 };
@@ -66,7 +67,7 @@ public:
 
     ACOS() : ta() { };
     ACOS(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    ACOS *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    ACOS *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -93,7 +94,7 @@ public:
 
     S_ACOS() : ta() { };
     S_ACOS(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_ACOS *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_ACOS *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -132,7 +133,7 @@ public:
 
     AD() : ta() { };
     AD(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, double *inVolume, int *outBegIdx, int *outNBElement, double *outReal);
-    AD *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, double *inVolume, int *outBegIdx, int *outNBElement, double *outReal);
+    AD *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, double *inVolume = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, double *inVolume, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -171,7 +172,7 @@ public:
 
     S_AD() : ta() { };
     S_AD(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, float *inVolume, int *outBegIdx, int *outNBElement, double *outReal);
-    S_AD *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, float *inVolume, int *outBegIdx, int *outNBElement, double *outReal);
+    S_AD *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, float *inVolume = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, float *inVolume, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -202,7 +203,7 @@ public:
 
     ADD() : ta() { };
     ADD(int startIdx, int endIdx, double *inReal0, double *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
-    ADD *create(int startIdx, int endIdx, double *inReal0, double *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
+    ADD *create(int startIdx = 0, int endIdx = 0, double *inReal0 = 0, double *inReal1 = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal0, double *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -233,7 +234,7 @@ public:
 
     S_ADD() : ta() { };
     S_ADD(int startIdx, int endIdx, float *inReal0, float *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
-    S_ADD *create(int startIdx, int endIdx, float *inReal0, float *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
+    S_ADD *create(int startIdx = 0, int endIdx = 0, float *inReal0 = 0, float *inReal1 = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal0, float *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -276,7 +277,7 @@ public:
 
     ADOSC() : ta() { };
     ADOSC(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, double *inVolume, int optInFastPeriod, int optInSlowPeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    ADOSC *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, double *inVolume, int optInFastPeriod, int optInSlowPeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    ADOSC *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, double *inVolume = 0, int optInFastPeriod = 0, int optInSlowPeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, double *inVolume, int optInFastPeriod, int optInSlowPeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -319,7 +320,7 @@ public:
 
     S_ADOSC() : ta() { };
     S_ADOSC(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, float *inVolume, int optInFastPeriod, int optInSlowPeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_ADOSC *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, float *inVolume, int optInFastPeriod, int optInSlowPeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_ADOSC *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, float *inVolume = 0, int optInFastPeriod = 0, int optInSlowPeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, float *inVolume, int optInFastPeriod, int optInSlowPeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -356,7 +357,7 @@ public:
 
     ADX() : ta() { };
     ADX(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    ADX *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    ADX *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -393,7 +394,7 @@ public:
 
     S_ADX() : ta() { };
     S_ADX(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_ADX *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_ADX *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -430,7 +431,7 @@ public:
 
     ADXR() : ta() { };
     ADXR(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    ADXR *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    ADXR *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -467,7 +468,7 @@ public:
 
     S_ADXR() : ta() { };
     S_ADXR(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_ADXR *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_ADXR *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -500,7 +501,7 @@ public:
 
     APO() : ta() { };
     APO(int startIdx, int endIdx, double *inReal, int optInFastPeriod, int optInSlowPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
-    APO *create(int startIdx, int endIdx, double *inReal, int optInFastPeriod, int optInSlowPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
+    APO *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInFastPeriod = 0, int optInSlowPeriod = 0, TA_MAType optInMAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInFastPeriod, int optInSlowPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -533,7 +534,7 @@ public:
 
     S_APO() : ta() { };
     S_APO(int startIdx, int endIdx, float *inReal, int optInFastPeriod, int optInSlowPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
-    S_APO *create(int startIdx, int endIdx, float *inReal, int optInFastPeriod, int optInSlowPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
+    S_APO *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInFastPeriod = 0, int optInSlowPeriod = 0, TA_MAType optInMAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInFastPeriod, int optInSlowPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -568,7 +569,7 @@ public:
 
     AROON() : ta() { };
     AROON(int startIdx, int endIdx, double *inHigh, double *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outAroonDown, double *outAroonUp);
-    AROON *create(int startIdx, int endIdx, double *inHigh, double *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outAroonDown, double *outAroonUp);
+    AROON *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outAroonDown = 0, double *outAroonU = 0);
     void update(double *inHigh, double *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outAroonDown, double *outAroonUp);
     TA_RetCode run();
 };
@@ -603,7 +604,7 @@ public:
 
     S_AROON() : ta() { };
     S_AROON(int startIdx, int endIdx, float *inHigh, float *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outAroonDown, double *outAroonUp);
-    S_AROON *create(int startIdx, int endIdx, float *inHigh, float *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outAroonDown, double *outAroonUp);
+    S_AROON *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outAroonDown = 0, double *outAroonU = 0);
     void update(float *inHigh, float *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outAroonDown, double *outAroonUp);
     TA_RetCode run();
 };
@@ -636,7 +637,7 @@ public:
 
     AROONOSC() : ta() { };
     AROONOSC(int startIdx, int endIdx, double *inHigh, double *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    AROONOSC *create(int startIdx, int endIdx, double *inHigh, double *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    AROONOSC *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -669,7 +670,7 @@ public:
 
     S_AROONOSC() : ta() { };
     S_AROONOSC(int startIdx, int endIdx, float *inHigh, float *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_AROONOSC *create(int startIdx, int endIdx, float *inHigh, float *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_AROONOSC *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -696,7 +697,7 @@ public:
 
     ASIN() : ta() { };
     ASIN(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    ASIN *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    ASIN *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -723,7 +724,7 @@ public:
 
     S_ASIN() : ta() { };
     S_ASIN(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_ASIN *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_ASIN *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -750,7 +751,7 @@ public:
 
     ATAN() : ta() { };
     ATAN(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    ATAN *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    ATAN *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -777,7 +778,7 @@ public:
 
     S_ATAN() : ta() { };
     S_ATAN(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_ATAN *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_ATAN *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -814,7 +815,7 @@ public:
 
     ATR() : ta() { };
     ATR(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    ATR *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    ATR *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -851,7 +852,7 @@ public:
 
     S_ATR() : ta() { };
     S_ATR(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_ATR *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_ATR *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -890,7 +891,7 @@ public:
 
     AVGPRICE() : ta() { };
     AVGPRICE(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, double *outReal);
-    AVGPRICE *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, double *outReal);
+    AVGPRICE *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -929,7 +930,7 @@ public:
 
     S_AVGPRICE() : ta() { };
     S_AVGPRICE(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, double *outReal);
-    S_AVGPRICE *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, double *outReal);
+    S_AVGPRICE *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -968,7 +969,7 @@ public:
 
     BBANDS() : ta() { };
     BBANDS(int startIdx, int endIdx, double *inReal, int optInTimePeriod, double optInNbDevUp, double optInNbDevDn, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outRealUpperBand, double *outRealMiddleBand, double *outRealLowerBand);
-    BBANDS *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, double optInNbDevUp, double optInNbDevDn, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outRealUpperBand, double *outRealMiddleBand, double *outRealLowerBand);
+    BBANDS *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, double optInNbDevUp = 0, double optInNbDevDn = 0, TA_MAType optInMAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outRealUpperBand = 0, double *outRealMiddleBand = 0, double *outRealLowerBan = 0);
     void update(double *inReal, int optInTimePeriod, double optInNbDevUp, double optInNbDevDn, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outRealUpperBand, double *outRealMiddleBand, double *outRealLowerBand);
     TA_RetCode run();
 };
@@ -1007,7 +1008,7 @@ public:
 
     S_BBANDS() : ta() { };
     S_BBANDS(int startIdx, int endIdx, float *inReal, int optInTimePeriod, double optInNbDevUp, double optInNbDevDn, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outRealUpperBand, double *outRealMiddleBand, double *outRealLowerBand);
-    S_BBANDS *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, double optInNbDevUp, double optInNbDevDn, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outRealUpperBand, double *outRealMiddleBand, double *outRealLowerBand);
+    S_BBANDS *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, double optInNbDevUp = 0, double optInNbDevDn = 0, TA_MAType optInMAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outRealUpperBand = 0, double *outRealMiddleBand = 0, double *outRealLowerBan = 0);
     void update(float *inReal, int optInTimePeriod, double optInNbDevUp, double optInNbDevDn, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outRealUpperBand, double *outRealMiddleBand, double *outRealLowerBand);
     TA_RetCode run();
 };
@@ -1040,7 +1041,7 @@ public:
 
     BETA() : ta() { };
     BETA(int startIdx, int endIdx, double *inReal0, double *inReal1, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    BETA *create(int startIdx, int endIdx, double *inReal0, double *inReal1, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    BETA *create(int startIdx = 0, int endIdx = 0, double *inReal0 = 0, double *inReal1 = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal0, double *inReal1, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -1073,7 +1074,7 @@ public:
 
     S_BETA() : ta() { };
     S_BETA(int startIdx, int endIdx, float *inReal0, float *inReal1, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_BETA *create(int startIdx, int endIdx, float *inReal0, float *inReal1, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_BETA *create(int startIdx = 0, int endIdx = 0, float *inReal0 = 0, float *inReal1 = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal0, float *inReal1, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -1112,7 +1113,7 @@ public:
 
     BOP() : ta() { };
     BOP(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, double *outReal);
-    BOP *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, double *outReal);
+    BOP *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -1151,7 +1152,7 @@ public:
 
     S_BOP() : ta() { };
     S_BOP(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, double *outReal);
-    S_BOP *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, double *outReal);
+    S_BOP *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -1188,7 +1189,7 @@ public:
 
     CCI() : ta() { };
     CCI(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    CCI *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    CCI *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -1225,7 +1226,7 @@ public:
 
     S_CCI() : ta() { };
     S_CCI(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_CCI *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_CCI *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -1264,7 +1265,7 @@ public:
 
     CDL2CROWS() : ta() { };
     CDL2CROWS(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDL2CROWS *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDL2CROWS *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1303,7 +1304,7 @@ public:
 
     S_CDL2CROWS() : ta() { };
     S_CDL2CROWS(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDL2CROWS *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDL2CROWS *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1342,7 +1343,7 @@ public:
 
     CDL3BLACKCROWS() : ta() { };
     CDL3BLACKCROWS(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDL3BLACKCROWS *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDL3BLACKCROWS *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1381,7 +1382,7 @@ public:
 
     S_CDL3BLACKCROWS() : ta() { };
     S_CDL3BLACKCROWS(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDL3BLACKCROWS *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDL3BLACKCROWS *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1420,7 +1421,7 @@ public:
 
     CDL3INSIDE() : ta() { };
     CDL3INSIDE(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDL3INSIDE *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDL3INSIDE *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1459,7 +1460,7 @@ public:
 
     S_CDL3INSIDE() : ta() { };
     S_CDL3INSIDE(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDL3INSIDE *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDL3INSIDE *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1498,7 +1499,7 @@ public:
 
     CDL3LINESTRIKE() : ta() { };
     CDL3LINESTRIKE(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDL3LINESTRIKE *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDL3LINESTRIKE *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1537,7 +1538,7 @@ public:
 
     S_CDL3LINESTRIKE() : ta() { };
     S_CDL3LINESTRIKE(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDL3LINESTRIKE *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDL3LINESTRIKE *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1576,7 +1577,7 @@ public:
 
     CDL3OUTSIDE() : ta() { };
     CDL3OUTSIDE(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDL3OUTSIDE *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDL3OUTSIDE *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1615,7 +1616,7 @@ public:
 
     S_CDL3OUTSIDE() : ta() { };
     S_CDL3OUTSIDE(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDL3OUTSIDE *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDL3OUTSIDE *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1654,7 +1655,7 @@ public:
 
     CDL3STARSINSOUTH() : ta() { };
     CDL3STARSINSOUTH(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDL3STARSINSOUTH *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDL3STARSINSOUTH *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1693,7 +1694,7 @@ public:
 
     S_CDL3STARSINSOUTH() : ta() { };
     S_CDL3STARSINSOUTH(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDL3STARSINSOUTH *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDL3STARSINSOUTH *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1732,7 +1733,7 @@ public:
 
     CDL3WHITESOLDIERS() : ta() { };
     CDL3WHITESOLDIERS(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDL3WHITESOLDIERS *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDL3WHITESOLDIERS *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1771,7 +1772,7 @@ public:
 
     S_CDL3WHITESOLDIERS() : ta() { };
     S_CDL3WHITESOLDIERS(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDL3WHITESOLDIERS *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDL3WHITESOLDIERS *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1812,7 +1813,7 @@ public:
 
     CDLABANDONEDBABY() : ta() { };
     CDLABANDONEDBABY(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLABANDONEDBABY *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLABANDONEDBABY *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, double optInPenetration = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1853,7 +1854,7 @@ public:
 
     S_CDLABANDONEDBABY() : ta() { };
     S_CDLABANDONEDBABY(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLABANDONEDBABY *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLABANDONEDBABY *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, double optInPenetration = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1892,7 +1893,7 @@ public:
 
     CDLADVANCEBLOCK() : ta() { };
     CDLADVANCEBLOCK(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLADVANCEBLOCK *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLADVANCEBLOCK *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1931,7 +1932,7 @@ public:
 
     S_CDLADVANCEBLOCK() : ta() { };
     S_CDLADVANCEBLOCK(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLADVANCEBLOCK *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLADVANCEBLOCK *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -1970,7 +1971,7 @@ public:
 
     CDLBELTHOLD() : ta() { };
     CDLBELTHOLD(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLBELTHOLD *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLBELTHOLD *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2009,7 +2010,7 @@ public:
 
     S_CDLBELTHOLD() : ta() { };
     S_CDLBELTHOLD(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLBELTHOLD *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLBELTHOLD *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2048,7 +2049,7 @@ public:
 
     CDLBREAKAWAY() : ta() { };
     CDLBREAKAWAY(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLBREAKAWAY *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLBREAKAWAY *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2087,7 +2088,7 @@ public:
 
     S_CDLBREAKAWAY() : ta() { };
     S_CDLBREAKAWAY(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLBREAKAWAY *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLBREAKAWAY *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2126,7 +2127,7 @@ public:
 
     CDLCLOSINGMARUBOZU() : ta() { };
     CDLCLOSINGMARUBOZU(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLCLOSINGMARUBOZU *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLCLOSINGMARUBOZU *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2165,7 +2166,7 @@ public:
 
     S_CDLCLOSINGMARUBOZU() : ta() { };
     S_CDLCLOSINGMARUBOZU(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLCLOSINGMARUBOZU *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLCLOSINGMARUBOZU *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2204,7 +2205,7 @@ public:
 
     CDLCONCEALBABYSWALL() : ta() { };
     CDLCONCEALBABYSWALL(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLCONCEALBABYSWALL *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLCONCEALBABYSWALL *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2243,7 +2244,7 @@ public:
 
     S_CDLCONCEALBABYSWALL() : ta() { };
     S_CDLCONCEALBABYSWALL(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLCONCEALBABYSWALL *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLCONCEALBABYSWALL *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2282,7 +2283,7 @@ public:
 
     CDLCOUNTERATTACK() : ta() { };
     CDLCOUNTERATTACK(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLCOUNTERATTACK *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLCOUNTERATTACK *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2321,7 +2322,7 @@ public:
 
     S_CDLCOUNTERATTACK() : ta() { };
     S_CDLCOUNTERATTACK(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLCOUNTERATTACK *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLCOUNTERATTACK *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2362,7 +2363,7 @@ public:
 
     CDLDARKCLOUDCOVER() : ta() { };
     CDLDARKCLOUDCOVER(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLDARKCLOUDCOVER *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLDARKCLOUDCOVER *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, double optInPenetration = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2403,7 +2404,7 @@ public:
 
     S_CDLDARKCLOUDCOVER() : ta() { };
     S_CDLDARKCLOUDCOVER(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLDARKCLOUDCOVER *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLDARKCLOUDCOVER *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, double optInPenetration = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2442,7 +2443,7 @@ public:
 
     CDLDOJI() : ta() { };
     CDLDOJI(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLDOJI *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLDOJI *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2481,7 +2482,7 @@ public:
 
     S_CDLDOJI() : ta() { };
     S_CDLDOJI(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLDOJI *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLDOJI *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2520,7 +2521,7 @@ public:
 
     CDLDOJISTAR() : ta() { };
     CDLDOJISTAR(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLDOJISTAR *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLDOJISTAR *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2559,7 +2560,7 @@ public:
 
     S_CDLDOJISTAR() : ta() { };
     S_CDLDOJISTAR(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLDOJISTAR *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLDOJISTAR *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2598,7 +2599,7 @@ public:
 
     CDLDRAGONFLYDOJI() : ta() { };
     CDLDRAGONFLYDOJI(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLDRAGONFLYDOJI *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLDRAGONFLYDOJI *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2637,7 +2638,7 @@ public:
 
     S_CDLDRAGONFLYDOJI() : ta() { };
     S_CDLDRAGONFLYDOJI(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLDRAGONFLYDOJI *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLDRAGONFLYDOJI *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2676,7 +2677,7 @@ public:
 
     CDLENGULFING() : ta() { };
     CDLENGULFING(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLENGULFING *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLENGULFING *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2715,7 +2716,7 @@ public:
 
     S_CDLENGULFING() : ta() { };
     S_CDLENGULFING(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLENGULFING *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLENGULFING *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2756,7 +2757,7 @@ public:
 
     CDLEVENINGDOJISTAR() : ta() { };
     CDLEVENINGDOJISTAR(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLEVENINGDOJISTAR *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLEVENINGDOJISTAR *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, double optInPenetration = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2797,7 +2798,7 @@ public:
 
     S_CDLEVENINGDOJISTAR() : ta() { };
     S_CDLEVENINGDOJISTAR(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLEVENINGDOJISTAR *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLEVENINGDOJISTAR *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, double optInPenetration = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2838,7 +2839,7 @@ public:
 
     CDLEVENINGSTAR() : ta() { };
     CDLEVENINGSTAR(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLEVENINGSTAR *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLEVENINGSTAR *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, double optInPenetration = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2879,7 +2880,7 @@ public:
 
     S_CDLEVENINGSTAR() : ta() { };
     S_CDLEVENINGSTAR(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLEVENINGSTAR *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLEVENINGSTAR *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, double optInPenetration = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2918,7 +2919,7 @@ public:
 
     CDLGAPSIDESIDEWHITE() : ta() { };
     CDLGAPSIDESIDEWHITE(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLGAPSIDESIDEWHITE *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLGAPSIDESIDEWHITE *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2957,7 +2958,7 @@ public:
 
     S_CDLGAPSIDESIDEWHITE() : ta() { };
     S_CDLGAPSIDESIDEWHITE(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLGAPSIDESIDEWHITE *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLGAPSIDESIDEWHITE *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -2996,7 +2997,7 @@ public:
 
     CDLGRAVESTONEDOJI() : ta() { };
     CDLGRAVESTONEDOJI(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLGRAVESTONEDOJI *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLGRAVESTONEDOJI *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3035,7 +3036,7 @@ public:
 
     S_CDLGRAVESTONEDOJI() : ta() { };
     S_CDLGRAVESTONEDOJI(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLGRAVESTONEDOJI *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLGRAVESTONEDOJI *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3074,7 +3075,7 @@ public:
 
     CDLHAMMER() : ta() { };
     CDLHAMMER(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLHAMMER *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLHAMMER *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3113,7 +3114,7 @@ public:
 
     S_CDLHAMMER() : ta() { };
     S_CDLHAMMER(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLHAMMER *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLHAMMER *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3152,7 +3153,7 @@ public:
 
     CDLHANGINGMAN() : ta() { };
     CDLHANGINGMAN(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLHANGINGMAN *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLHANGINGMAN *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3191,7 +3192,7 @@ public:
 
     S_CDLHANGINGMAN() : ta() { };
     S_CDLHANGINGMAN(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLHANGINGMAN *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLHANGINGMAN *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3230,7 +3231,7 @@ public:
 
     CDLHARAMI() : ta() { };
     CDLHARAMI(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLHARAMI *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLHARAMI *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3269,7 +3270,7 @@ public:
 
     S_CDLHARAMI() : ta() { };
     S_CDLHARAMI(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLHARAMI *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLHARAMI *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3308,7 +3309,7 @@ public:
 
     CDLHARAMICROSS() : ta() { };
     CDLHARAMICROSS(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLHARAMICROSS *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLHARAMICROSS *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3347,7 +3348,7 @@ public:
 
     S_CDLHARAMICROSS() : ta() { };
     S_CDLHARAMICROSS(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLHARAMICROSS *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLHARAMICROSS *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3386,7 +3387,7 @@ public:
 
     CDLHIGHWAVE() : ta() { };
     CDLHIGHWAVE(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLHIGHWAVE *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLHIGHWAVE *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3425,7 +3426,7 @@ public:
 
     S_CDLHIGHWAVE() : ta() { };
     S_CDLHIGHWAVE(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLHIGHWAVE *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLHIGHWAVE *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3464,7 +3465,7 @@ public:
 
     CDLHIKKAKE() : ta() { };
     CDLHIKKAKE(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLHIKKAKE *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLHIKKAKE *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3503,7 +3504,7 @@ public:
 
     S_CDLHIKKAKE() : ta() { };
     S_CDLHIKKAKE(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLHIKKAKE *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLHIKKAKE *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3542,7 +3543,7 @@ public:
 
     CDLHIKKAKEMOD() : ta() { };
     CDLHIKKAKEMOD(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLHIKKAKEMOD *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLHIKKAKEMOD *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3581,7 +3582,7 @@ public:
 
     S_CDLHIKKAKEMOD() : ta() { };
     S_CDLHIKKAKEMOD(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLHIKKAKEMOD *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLHIKKAKEMOD *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3620,7 +3621,7 @@ public:
 
     CDLHOMINGPIGEON() : ta() { };
     CDLHOMINGPIGEON(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLHOMINGPIGEON *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLHOMINGPIGEON *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3659,7 +3660,7 @@ public:
 
     S_CDLHOMINGPIGEON() : ta() { };
     S_CDLHOMINGPIGEON(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLHOMINGPIGEON *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLHOMINGPIGEON *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3698,7 +3699,7 @@ public:
 
     CDLIDENTICAL3CROWS() : ta() { };
     CDLIDENTICAL3CROWS(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLIDENTICAL3CROWS *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLIDENTICAL3CROWS *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3737,7 +3738,7 @@ public:
 
     S_CDLIDENTICAL3CROWS() : ta() { };
     S_CDLIDENTICAL3CROWS(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLIDENTICAL3CROWS *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLIDENTICAL3CROWS *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3776,7 +3777,7 @@ public:
 
     CDLINNECK() : ta() { };
     CDLINNECK(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLINNECK *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLINNECK *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3815,7 +3816,7 @@ public:
 
     S_CDLINNECK() : ta() { };
     S_CDLINNECK(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLINNECK *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLINNECK *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3854,7 +3855,7 @@ public:
 
     CDLINVERTEDHAMMER() : ta() { };
     CDLINVERTEDHAMMER(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLINVERTEDHAMMER *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLINVERTEDHAMMER *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3893,7 +3894,7 @@ public:
 
     S_CDLINVERTEDHAMMER() : ta() { };
     S_CDLINVERTEDHAMMER(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLINVERTEDHAMMER *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLINVERTEDHAMMER *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3932,7 +3933,7 @@ public:
 
     CDLKICKING() : ta() { };
     CDLKICKING(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLKICKING *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLKICKING *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -3971,7 +3972,7 @@ public:
 
     S_CDLKICKING() : ta() { };
     S_CDLKICKING(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLKICKING *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLKICKING *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4010,7 +4011,7 @@ public:
 
     CDLKICKINGBYLENGTH() : ta() { };
     CDLKICKINGBYLENGTH(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLKICKINGBYLENGTH *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLKICKINGBYLENGTH *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4049,7 +4050,7 @@ public:
 
     S_CDLKICKINGBYLENGTH() : ta() { };
     S_CDLKICKINGBYLENGTH(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLKICKINGBYLENGTH *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLKICKINGBYLENGTH *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4088,7 +4089,7 @@ public:
 
     CDLLADDERBOTTOM() : ta() { };
     CDLLADDERBOTTOM(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLLADDERBOTTOM *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLLADDERBOTTOM *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4127,7 +4128,7 @@ public:
 
     S_CDLLADDERBOTTOM() : ta() { };
     S_CDLLADDERBOTTOM(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLLADDERBOTTOM *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLLADDERBOTTOM *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4166,7 +4167,7 @@ public:
 
     CDLLONGLEGGEDDOJI() : ta() { };
     CDLLONGLEGGEDDOJI(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLLONGLEGGEDDOJI *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLLONGLEGGEDDOJI *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4205,7 +4206,7 @@ public:
 
     S_CDLLONGLEGGEDDOJI() : ta() { };
     S_CDLLONGLEGGEDDOJI(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLLONGLEGGEDDOJI *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLLONGLEGGEDDOJI *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4244,7 +4245,7 @@ public:
 
     CDLLONGLINE() : ta() { };
     CDLLONGLINE(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLLONGLINE *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLLONGLINE *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4283,7 +4284,7 @@ public:
 
     S_CDLLONGLINE() : ta() { };
     S_CDLLONGLINE(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLLONGLINE *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLLONGLINE *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4322,7 +4323,7 @@ public:
 
     CDLMARUBOZU() : ta() { };
     CDLMARUBOZU(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLMARUBOZU *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLMARUBOZU *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4361,7 +4362,7 @@ public:
 
     S_CDLMARUBOZU() : ta() { };
     S_CDLMARUBOZU(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLMARUBOZU *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLMARUBOZU *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4400,7 +4401,7 @@ public:
 
     CDLMATCHINGLOW() : ta() { };
     CDLMATCHINGLOW(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLMATCHINGLOW *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLMATCHINGLOW *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4439,7 +4440,7 @@ public:
 
     S_CDLMATCHINGLOW() : ta() { };
     S_CDLMATCHINGLOW(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLMATCHINGLOW *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLMATCHINGLOW *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4480,7 +4481,7 @@ public:
 
     CDLMATHOLD() : ta() { };
     CDLMATHOLD(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLMATHOLD *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLMATHOLD *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, double optInPenetration = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4521,7 +4522,7 @@ public:
 
     S_CDLMATHOLD() : ta() { };
     S_CDLMATHOLD(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLMATHOLD *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLMATHOLD *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, double optInPenetration = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4562,7 +4563,7 @@ public:
 
     CDLMORNINGDOJISTAR() : ta() { };
     CDLMORNINGDOJISTAR(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLMORNINGDOJISTAR *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLMORNINGDOJISTAR *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, double optInPenetration = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4603,7 +4604,7 @@ public:
 
     S_CDLMORNINGDOJISTAR() : ta() { };
     S_CDLMORNINGDOJISTAR(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLMORNINGDOJISTAR *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLMORNINGDOJISTAR *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, double optInPenetration = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4644,7 +4645,7 @@ public:
 
     CDLMORNINGSTAR() : ta() { };
     CDLMORNINGSTAR(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLMORNINGSTAR *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLMORNINGSTAR *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, double optInPenetration = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4685,7 +4686,7 @@ public:
 
     S_CDLMORNINGSTAR() : ta() { };
     S_CDLMORNINGSTAR(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLMORNINGSTAR *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLMORNINGSTAR *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, double optInPenetration = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, double optInPenetration, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4724,7 +4725,7 @@ public:
 
     CDLONNECK() : ta() { };
     CDLONNECK(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLONNECK *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLONNECK *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4763,7 +4764,7 @@ public:
 
     S_CDLONNECK() : ta() { };
     S_CDLONNECK(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLONNECK *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLONNECK *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4802,7 +4803,7 @@ public:
 
     CDLPIERCING() : ta() { };
     CDLPIERCING(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLPIERCING *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLPIERCING *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4841,7 +4842,7 @@ public:
 
     S_CDLPIERCING() : ta() { };
     S_CDLPIERCING(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLPIERCING *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLPIERCING *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4880,7 +4881,7 @@ public:
 
     CDLRICKSHAWMAN() : ta() { };
     CDLRICKSHAWMAN(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLRICKSHAWMAN *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLRICKSHAWMAN *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4919,7 +4920,7 @@ public:
 
     S_CDLRICKSHAWMAN() : ta() { };
     S_CDLRICKSHAWMAN(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLRICKSHAWMAN *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLRICKSHAWMAN *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4958,7 +4959,7 @@ public:
 
     CDLRISEFALL3METHODS() : ta() { };
     CDLRISEFALL3METHODS(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLRISEFALL3METHODS *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLRISEFALL3METHODS *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -4997,7 +4998,7 @@ public:
 
     S_CDLRISEFALL3METHODS() : ta() { };
     S_CDLRISEFALL3METHODS(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLRISEFALL3METHODS *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLRISEFALL3METHODS *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5036,7 +5037,7 @@ public:
 
     CDLSEPARATINGLINES() : ta() { };
     CDLSEPARATINGLINES(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLSEPARATINGLINES *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLSEPARATINGLINES *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5075,7 +5076,7 @@ public:
 
     S_CDLSEPARATINGLINES() : ta() { };
     S_CDLSEPARATINGLINES(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLSEPARATINGLINES *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLSEPARATINGLINES *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5114,7 +5115,7 @@ public:
 
     CDLSHOOTINGSTAR() : ta() { };
     CDLSHOOTINGSTAR(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLSHOOTINGSTAR *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLSHOOTINGSTAR *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5153,7 +5154,7 @@ public:
 
     S_CDLSHOOTINGSTAR() : ta() { };
     S_CDLSHOOTINGSTAR(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLSHOOTINGSTAR *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLSHOOTINGSTAR *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5192,7 +5193,7 @@ public:
 
     CDLSHORTLINE() : ta() { };
     CDLSHORTLINE(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLSHORTLINE *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLSHORTLINE *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5231,7 +5232,7 @@ public:
 
     S_CDLSHORTLINE() : ta() { };
     S_CDLSHORTLINE(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLSHORTLINE *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLSHORTLINE *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5270,7 +5271,7 @@ public:
 
     CDLSPINNINGTOP() : ta() { };
     CDLSPINNINGTOP(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLSPINNINGTOP *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLSPINNINGTOP *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5309,7 +5310,7 @@ public:
 
     S_CDLSPINNINGTOP() : ta() { };
     S_CDLSPINNINGTOP(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLSPINNINGTOP *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLSPINNINGTOP *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5348,7 +5349,7 @@ public:
 
     CDLSTALLEDPATTERN() : ta() { };
     CDLSTALLEDPATTERN(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLSTALLEDPATTERN *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLSTALLEDPATTERN *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5387,7 +5388,7 @@ public:
 
     S_CDLSTALLEDPATTERN() : ta() { };
     S_CDLSTALLEDPATTERN(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLSTALLEDPATTERN *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLSTALLEDPATTERN *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5426,7 +5427,7 @@ public:
 
     CDLSTICKSANDWICH() : ta() { };
     CDLSTICKSANDWICH(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLSTICKSANDWICH *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLSTICKSANDWICH *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5465,7 +5466,7 @@ public:
 
     S_CDLSTICKSANDWICH() : ta() { };
     S_CDLSTICKSANDWICH(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLSTICKSANDWICH *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLSTICKSANDWICH *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5504,7 +5505,7 @@ public:
 
     CDLTAKURI() : ta() { };
     CDLTAKURI(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLTAKURI *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLTAKURI *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5543,7 +5544,7 @@ public:
 
     S_CDLTAKURI() : ta() { };
     S_CDLTAKURI(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLTAKURI *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLTAKURI *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5582,7 +5583,7 @@ public:
 
     CDLTASUKIGAP() : ta() { };
     CDLTASUKIGAP(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLTASUKIGAP *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLTASUKIGAP *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5621,7 +5622,7 @@ public:
 
     S_CDLTASUKIGAP() : ta() { };
     S_CDLTASUKIGAP(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLTASUKIGAP *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLTASUKIGAP *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5660,7 +5661,7 @@ public:
 
     CDLTHRUSTING() : ta() { };
     CDLTHRUSTING(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLTHRUSTING *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLTHRUSTING *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5699,7 +5700,7 @@ public:
 
     S_CDLTHRUSTING() : ta() { };
     S_CDLTHRUSTING(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLTHRUSTING *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLTHRUSTING *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5738,7 +5739,7 @@ public:
 
     CDLTRISTAR() : ta() { };
     CDLTRISTAR(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLTRISTAR *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLTRISTAR *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5777,7 +5778,7 @@ public:
 
     S_CDLTRISTAR() : ta() { };
     S_CDLTRISTAR(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLTRISTAR *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLTRISTAR *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5816,7 +5817,7 @@ public:
 
     CDLUNIQUE3RIVER() : ta() { };
     CDLUNIQUE3RIVER(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLUNIQUE3RIVER *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLUNIQUE3RIVER *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5855,7 +5856,7 @@ public:
 
     S_CDLUNIQUE3RIVER() : ta() { };
     S_CDLUNIQUE3RIVER(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLUNIQUE3RIVER *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLUNIQUE3RIVER *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5894,7 +5895,7 @@ public:
 
     CDLUPSIDEGAP2CROWS() : ta() { };
     CDLUPSIDEGAP2CROWS(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLUPSIDEGAP2CROWS *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLUPSIDEGAP2CROWS *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5933,7 +5934,7 @@ public:
 
     S_CDLUPSIDEGAP2CROWS() : ta() { };
     S_CDLUPSIDEGAP2CROWS(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLUPSIDEGAP2CROWS *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLUPSIDEGAP2CROWS *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -5972,7 +5973,7 @@ public:
 
     CDLXSIDEGAP3METHODS() : ta() { };
     CDLXSIDEGAP3METHODS(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    CDLXSIDEGAP3METHODS *create(int startIdx, int endIdx, double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    CDLXSIDEGAP3METHODS *create(int startIdx = 0, int endIdx = 0, double *inOpen = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inOpen, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -6011,7 +6012,7 @@ public:
 
     S_CDLXSIDEGAP3METHODS() : ta() { };
     S_CDLXSIDEGAP3METHODS(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_CDLXSIDEGAP3METHODS *create(int startIdx, int endIdx, float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_CDLXSIDEGAP3METHODS *create(int startIdx = 0, int endIdx = 0, float *inOpen = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inOpen, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -6038,7 +6039,7 @@ public:
 
     CEIL() : ta() { };
     CEIL(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    CEIL *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    CEIL *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6065,7 +6066,7 @@ public:
 
     S_CEIL() : ta() { };
     S_CEIL(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_CEIL *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_CEIL *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6094,7 +6095,7 @@ public:
 
     CMO() : ta() { };
     CMO(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    CMO *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    CMO *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6123,7 +6124,7 @@ public:
 
     S_CMO() : ta() { };
     S_CMO(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_CMO *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_CMO *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6156,7 +6157,7 @@ public:
 
     CORREL() : ta() { };
     CORREL(int startIdx, int endIdx, double *inReal0, double *inReal1, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    CORREL *create(int startIdx, int endIdx, double *inReal0, double *inReal1, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    CORREL *create(int startIdx = 0, int endIdx = 0, double *inReal0 = 0, double *inReal1 = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal0, double *inReal1, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6189,7 +6190,7 @@ public:
 
     S_CORREL() : ta() { };
     S_CORREL(int startIdx, int endIdx, float *inReal0, float *inReal1, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_CORREL *create(int startIdx, int endIdx, float *inReal0, float *inReal1, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_CORREL *create(int startIdx = 0, int endIdx = 0, float *inReal0 = 0, float *inReal1 = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal0, float *inReal1, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6216,7 +6217,7 @@ public:
 
     COS() : ta() { };
     COS(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    COS *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    COS *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6243,7 +6244,7 @@ public:
 
     S_COS() : ta() { };
     S_COS(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_COS *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_COS *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6270,7 +6271,7 @@ public:
 
     COSH() : ta() { };
     COSH(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    COSH *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    COSH *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6297,7 +6298,7 @@ public:
 
     S_COSH() : ta() { };
     S_COSH(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_COSH *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_COSH *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6326,7 +6327,7 @@ public:
 
     DEMA() : ta() { };
     DEMA(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    DEMA *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    DEMA *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6355,7 +6356,7 @@ public:
 
     S_DEMA() : ta() { };
     S_DEMA(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_DEMA *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_DEMA *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6386,7 +6387,7 @@ public:
 
     DIV() : ta() { };
     DIV(int startIdx, int endIdx, double *inReal0, double *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
-    DIV *create(int startIdx, int endIdx, double *inReal0, double *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
+    DIV *create(int startIdx = 0, int endIdx = 0, double *inReal0 = 0, double *inReal1 = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal0, double *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6417,7 +6418,7 @@ public:
 
     S_DIV() : ta() { };
     S_DIV(int startIdx, int endIdx, float *inReal0, float *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
-    S_DIV *create(int startIdx, int endIdx, float *inReal0, float *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
+    S_DIV *create(int startIdx = 0, int endIdx = 0, float *inReal0 = 0, float *inReal1 = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal0, float *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6454,7 +6455,7 @@ public:
 
     DX() : ta() { };
     DX(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    DX *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    DX *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6491,7 +6492,7 @@ public:
 
     S_DX() : ta() { };
     S_DX(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_DX *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_DX *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6520,7 +6521,7 @@ public:
 
     EMA() : ta() { };
     EMA(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    EMA *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    EMA *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6549,7 +6550,7 @@ public:
 
     S_EMA() : ta() { };
     S_EMA(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_EMA *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_EMA *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6576,7 +6577,7 @@ public:
 
     EXP() : ta() { };
     EXP(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    EXP *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    EXP *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6603,7 +6604,7 @@ public:
 
     S_EXP() : ta() { };
     S_EXP(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_EXP *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_EXP *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6630,7 +6631,7 @@ public:
 
     FLOOR() : ta() { };
     FLOOR(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    FLOOR *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    FLOOR *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6657,7 +6658,7 @@ public:
 
     S_FLOOR() : ta() { };
     S_FLOOR(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_FLOOR *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_FLOOR *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6684,7 +6685,7 @@ public:
 
     HT_DCPERIOD() : ta() { };
     HT_DCPERIOD(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    HT_DCPERIOD *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    HT_DCPERIOD *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6711,7 +6712,7 @@ public:
 
     S_HT_DCPERIOD() : ta() { };
     S_HT_DCPERIOD(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_HT_DCPERIOD *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_HT_DCPERIOD *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6738,7 +6739,7 @@ public:
 
     HT_DCPHASE() : ta() { };
     HT_DCPHASE(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    HT_DCPHASE *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    HT_DCPHASE *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6765,7 +6766,7 @@ public:
 
     S_HT_DCPHASE() : ta() { };
     S_HT_DCPHASE(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_HT_DCPHASE *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_HT_DCPHASE *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6794,7 +6795,7 @@ public:
 
     HT_PHASOR() : ta() { };
     HT_PHASOR(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outInPhase, double *outQuadrature);
-    HT_PHASOR *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outInPhase, double *outQuadrature);
+    HT_PHASOR *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outInPhase = 0, double *outQuadratur = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outInPhase, double *outQuadrature);
     TA_RetCode run();
 };
@@ -6823,7 +6824,7 @@ public:
 
     S_HT_PHASOR() : ta() { };
     S_HT_PHASOR(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outInPhase, double *outQuadrature);
-    S_HT_PHASOR *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outInPhase, double *outQuadrature);
+    S_HT_PHASOR *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outInPhase = 0, double *outQuadratur = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outInPhase, double *outQuadrature);
     TA_RetCode run();
 };
@@ -6852,7 +6853,7 @@ public:
 
     HT_SINE() : ta() { };
     HT_SINE(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outSine, double *outLeadSine);
-    HT_SINE *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outSine, double *outLeadSine);
+    HT_SINE *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outSine = 0, double *outLeadSin = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outSine, double *outLeadSine);
     TA_RetCode run();
 };
@@ -6881,7 +6882,7 @@ public:
 
     S_HT_SINE() : ta() { };
     S_HT_SINE(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outSine, double *outLeadSine);
-    S_HT_SINE *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outSine, double *outLeadSine);
+    S_HT_SINE *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outSine = 0, double *outLeadSin = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outSine, double *outLeadSine);
     TA_RetCode run();
 };
@@ -6908,7 +6909,7 @@ public:
 
     HT_TRENDLINE() : ta() { };
     HT_TRENDLINE(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    HT_TRENDLINE *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    HT_TRENDLINE *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6935,7 +6936,7 @@ public:
 
     S_HT_TRENDLINE() : ta() { };
     S_HT_TRENDLINE(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_HT_TRENDLINE *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_HT_TRENDLINE *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -6962,7 +6963,7 @@ public:
 
     HT_TRENDMODE() : ta() { };
     HT_TRENDMODE(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, int *outInteger);
-    HT_TRENDMODE *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, int *outInteger);
+    HT_TRENDMODE *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -6989,7 +6990,7 @@ public:
 
     S_HT_TRENDMODE() : ta() { };
     S_HT_TRENDMODE(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_HT_TRENDMODE *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_HT_TRENDMODE *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -7018,7 +7019,7 @@ public:
 
     KAMA() : ta() { };
     KAMA(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    KAMA *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    KAMA *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7047,7 +7048,7 @@ public:
 
     S_KAMA() : ta() { };
     S_KAMA(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_KAMA *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_KAMA *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7076,7 +7077,7 @@ public:
 
     LINEARREG() : ta() { };
     LINEARREG(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    LINEARREG *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    LINEARREG *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7105,7 +7106,7 @@ public:
 
     S_LINEARREG() : ta() { };
     S_LINEARREG(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_LINEARREG *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_LINEARREG *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7134,7 +7135,7 @@ public:
 
     LINEARREG_ANGLE() : ta() { };
     LINEARREG_ANGLE(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    LINEARREG_ANGLE *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    LINEARREG_ANGLE *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7163,7 +7164,7 @@ public:
 
     S_LINEARREG_ANGLE() : ta() { };
     S_LINEARREG_ANGLE(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_LINEARREG_ANGLE *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_LINEARREG_ANGLE *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7192,7 +7193,7 @@ public:
 
     LINEARREG_INTERCEPT() : ta() { };
     LINEARREG_INTERCEPT(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    LINEARREG_INTERCEPT *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    LINEARREG_INTERCEPT *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7221,7 +7222,7 @@ public:
 
     S_LINEARREG_INTERCEPT() : ta() { };
     S_LINEARREG_INTERCEPT(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_LINEARREG_INTERCEPT *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_LINEARREG_INTERCEPT *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7250,7 +7251,7 @@ public:
 
     LINEARREG_SLOPE() : ta() { };
     LINEARREG_SLOPE(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    LINEARREG_SLOPE *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    LINEARREG_SLOPE *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7279,7 +7280,7 @@ public:
 
     S_LINEARREG_SLOPE() : ta() { };
     S_LINEARREG_SLOPE(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_LINEARREG_SLOPE *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_LINEARREG_SLOPE *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7306,7 +7307,7 @@ public:
 
     LN() : ta() { };
     LN(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    LN *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    LN *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7333,7 +7334,7 @@ public:
 
     S_LN() : ta() { };
     S_LN(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_LN *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_LN *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7360,7 +7361,7 @@ public:
 
     LOG10() : ta() { };
     LOG10(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    LOG10 *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    LOG10 *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7387,7 +7388,7 @@ public:
 
     S_LOG10() : ta() { };
     S_LOG10(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_LOG10 *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_LOG10 *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7418,7 +7419,7 @@ public:
 
     MA() : ta() { };
     MA(int startIdx, int endIdx, double *inReal, int optInTimePeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
-    MA *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
+    MA *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, TA_MAType optInMAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7449,7 +7450,7 @@ public:
 
     S_MA() : ta() { };
     S_MA(int startIdx, int endIdx, float *inReal, int optInTimePeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
-    S_MA *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
+    S_MA *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, TA_MAType optInMAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7486,7 +7487,7 @@ public:
 
     MACD() : ta() { };
     MACD(int startIdx, int endIdx, double *inReal, int optInFastPeriod, int optInSlowPeriod, int optInSignalPeriod, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
-    MACD *create(int startIdx, int endIdx, double *inReal, int optInFastPeriod, int optInSlowPeriod, int optInSignalPeriod, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
+    MACD *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInFastPeriod = 0, int optInSlowPeriod = 0, int optInSignalPeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outMACD = 0, double *outMACDSignal = 0, double *outMACDHis = 0);
     void update(double *inReal, int optInFastPeriod, int optInSlowPeriod, int optInSignalPeriod, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
     TA_RetCode run();
 };
@@ -7523,7 +7524,7 @@ public:
 
     S_MACD() : ta() { };
     S_MACD(int startIdx, int endIdx, float *inReal, int optInFastPeriod, int optInSlowPeriod, int optInSignalPeriod, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
-    S_MACD *create(int startIdx, int endIdx, float *inReal, int optInFastPeriod, int optInSlowPeriod, int optInSignalPeriod, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
+    S_MACD *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInFastPeriod = 0, int optInSlowPeriod = 0, int optInSignalPeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outMACD = 0, double *outMACDSignal = 0, double *outMACDHis = 0);
     void update(float *inReal, int optInFastPeriod, int optInSlowPeriod, int optInSignalPeriod, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
     TA_RetCode run();
 };
@@ -7566,7 +7567,7 @@ public:
 
     MACDEXT() : ta() { };
     MACDEXT(int startIdx, int endIdx, double *inReal, int optInFastPeriod, TA_MAType optInFastMAType, int optInSlowPeriod, TA_MAType optInSlowMAType, int optInSignalPeriod, TA_MAType optInSignalMAType, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
-    MACDEXT *create(int startIdx, int endIdx, double *inReal, int optInFastPeriod, TA_MAType optInFastMAType, int optInSlowPeriod, TA_MAType optInSlowMAType, int optInSignalPeriod, TA_MAType optInSignalMAType, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
+    MACDEXT *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInFastPeriod = 0, TA_MAType optInFastMAType = (TA_MAType) 0, int optInSlowPeriod = 0, TA_MAType optInSlowMAType = (TA_MAType) 0, int optInSignalPeriod = 0, TA_MAType optInSignalMAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outMACD = 0, double *outMACDSignal = 0, double *outMACDHis = 0);
     void update(double *inReal, int optInFastPeriod, TA_MAType optInFastMAType, int optInSlowPeriod, TA_MAType optInSlowMAType, int optInSignalPeriod, TA_MAType optInSignalMAType, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
     TA_RetCode run();
 };
@@ -7609,7 +7610,7 @@ public:
 
     S_MACDEXT() : ta() { };
     S_MACDEXT(int startIdx, int endIdx, float *inReal, int optInFastPeriod, TA_MAType optInFastMAType, int optInSlowPeriod, TA_MAType optInSlowMAType, int optInSignalPeriod, TA_MAType optInSignalMAType, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
-    S_MACDEXT *create(int startIdx, int endIdx, float *inReal, int optInFastPeriod, TA_MAType optInFastMAType, int optInSlowPeriod, TA_MAType optInSlowMAType, int optInSignalPeriod, TA_MAType optInSignalMAType, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
+    S_MACDEXT *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInFastPeriod = 0, TA_MAType optInFastMAType = (TA_MAType) 0, int optInSlowPeriod = 0, TA_MAType optInSlowMAType = (TA_MAType) 0, int optInSignalPeriod = 0, TA_MAType optInSignalMAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outMACD = 0, double *outMACDSignal = 0, double *outMACDHis = 0);
     void update(float *inReal, int optInFastPeriod, TA_MAType optInFastMAType, int optInSlowPeriod, TA_MAType optInSlowMAType, int optInSignalPeriod, TA_MAType optInSignalMAType, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
     TA_RetCode run();
 };
@@ -7642,7 +7643,7 @@ public:
 
     MACDFIX() : ta() { };
     MACDFIX(int startIdx, int endIdx, double *inReal, int optInSignalPeriod, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
-    MACDFIX *create(int startIdx, int endIdx, double *inReal, int optInSignalPeriod, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
+    MACDFIX *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInSignalPeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outMACD = 0, double *outMACDSignal = 0, double *outMACDHis = 0);
     void update(double *inReal, int optInSignalPeriod, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
     TA_RetCode run();
 };
@@ -7675,7 +7676,7 @@ public:
 
     S_MACDFIX() : ta() { };
     S_MACDFIX(int startIdx, int endIdx, float *inReal, int optInSignalPeriod, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
-    S_MACDFIX *create(int startIdx, int endIdx, float *inReal, int optInSignalPeriod, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
+    S_MACDFIX *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInSignalPeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outMACD = 0, double *outMACDSignal = 0, double *outMACDHis = 0);
     void update(float *inReal, int optInSignalPeriod, int *outBegIdx, int *outNBElement, double *outMACD, double *outMACDSignal, double *outMACDHist);
     TA_RetCode run();
 };
@@ -7708,7 +7709,7 @@ public:
 
     MAMA() : ta() { };
     MAMA(int startIdx, int endIdx, double *inReal, double optInFastLimit, double optInSlowLimit, int *outBegIdx, int *outNBElement, double *outMAMA, double *outFAMA);
-    MAMA *create(int startIdx, int endIdx, double *inReal, double optInFastLimit, double optInSlowLimit, int *outBegIdx, int *outNBElement, double *outMAMA, double *outFAMA);
+    MAMA *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, double optInFastLimit = 0, double optInSlowLimit = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outMAMA = 0, double *outFAM = 0);
     void update(double *inReal, double optInFastLimit, double optInSlowLimit, int *outBegIdx, int *outNBElement, double *outMAMA, double *outFAMA);
     TA_RetCode run();
 };
@@ -7741,7 +7742,7 @@ public:
 
     S_MAMA() : ta() { };
     S_MAMA(int startIdx, int endIdx, float *inReal, double optInFastLimit, double optInSlowLimit, int *outBegIdx, int *outNBElement, double *outMAMA, double *outFAMA);
-    S_MAMA *create(int startIdx, int endIdx, float *inReal, double optInFastLimit, double optInSlowLimit, int *outBegIdx, int *outNBElement, double *outMAMA, double *outFAMA);
+    S_MAMA *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, double optInFastLimit = 0, double optInSlowLimit = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outMAMA = 0, double *outFAM = 0);
     void update(float *inReal, double optInFastLimit, double optInSlowLimit, int *outBegIdx, int *outNBElement, double *outMAMA, double *outFAMA);
     TA_RetCode run();
 };
@@ -7778,7 +7779,7 @@ public:
 
     MAVP() : ta() { };
     MAVP(int startIdx, int endIdx, double *inReal, double *inPeriods, int optInMinPeriod, int optInMaxPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
-    MAVP *create(int startIdx, int endIdx, double *inReal, double *inPeriods, int optInMinPeriod, int optInMaxPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
+    MAVP *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, double *inPeriods = 0, int optInMinPeriod = 0, int optInMaxPeriod = 0, TA_MAType optInMAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, double *inPeriods, int optInMinPeriod, int optInMaxPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7815,7 +7816,7 @@ public:
 
     S_MAVP() : ta() { };
     S_MAVP(int startIdx, int endIdx, float *inReal, float *inPeriods, int optInMinPeriod, int optInMaxPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
-    S_MAVP *create(int startIdx, int endIdx, float *inReal, float *inPeriods, int optInMinPeriod, int optInMaxPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
+    S_MAVP *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, float *inPeriods = 0, int optInMinPeriod = 0, int optInMaxPeriod = 0, TA_MAType optInMAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, float *inPeriods, int optInMinPeriod, int optInMaxPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7844,7 +7845,7 @@ public:
 
     MAX() : ta() { };
     MAX(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    MAX *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    MAX *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7873,7 +7874,7 @@ public:
 
     S_MAX() : ta() { };
     S_MAX(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_MAX *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_MAX *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7902,7 +7903,7 @@ public:
 
     MAXINDEX() : ta() { };
     MAXINDEX(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outInteger);
-    MAXINDEX *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outInteger);
+    MAXINDEX *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -7931,7 +7932,7 @@ public:
 
     S_MAXINDEX() : ta() { };
     S_MAXINDEX(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_MAXINDEX *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_MAXINDEX *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -7962,7 +7963,7 @@ public:
 
     MEDPRICE() : ta() { };
     MEDPRICE(int startIdx, int endIdx, double *inHigh, double *inLow, int *outBegIdx, int *outNBElement, double *outReal);
-    MEDPRICE *create(int startIdx, int endIdx, double *inHigh, double *inLow, int *outBegIdx, int *outNBElement, double *outReal);
+    MEDPRICE *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -7993,7 +7994,7 @@ public:
 
     S_MEDPRICE() : ta() { };
     S_MEDPRICE(int startIdx, int endIdx, float *inHigh, float *inLow, int *outBegIdx, int *outNBElement, double *outReal);
-    S_MEDPRICE *create(int startIdx, int endIdx, float *inHigh, float *inLow, int *outBegIdx, int *outNBElement, double *outReal);
+    S_MEDPRICE *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8034,7 +8035,7 @@ public:
 
     MFI() : ta() { };
     MFI(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, double *inVolume, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    MFI *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, double *inVolume, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    MFI *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, double *inVolume = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, double *inVolume, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8075,7 +8076,7 @@ public:
 
     S_MFI() : ta() { };
     S_MFI(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, float *inVolume, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_MFI *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, float *inVolume, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_MFI *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, float *inVolume = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, float *inVolume, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8104,7 +8105,7 @@ public:
 
     MIDPOINT() : ta() { };
     MIDPOINT(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    MIDPOINT *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    MIDPOINT *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8133,7 +8134,7 @@ public:
 
     S_MIDPOINT() : ta() { };
     S_MIDPOINT(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_MIDPOINT *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_MIDPOINT *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8166,7 +8167,7 @@ public:
 
     MIDPRICE() : ta() { };
     MIDPRICE(int startIdx, int endIdx, double *inHigh, double *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    MIDPRICE *create(int startIdx, int endIdx, double *inHigh, double *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    MIDPRICE *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8199,7 +8200,7 @@ public:
 
     S_MIDPRICE() : ta() { };
     S_MIDPRICE(int startIdx, int endIdx, float *inHigh, float *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_MIDPRICE *create(int startIdx, int endIdx, float *inHigh, float *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_MIDPRICE *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8228,7 +8229,7 @@ public:
 
     MIN() : ta() { };
     MIN(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    MIN *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    MIN *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8257,7 +8258,7 @@ public:
 
     S_MIN() : ta() { };
     S_MIN(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_MIN *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_MIN *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8286,7 +8287,7 @@ public:
 
     MININDEX() : ta() { };
     MININDEX(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outInteger);
-    MININDEX *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outInteger);
+    MININDEX *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -8315,7 +8316,7 @@ public:
 
     S_MININDEX() : ta() { };
     S_MININDEX(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outInteger);
-    S_MININDEX *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outInteger);
+    S_MININDEX *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outIntege = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outInteger);
     TA_RetCode run();
 };
@@ -8346,7 +8347,7 @@ public:
 
     MINMAX() : ta() { };
     MINMAX(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outMin, double *outMax);
-    MINMAX *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outMin, double *outMax);
+    MINMAX *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outMin = 0, double *outMa = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outMin, double *outMax);
     TA_RetCode run();
 };
@@ -8377,7 +8378,7 @@ public:
 
     S_MINMAX() : ta() { };
     S_MINMAX(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outMin, double *outMax);
-    S_MINMAX *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outMin, double *outMax);
+    S_MINMAX *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outMin = 0, double *outMa = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outMin, double *outMax);
     TA_RetCode run();
 };
@@ -8408,7 +8409,7 @@ public:
 
     MINMAXINDEX() : ta() { };
     MINMAXINDEX(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outMinIdx, int *outMaxIdx);
-    MINMAXINDEX *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outMinIdx, int *outMaxIdx);
+    MINMAXINDEX *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outMinIdx = 0, int *outMaxId = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outMinIdx, int *outMaxIdx);
     TA_RetCode run();
 };
@@ -8439,7 +8440,7 @@ public:
 
     S_MINMAXINDEX() : ta() { };
     S_MINMAXINDEX(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outMinIdx, int *outMaxIdx);
-    S_MINMAXINDEX *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outMinIdx, int *outMaxIdx);
+    S_MINMAXINDEX *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, int *outMinIdx = 0, int *outMaxId = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, int *outMinIdx, int *outMaxIdx);
     TA_RetCode run();
 };
@@ -8476,7 +8477,7 @@ public:
 
     MINUS_DI() : ta() { };
     MINUS_DI(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    MINUS_DI *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    MINUS_DI *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8513,7 +8514,7 @@ public:
 
     S_MINUS_DI() : ta() { };
     S_MINUS_DI(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_MINUS_DI *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_MINUS_DI *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8546,7 +8547,7 @@ public:
 
     MINUS_DM() : ta() { };
     MINUS_DM(int startIdx, int endIdx, double *inHigh, double *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    MINUS_DM *create(int startIdx, int endIdx, double *inHigh, double *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    MINUS_DM *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8579,7 +8580,7 @@ public:
 
     S_MINUS_DM() : ta() { };
     S_MINUS_DM(int startIdx, int endIdx, float *inHigh, float *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_MINUS_DM *create(int startIdx, int endIdx, float *inHigh, float *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_MINUS_DM *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8608,7 +8609,7 @@ public:
 
     MOM() : ta() { };
     MOM(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    MOM *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    MOM *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8637,7 +8638,7 @@ public:
 
     S_MOM() : ta() { };
     S_MOM(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_MOM *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_MOM *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8668,7 +8669,7 @@ public:
 
     MULT() : ta() { };
     MULT(int startIdx, int endIdx, double *inReal0, double *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
-    MULT *create(int startIdx, int endIdx, double *inReal0, double *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
+    MULT *create(int startIdx = 0, int endIdx = 0, double *inReal0 = 0, double *inReal1 = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal0, double *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8699,7 +8700,7 @@ public:
 
     S_MULT() : ta() { };
     S_MULT(int startIdx, int endIdx, float *inReal0, float *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
-    S_MULT *create(int startIdx, int endIdx, float *inReal0, float *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
+    S_MULT *create(int startIdx = 0, int endIdx = 0, float *inReal0 = 0, float *inReal1 = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal0, float *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8736,7 +8737,7 @@ public:
 
     NATR() : ta() { };
     NATR(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    NATR *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    NATR *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8773,7 +8774,7 @@ public:
 
     S_NATR() : ta() { };
     S_NATR(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_NATR *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_NATR *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8804,7 +8805,7 @@ public:
 
     OBV() : ta() { };
     OBV(int startIdx, int endIdx, double *inReal, double *inVolume, int *outBegIdx, int *outNBElement, double *outReal);
-    OBV *create(int startIdx, int endIdx, double *inReal, double *inVolume, int *outBegIdx, int *outNBElement, double *outReal);
+    OBV *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, double *inVolume = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, double *inVolume, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8835,7 +8836,7 @@ public:
 
     S_OBV() : ta() { };
     S_OBV(int startIdx, int endIdx, float *inReal, float *inVolume, int *outBegIdx, int *outNBElement, double *outReal);
-    S_OBV *create(int startIdx, int endIdx, float *inReal, float *inVolume, int *outBegIdx, int *outNBElement, double *outReal);
+    S_OBV *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, float *inVolume = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, float *inVolume, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8872,7 +8873,7 @@ public:
 
     PLUS_DI() : ta() { };
     PLUS_DI(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    PLUS_DI *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    PLUS_DI *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8909,7 +8910,7 @@ public:
 
     S_PLUS_DI() : ta() { };
     S_PLUS_DI(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_PLUS_DI *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_PLUS_DI *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8942,7 +8943,7 @@ public:
 
     PLUS_DM() : ta() { };
     PLUS_DM(int startIdx, int endIdx, double *inHigh, double *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    PLUS_DM *create(int startIdx, int endIdx, double *inHigh, double *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    PLUS_DM *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -8975,7 +8976,7 @@ public:
 
     S_PLUS_DM() : ta() { };
     S_PLUS_DM(int startIdx, int endIdx, float *inHigh, float *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_PLUS_DM *create(int startIdx, int endIdx, float *inHigh, float *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_PLUS_DM *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9008,7 +9009,7 @@ public:
 
     PPO() : ta() { };
     PPO(int startIdx, int endIdx, double *inReal, int optInFastPeriod, int optInSlowPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
-    PPO *create(int startIdx, int endIdx, double *inReal, int optInFastPeriod, int optInSlowPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
+    PPO *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInFastPeriod = 0, int optInSlowPeriod = 0, TA_MAType optInMAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInFastPeriod, int optInSlowPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9041,7 +9042,7 @@ public:
 
     S_PPO() : ta() { };
     S_PPO(int startIdx, int endIdx, float *inReal, int optInFastPeriod, int optInSlowPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
-    S_PPO *create(int startIdx, int endIdx, float *inReal, int optInFastPeriod, int optInSlowPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
+    S_PPO *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInFastPeriod = 0, int optInSlowPeriod = 0, TA_MAType optInMAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInFastPeriod, int optInSlowPeriod, TA_MAType optInMAType, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9070,7 +9071,7 @@ public:
 
     ROC() : ta() { };
     ROC(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    ROC *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    ROC *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9099,7 +9100,7 @@ public:
 
     S_ROC() : ta() { };
     S_ROC(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_ROC *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_ROC *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9128,7 +9129,7 @@ public:
 
     ROCP() : ta() { };
     ROCP(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    ROCP *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    ROCP *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9157,7 +9158,7 @@ public:
 
     S_ROCP() : ta() { };
     S_ROCP(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_ROCP *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_ROCP *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9186,7 +9187,7 @@ public:
 
     ROCR() : ta() { };
     ROCR(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    ROCR *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    ROCR *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9215,7 +9216,7 @@ public:
 
     S_ROCR() : ta() { };
     S_ROCR(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_ROCR *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_ROCR *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9244,7 +9245,7 @@ public:
 
     ROCR100() : ta() { };
     ROCR100(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    ROCR100 *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    ROCR100 *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9273,7 +9274,7 @@ public:
 
     S_ROCR100() : ta() { };
     S_ROCR100(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_ROCR100 *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_ROCR100 *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9302,7 +9303,7 @@ public:
 
     RSI() : ta() { };
     RSI(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    RSI *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    RSI *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9331,7 +9332,7 @@ public:
 
     S_RSI() : ta() { };
     S_RSI(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_RSI *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_RSI *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9366,7 +9367,7 @@ public:
 
     SAR() : ta() { };
     SAR(int startIdx, int endIdx, double *inHigh, double *inLow, double optInAcceleration, double optInMaximum, int *outBegIdx, int *outNBElement, double *outReal);
-    SAR *create(int startIdx, int endIdx, double *inHigh, double *inLow, double optInAcceleration, double optInMaximum, int *outBegIdx, int *outNBElement, double *outReal);
+    SAR *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double optInAcceleration = 0, double optInMaximum = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double optInAcceleration, double optInMaximum, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9401,7 +9402,7 @@ public:
 
     S_SAR() : ta() { };
     S_SAR(int startIdx, int endIdx, float *inHigh, float *inLow, double optInAcceleration, double optInMaximum, int *outBegIdx, int *outNBElement, double *outReal);
-    S_SAR *create(int startIdx, int endIdx, float *inHigh, float *inLow, double optInAcceleration, double optInMaximum, int *outBegIdx, int *outNBElement, double *outReal);
+    S_SAR *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, double optInAcceleration = 0, double optInMaximum = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, double optInAcceleration, double optInMaximum, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9448,7 +9449,7 @@ public:
 
     SAREXT() : ta() { };
     SAREXT(int startIdx, int endIdx, double *inHigh, double *inLow, double optInStartValue, double optInOffsetOnReverse, double optInAccelerationInitLong, double optInAccelerationLong, double optInAccelerationMaxLong, double optInAccelerationInitShort, double optInAccelerationShort, double optInAccelerationMaxShort, int *outBegIdx, int *outNBElement, double *outReal);
-    SAREXT *create(int startIdx, int endIdx, double *inHigh, double *inLow, double optInStartValue, double optInOffsetOnReverse, double optInAccelerationInitLong, double optInAccelerationLong, double optInAccelerationMaxLong, double optInAccelerationInitShort, double optInAccelerationShort, double optInAccelerationMaxShort, int *outBegIdx, int *outNBElement, double *outReal);
+    SAREXT *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double optInStartValue = 0, double optInOffsetOnReverse = 0, double optInAccelerationInitLong = 0, double optInAccelerationLong = 0, double optInAccelerationMaxLong = 0, double optInAccelerationInitShort = 0, double optInAccelerationShort = 0, double optInAccelerationMaxShort = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double optInStartValue, double optInOffsetOnReverse, double optInAccelerationInitLong, double optInAccelerationLong, double optInAccelerationMaxLong, double optInAccelerationInitShort, double optInAccelerationShort, double optInAccelerationMaxShort, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9495,7 +9496,7 @@ public:
 
     S_SAREXT() : ta() { };
     S_SAREXT(int startIdx, int endIdx, float *inHigh, float *inLow, double optInStartValue, double optInOffsetOnReverse, double optInAccelerationInitLong, double optInAccelerationLong, double optInAccelerationMaxLong, double optInAccelerationInitShort, double optInAccelerationShort, double optInAccelerationMaxShort, int *outBegIdx, int *outNBElement, double *outReal);
-    S_SAREXT *create(int startIdx, int endIdx, float *inHigh, float *inLow, double optInStartValue, double optInOffsetOnReverse, double optInAccelerationInitLong, double optInAccelerationLong, double optInAccelerationMaxLong, double optInAccelerationInitShort, double optInAccelerationShort, double optInAccelerationMaxShort, int *outBegIdx, int *outNBElement, double *outReal);
+    S_SAREXT *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, double optInStartValue = 0, double optInOffsetOnReverse = 0, double optInAccelerationInitLong = 0, double optInAccelerationLong = 0, double optInAccelerationMaxLong = 0, double optInAccelerationInitShort = 0, double optInAccelerationShort = 0, double optInAccelerationMaxShort = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, double optInStartValue, double optInOffsetOnReverse, double optInAccelerationInitLong, double optInAccelerationLong, double optInAccelerationMaxLong, double optInAccelerationInitShort, double optInAccelerationShort, double optInAccelerationMaxShort, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9522,7 +9523,7 @@ public:
 
     SIN() : ta() { };
     SIN(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    SIN *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    SIN *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9549,7 +9550,7 @@ public:
 
     S_SIN() : ta() { };
     S_SIN(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_SIN *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_SIN *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9576,7 +9577,7 @@ public:
 
     SINH() : ta() { };
     SINH(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    SINH *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    SINH *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9603,7 +9604,7 @@ public:
 
     S_SINH() : ta() { };
     S_SINH(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_SINH *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_SINH *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9632,7 +9633,7 @@ public:
 
     SMA() : ta() { };
     SMA(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    SMA *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    SMA *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9661,7 +9662,7 @@ public:
 
     S_SMA() : ta() { };
     S_SMA(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_SMA *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_SMA *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9688,7 +9689,7 @@ public:
 
     SQRT() : ta() { };
     SQRT(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    SQRT *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    SQRT *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9715,7 +9716,7 @@ public:
 
     S_SQRT() : ta() { };
     S_SQRT(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_SQRT *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_SQRT *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9746,7 +9747,7 @@ public:
 
     STDDEV() : ta() { };
     STDDEV(int startIdx, int endIdx, double *inReal, int optInTimePeriod, double optInNbDev, int *outBegIdx, int *outNBElement, double *outReal);
-    STDDEV *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, double optInNbDev, int *outBegIdx, int *outNBElement, double *outReal);
+    STDDEV *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, double optInNbDev = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, double optInNbDev, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9777,7 +9778,7 @@ public:
 
     S_STDDEV() : ta() { };
     S_STDDEV(int startIdx, int endIdx, float *inReal, int optInTimePeriod, double optInNbDev, int *outBegIdx, int *outNBElement, double *outReal);
-    S_STDDEV *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, double optInNbDev, int *outBegIdx, int *outNBElement, double *outReal);
+    S_STDDEV *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, double optInNbDev = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, double optInNbDev, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -9824,7 +9825,7 @@ public:
 
     STOCH() : ta() { };
     STOCH(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInFastK_Period, int optInSlowK_Period, TA_MAType optInSlowK_MAType, int optInSlowD_Period, TA_MAType optInSlowD_MAType, int *outBegIdx, int *outNBElement, double *outSlowK, double *outSlowD);
-    STOCH *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInFastK_Period, int optInSlowK_Period, TA_MAType optInSlowK_MAType, int optInSlowD_Period, TA_MAType optInSlowD_MAType, int *outBegIdx, int *outNBElement, double *outSlowK, double *outSlowD);
+    STOCH *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int optInFastK_Period = 0, int optInSlowK_Period = 0, TA_MAType optInSlowK_MAType = (TA_MAType) 0, int optInSlowD_Period = 0, TA_MAType optInSlowD_MAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outSlowK = 0, double *outSlow = 0);
     void update(double *inHigh, double *inLow, double *inClose, int optInFastK_Period, int optInSlowK_Period, TA_MAType optInSlowK_MAType, int optInSlowD_Period, TA_MAType optInSlowD_MAType, int *outBegIdx, int *outNBElement, double *outSlowK, double *outSlowD);
     TA_RetCode run();
 };
@@ -9871,7 +9872,7 @@ public:
 
     S_STOCH() : ta() { };
     S_STOCH(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInFastK_Period, int optInSlowK_Period, TA_MAType optInSlowK_MAType, int optInSlowD_Period, TA_MAType optInSlowD_MAType, int *outBegIdx, int *outNBElement, double *outSlowK, double *outSlowD);
-    S_STOCH *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInFastK_Period, int optInSlowK_Period, TA_MAType optInSlowK_MAType, int optInSlowD_Period, TA_MAType optInSlowD_MAType, int *outBegIdx, int *outNBElement, double *outSlowK, double *outSlowD);
+    S_STOCH *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int optInFastK_Period = 0, int optInSlowK_Period = 0, TA_MAType optInSlowK_MAType = (TA_MAType) 0, int optInSlowD_Period = 0, TA_MAType optInSlowD_MAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outSlowK = 0, double *outSlow = 0);
     void update(float *inHigh, float *inLow, float *inClose, int optInFastK_Period, int optInSlowK_Period, TA_MAType optInSlowK_MAType, int optInSlowD_Period, TA_MAType optInSlowD_MAType, int *outBegIdx, int *outNBElement, double *outSlowK, double *outSlowD);
     TA_RetCode run();
 };
@@ -9914,7 +9915,7 @@ public:
 
     STOCHF() : ta() { };
     STOCHF(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInFastK_Period, int optInFastD_Period, TA_MAType optInFastD_MAType, int *outBegIdx, int *outNBElement, double *outFastK, double *outFastD);
-    STOCHF *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInFastK_Period, int optInFastD_Period, TA_MAType optInFastD_MAType, int *outBegIdx, int *outNBElement, double *outFastK, double *outFastD);
+    STOCHF *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int optInFastK_Period = 0, int optInFastD_Period = 0, TA_MAType optInFastD_MAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outFastK = 0, double *outFast = 0);
     void update(double *inHigh, double *inLow, double *inClose, int optInFastK_Period, int optInFastD_Period, TA_MAType optInFastD_MAType, int *outBegIdx, int *outNBElement, double *outFastK, double *outFastD);
     TA_RetCode run();
 };
@@ -9957,7 +9958,7 @@ public:
 
     S_STOCHF() : ta() { };
     S_STOCHF(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInFastK_Period, int optInFastD_Period, TA_MAType optInFastD_MAType, int *outBegIdx, int *outNBElement, double *outFastK, double *outFastD);
-    S_STOCHF *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInFastK_Period, int optInFastD_Period, TA_MAType optInFastD_MAType, int *outBegIdx, int *outNBElement, double *outFastK, double *outFastD);
+    S_STOCHF *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int optInFastK_Period = 0, int optInFastD_Period = 0, TA_MAType optInFastD_MAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outFastK = 0, double *outFast = 0);
     void update(float *inHigh, float *inLow, float *inClose, int optInFastK_Period, int optInFastD_Period, TA_MAType optInFastD_MAType, int *outBegIdx, int *outNBElement, double *outFastK, double *outFastD);
     TA_RetCode run();
 };
@@ -9994,7 +9995,7 @@ public:
 
     STOCHRSI() : ta() { };
     STOCHRSI(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int optInFastK_Period, int optInFastD_Period, TA_MAType optInFastD_MAType, int *outBegIdx, int *outNBElement, double *outFastK, double *outFastD);
-    STOCHRSI *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int optInFastK_Period, int optInFastD_Period, TA_MAType optInFastD_MAType, int *outBegIdx, int *outNBElement, double *outFastK, double *outFastD);
+    STOCHRSI *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int optInFastK_Period = 0, int optInFastD_Period = 0, TA_MAType optInFastD_MAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outFastK = 0, double *outFast = 0);
     void update(double *inReal, int optInTimePeriod, int optInFastK_Period, int optInFastD_Period, TA_MAType optInFastD_MAType, int *outBegIdx, int *outNBElement, double *outFastK, double *outFastD);
     TA_RetCode run();
 };
@@ -10031,7 +10032,7 @@ public:
 
     S_STOCHRSI() : ta() { };
     S_STOCHRSI(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int optInFastK_Period, int optInFastD_Period, TA_MAType optInFastD_MAType, int *outBegIdx, int *outNBElement, double *outFastK, double *outFastD);
-    S_STOCHRSI *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int optInFastK_Period, int optInFastD_Period, TA_MAType optInFastD_MAType, int *outBegIdx, int *outNBElement, double *outFastK, double *outFastD);
+    S_STOCHRSI *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int optInFastK_Period = 0, int optInFastD_Period = 0, TA_MAType optInFastD_MAType = (TA_MAType) 0, int *outBegIdx = 0, int *outNBElement = 0, double *outFastK = 0, double *outFast = 0);
     void update(float *inReal, int optInTimePeriod, int optInFastK_Period, int optInFastD_Period, TA_MAType optInFastD_MAType, int *outBegIdx, int *outNBElement, double *outFastK, double *outFastD);
     TA_RetCode run();
 };
@@ -10062,7 +10063,7 @@ public:
 
     SUB() : ta() { };
     SUB(int startIdx, int endIdx, double *inReal0, double *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
-    SUB *create(int startIdx, int endIdx, double *inReal0, double *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
+    SUB *create(int startIdx = 0, int endIdx = 0, double *inReal0 = 0, double *inReal1 = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal0, double *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10093,7 +10094,7 @@ public:
 
     S_SUB() : ta() { };
     S_SUB(int startIdx, int endIdx, float *inReal0, float *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
-    S_SUB *create(int startIdx, int endIdx, float *inReal0, float *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
+    S_SUB *create(int startIdx = 0, int endIdx = 0, float *inReal0 = 0, float *inReal1 = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal0, float *inReal1, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10122,7 +10123,7 @@ public:
 
     SUM() : ta() { };
     SUM(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    SUM *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    SUM *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10151,7 +10152,7 @@ public:
 
     S_SUM() : ta() { };
     S_SUM(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_SUM *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_SUM *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10182,7 +10183,7 @@ public:
 
     T3() : ta() { };
     T3(int startIdx, int endIdx, double *inReal, int optInTimePeriod, double optInVFactor, int *outBegIdx, int *outNBElement, double *outReal);
-    T3 *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, double optInVFactor, int *outBegIdx, int *outNBElement, double *outReal);
+    T3 *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, double optInVFactor = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, double optInVFactor, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10213,7 +10214,7 @@ public:
 
     S_T3() : ta() { };
     S_T3(int startIdx, int endIdx, float *inReal, int optInTimePeriod, double optInVFactor, int *outBegIdx, int *outNBElement, double *outReal);
-    S_T3 *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, double optInVFactor, int *outBegIdx, int *outNBElement, double *outReal);
+    S_T3 *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, double optInVFactor = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, double optInVFactor, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10240,7 +10241,7 @@ public:
 
     TAN() : ta() { };
     TAN(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    TAN *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    TAN *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10267,7 +10268,7 @@ public:
 
     S_TAN() : ta() { };
     S_TAN(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_TAN *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_TAN *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10294,7 +10295,7 @@ public:
 
     TANH() : ta() { };
     TANH(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    TANH *create(int startIdx, int endIdx, double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    TANH *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10321,7 +10322,7 @@ public:
 
     S_TANH() : ta() { };
     S_TANH(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
-    S_TANH *create(int startIdx, int endIdx, float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
+    S_TANH *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10350,7 +10351,7 @@ public:
 
     TEMA() : ta() { };
     TEMA(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    TEMA *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    TEMA *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10379,7 +10380,7 @@ public:
 
     S_TEMA() : ta() { };
     S_TEMA(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_TEMA *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_TEMA *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10414,7 +10415,7 @@ public:
 
     TRANGE() : ta() { };
     TRANGE(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, double *outReal);
-    TRANGE *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, double *outReal);
+    TRANGE *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10449,7 +10450,7 @@ public:
 
     S_TRANGE() : ta() { };
     S_TRANGE(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, double *outReal);
-    S_TRANGE *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, double *outReal);
+    S_TRANGE *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10478,7 +10479,7 @@ public:
 
     TRIMA() : ta() { };
     TRIMA(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    TRIMA *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    TRIMA *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10507,7 +10508,7 @@ public:
 
     S_TRIMA() : ta() { };
     S_TRIMA(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_TRIMA *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_TRIMA *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10536,7 +10537,7 @@ public:
 
     TRIX() : ta() { };
     TRIX(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    TRIX *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    TRIX *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10565,7 +10566,7 @@ public:
 
     S_TRIX() : ta() { };
     S_TRIX(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_TRIX *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_TRIX *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10594,7 +10595,7 @@ public:
 
     TSF() : ta() { };
     TSF(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    TSF *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    TSF *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10623,7 +10624,7 @@ public:
 
     S_TSF() : ta() { };
     S_TSF(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_TSF *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_TSF *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10658,7 +10659,7 @@ public:
 
     TYPPRICE() : ta() { };
     TYPPRICE(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, double *outReal);
-    TYPPRICE *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, double *outReal);
+    TYPPRICE *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10693,7 +10694,7 @@ public:
 
     S_TYPPRICE() : ta() { };
     S_TYPPRICE(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, double *outReal);
-    S_TYPPRICE *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, double *outReal);
+    S_TYPPRICE *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10734,7 +10735,7 @@ public:
 
     ULTOSC() : ta() { };
     ULTOSC(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod1, int optInTimePeriod2, int optInTimePeriod3, int *outBegIdx, int *outNBElement, double *outReal);
-    ULTOSC *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod1, int optInTimePeriod2, int optInTimePeriod3, int *outBegIdx, int *outNBElement, double *outReal);
+    ULTOSC *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int optInTimePeriod1 = 0, int optInTimePeriod2 = 0, int optInTimePeriod3 = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, int optInTimePeriod1, int optInTimePeriod2, int optInTimePeriod3, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10775,7 +10776,7 @@ public:
 
     S_ULTOSC() : ta() { };
     S_ULTOSC(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod1, int optInTimePeriod2, int optInTimePeriod3, int *outBegIdx, int *outNBElement, double *outReal);
-    S_ULTOSC *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod1, int optInTimePeriod2, int optInTimePeriod3, int *outBegIdx, int *outNBElement, double *outReal);
+    S_ULTOSC *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int optInTimePeriod1 = 0, int optInTimePeriod2 = 0, int optInTimePeriod3 = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, int optInTimePeriod1, int optInTimePeriod2, int optInTimePeriod3, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10806,7 +10807,7 @@ public:
 
     VAR() : ta() { };
     VAR(int startIdx, int endIdx, double *inReal, int optInTimePeriod, double optInNbDev, int *outBegIdx, int *outNBElement, double *outReal);
-    VAR *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, double optInNbDev, int *outBegIdx, int *outNBElement, double *outReal);
+    VAR *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, double optInNbDev = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, double optInNbDev, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10837,7 +10838,7 @@ public:
 
     S_VAR() : ta() { };
     S_VAR(int startIdx, int endIdx, float *inReal, int optInTimePeriod, double optInNbDev, int *outBegIdx, int *outNBElement, double *outReal);
-    S_VAR *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, double optInNbDev, int *outBegIdx, int *outNBElement, double *outReal);
+    S_VAR *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, double optInNbDev = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, double optInNbDev, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10872,7 +10873,7 @@ public:
 
     WCLPRICE() : ta() { };
     WCLPRICE(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, double *outReal);
-    WCLPRICE *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, double *outReal);
+    WCLPRICE *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10907,7 +10908,7 @@ public:
 
     S_WCLPRICE() : ta() { };
     S_WCLPRICE(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, double *outReal);
-    S_WCLPRICE *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, double *outReal);
+    S_WCLPRICE *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10944,7 +10945,7 @@ public:
 
     WILLR() : ta() { };
     WILLR(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    WILLR *create(int startIdx, int endIdx, double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    WILLR *create(int startIdx = 0, int endIdx = 0, double *inHigh = 0, double *inLow = 0, double *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inHigh, double *inLow, double *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -10981,7 +10982,7 @@ public:
 
     S_WILLR() : ta() { };
     S_WILLR(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_WILLR *create(int startIdx, int endIdx, float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_WILLR *create(int startIdx = 0, int endIdx = 0, float *inHigh = 0, float *inLow = 0, float *inClose = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inHigh, float *inLow, float *inClose, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -11010,7 +11011,7 @@ public:
 
     WMA() : ta() { };
     WMA(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    WMA *create(int startIdx, int endIdx, double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    WMA *create(int startIdx = 0, int endIdx = 0, double *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(double *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };
@@ -11039,7 +11040,7 @@ public:
 
     S_WMA() : ta() { };
     S_WMA(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
-    S_WMA *create(int startIdx, int endIdx, float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
+    S_WMA *create(int startIdx = 0, int endIdx = 0, float *inReal = 0, int optInTimePeriod = 0, int *outBegIdx = 0, int *outNBElement = 0, double *outReal = 0);
     void update(float *inReal, int optInTimePeriod, int *outBegIdx, int *outNBElement, double *outReal);
     TA_RetCode run();
 };

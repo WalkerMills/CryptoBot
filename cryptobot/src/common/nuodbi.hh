@@ -9,6 +9,8 @@
 
 #include <nuodb/NuoDB.h>
 
+#define USER "auth_user"
+
 #define TRADE "cryptobot_trade"
 #define PRICE "cryptobot_price"
 #define PRICE_15 "cryptobot_price_15"
@@ -66,6 +68,15 @@ public:
     NuoDB::ResultSet *get(int id);
     int erase(int id);
 
+};
+
+class user : public table {
+public:
+    user() : table(USER) { }
+
+    int primary(const char *username);
+
+    char *username(const int uid);
 };
 
 class trade : public table {

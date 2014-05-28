@@ -6,7 +6,7 @@
 
 include config.mk
 
-SRCS = $(foreach dir, $(srcdir), $(wildcard $(dir)/*.cpp)) \
+SRCS = $(foreach dir, $(srcdir), $(wildcard $(dir)/*.cpp))
 OBJS = $(patsubst src/%.cpp, lib/%.o, $(SRC))
 
 include $(addsuffix /module.mk, $(srcdir))
@@ -72,13 +72,11 @@ $(THRIFTS): %: %.thrift
 	$(THRIFT) $(THRIFT_FLAGS) $< 
 
 # Object target dependencies
-lib/Bot.o:
+lib/Bot.o lib/bots_constants.o lib/bots_types.o: $(THRIFTS)
 lib/bots.o: libcontrol.so libreflection.so librules.so
-lib/bots_constants.o:
-lib/bots_types.o:
 lib/client.o: libbots.so
-lib/control.o: libnuodbi.so 
-lib/interface.o: libbots.so
+lib/control.o: lib/Bot.o lib/bots_types.o lib/bots_constants.o libnuodbi.so 
+lib/interface.o: libbots.so librules.so
 lib/nuodbi.o:
 lib/reflection.o: libta.so
 lib/rules.o: libta.so
@@ -92,7 +90,7 @@ lib/test.o: librules.so
 lib/bots.o: EXTRA_CFLAGS := $(SERIAL_CFLAGS) -D_GLIBCXX_USE_NANOSLEEP
 lib/client.o: EXTRA_CFLAGS := -D_GLIBCXX_USE_NANOSLEEP
 lib/control.o: EXTRA_CFLAGS := $(THRIFT_CFLAGS)
-lib/interface.o: EXTRA_CFLAGS := $(CYTHON_CFLAGS)
+lib/interface.o: EXTRA_CFLAGS := $(BP_CFLAGS)
 lib/server.o: EXTRA_CFLAGS := $(THRIFT_CFLAGS) $(SERIAL_CFLAGS)
 lib/test.o: EXTRA_CFLAGS := $(SERIAL_CFLAGS)
 lib/worker.o: EXTRA_LDFLAGS := $(SERIAL_CFLAGS) -D_GLIBCXX_USE_NANOSLEEP
@@ -104,28 +102,23 @@ lib/%.o: %.cpp
 libcontrol.so: lib/Bot.o lib/bots_types.o lib/bots_constants.o
 
 # Library target linking flags
-interface.so: EXTRA_LDFLAGS := $(CYTHON_LDFLAGS) -lbots
-libbots.so: EXTRA_LDFLAGS := $(SERIAL_LDFLAGS) \
--lcontrol -lnuodbi -lreflection -lrules
+interface.so: EXTRA_LDFLAGS := $(BP_LDFLAGS) -lbots -lrules
+libbots.so: EXTRA_LDFLAGS := $(SERIAL_LDFLAGS) -lcontrol -lnuodbi -lreflection -lrules
 libcontrol.so: EXTRA_LDFLAGS := $(THRIFT_LDFLAGS) -lnuodbi
 libnuodbi.so: EXTRA_LDFLAGS := $(NUODB_LDFLAGS)
 libreflection.so: EXTRA_LDFLAGS := -lta
-librules.so: EXTRA_LDFLAGS := $(ALGLIB_LDFLAGS) $(SERIAL_LDFLAGS) -lta \
--lreflection 
+librules.so: EXTRA_LDFLAGS := $(ALGLIB_LDFLAGS) $(SERIAL_LDFLAGS) -lta -lreflection 
 libta.so: EXTRA_LDFLAGS := $(TA_LDFLAGS)
 
 # Implicit rule for compiling libraries
 lib%.so: lib/%.o
-	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,$(shell basename $@) \
-	$(foreach dep, $^, $(libdir)/$(shell basename $(dep))) \
-	-o $(libdir)/$(shell basename $@) $(EXTRA_LDFLAGS)
+	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,$(shell basename $@) $(foreach dep, $^, $(libdir)/$(shell basename $(dep))) -o $(libdir)/$(shell basename $@) $(EXTRA_LDFLAGS)
 
 # Any shared object not matching the C/C++ library naming convention is
 # assumed to be a Cython extension; shared objects must match the name of the
 # Cython interfaces to avoid runtime errors
 %.so: lib/%.o
-	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,lib$@ $< -o $(libdir)/$@ \
-	$(EXTRA_LDFLAGS)
+	$(CXX) $(LD_FLAGS) -shared -Wl,-soname,lib$@ $< -o $(libdir)/$@ $(EXTRA_LDFLAGS)
 
 # Binary target dependencies
 client: librules.so libnuodbi.so
@@ -139,6 +132,5 @@ test: EXTRA_LDFLAGS := $(SERIAL_LDFLAGS) -lbots -lrules -lnuodbi
 
 # Default rule for compiling binaries
 $(BINS): %: lib/%.o
-	$(CXX) $(LD_FLAGS) $(foreach dep, $^, $(libdir)/$(shell basename $(dep))) \
-	-o $(bindir)/$@ $(EXTRA_LDFLAGS) 
+	$(CXX) $(LD_FLAGS) $(foreach dep, $^, $(libdir)/$(shell basename $(dep))) -o $(bindir)/$@ $(EXTRA_LDFLAGS) 
 
