@@ -56,6 +56,10 @@ void sma::add_indicator(int period) {
     this->indicators->push_back(new_sma);
 }
 
+void sma::set_period(int index, int period) {
+    this->indicators->at(index)->optInTimePeriod = period;
+}
+
 void sma::update_indices(int start, int end) {
     for ( std::vector<ta::SMA *>::iterator it = this->indicators->begin();
           it != this->indicators->end(); ++it ) {
@@ -174,6 +178,7 @@ std::vector<int> *sma::crossover(int index1, int index2, timescale_t scale) {
 
     int endind = std::min(data1->size(), data2->size());
     std::vector<int> *crosses = new std::vector<int>();
+    std::vector<int> *final_similars = new std::vector<int>();
     int i = 0;
 
     // Here, we set which dataset starts above the other. Then, we use
@@ -200,8 +205,28 @@ std::vector<int> *sma::crossover(int index1, int index2, timescale_t scale) {
         }
     }
 
+    for ( i = 0; i < crosses->size(); ++i ) {
+        // Get similar for each element
+        std::vector<std::pair<int, double>> *crossovers = 
+            this->return_similar(crosses->at(i), SIXTY);
+        int currInd = (crosses->at(i) - this->start) / (3600);
+        double refSlope = resultData[currInd + 1] - resultData[currInd];  
+        double upSlope = refSlope * 1.25;
+        double downSlope = refSlope * 0.75;
+
+        for ( int j = 0; j < crossovers->size(); ++j ) {
+            int similarIndex = (crossovers->at(j).first - this->start) / 3600;
+            double simSlope = 
+                resultData[similarIndex + 1] - resultData[similarIndex];
+
+            if ( simSlope >= downSlope && simSlope <= upSlope ) {
+                final_similars->push_back(crosses->at(i));
+            }
+        }
+    }
+
     // We return the list of crossover points. 
-    return crosses;
+    return final_similars;
 }
 
 db::price *sma::resolve(timescale_t scale) {
@@ -228,7 +253,8 @@ db::price *sma::resolve(timescale_t scale) {
     return price_db;
 }
 
-std::vector<double> *sma::return_similar(double unix_tid, timescale_t scale) {
+std::vector<std::pair<int, double>> *sma::return_similar(double unix_tid, 
+                                                         timescale_t scale) {
     // Open price database
     db::price *price_db = this->resolve(scale);
 
@@ -237,13 +263,15 @@ std::vector<double> *sma::return_similar(double unix_tid, timescale_t scale) {
 
     // Get similar points from the dataset 
     NuoDB::ResultSet *similar = price_db->get_similar(stddev);
-    std::vector<double> *amounts = new std::vector<double>();
+    std::vector<std::pair<int, double>> *amounts = 
+        new std::vector<std::pair<int, double>>();
 
     // Read results into a vector
     while ( similar->next() ) {
-        double amount = similar->getDouble(1);
-        amounts->push_back(amount);
-    }
+        std::pair <int, double> datapair = 
+            std::make_pair(similar->getInt(1), similar->getDouble(2));
+        amounts->push_back(datapair);
+    }    
 
     // Clean up, return the results
     delete price_db;
@@ -255,21 +283,18 @@ double sma::t_test(double amount, std::vector<double> *data) {
     int n = data->size();
     double *data_array = &data->at(0);
 
-    // Construct alglib::read_1d_array
     alglib::real_1d_array input;
-    input.setcontent(n, data_array); 
-    // for (int i = 0; i < n; i++) {
-    //     std::cout << input[i] << " ";
-    // }
-    // std::cout << std::endl << amount << std::endl;
     double both = 0.0;
     double left = 0.0;
     double right = 0.0;
 
+    // Construct alglib::read_1d_array
+    input.setcontent(n, data_array); 
+
     // Call student t-test and return p-value for left-tailed. 
     alglib::studentttest1(input, n, amount, both, left, right);
-    std::cout << "P-vales: Both: " << both << " Left: " << left << " Right: " << right
-              << std::endl << std::endl;
+    std::cout << "P-vales: Both: " << both << " Left: " << left << " Right: " 
+              << right << std::endl << std::endl;
     return left;
 }
 

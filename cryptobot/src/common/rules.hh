@@ -39,11 +39,11 @@ public:
     rule(action_t action, double amount);
     ~rule();
 
-    void add_indicator(...) { }
-
-    double *run() { return NULL; }
+    void add_indicator(...);
+    
     bool test() { return false; }
     void trade() { }
+    void run() { }
 };
 
 
@@ -64,13 +64,14 @@ public:
     sma(action_t action, double amount);
 
     void add_indicator(int period);
+    void set_period(int index, int period); 
     void update_indices(int start, int end);
 
     ta::SMA *get_indicator(int index);
     std::vector<std::pair<int, double>> *run_sma(int index, 
                                                  timescale_t timescale);
     std::vector<int> *crossover(int ind1, int ind2, timescale_t scale);
-    std::vector<double> *return_similar(double unix_tid, timescale_t scale);
+    std::vector<std::pair<int, double>> *return_similar(double unix_tid, timescale_t scale);
     double t_test(double amount, std::vector<double> *data);
     void run();
 };

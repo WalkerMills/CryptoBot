@@ -451,7 +451,7 @@ NuoDB::ResultSet *price::get_similar(const double var) {
     double upper = var * 1.005;
     double lower = var * 0.995;
     
-    ss << "SELECT amount FROM " << this->model << " WHERE stddev >= " << lower 
+    ss << "SELECT tid, amount FROM " << this->model << " WHERE stddev >= " << lower 
        << " AND stddev <= " << upper;
 
     const std::string &tmp = ss.str();
