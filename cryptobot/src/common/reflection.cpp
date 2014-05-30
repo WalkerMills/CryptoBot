@@ -324,6 +324,6 @@ ta::ta *ta_reflector::get(std::string name) {
 }
 
 ta::ta *reflect(std::string name) {
-    return ta_reflector::get(name)->create();
+    return ta_reflector::get(name);
 }
 

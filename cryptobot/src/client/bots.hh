@@ -34,9 +34,32 @@ public:
     void insert_rule(rule *r);
     void delete_rule(int index);
 
-    bool active();
     void run(bool trade);
     void stop();
+};
+
+// TODO: user routes bot control through control::network
+class user {
+private:
+    int id;
+    db::bot *bot_db;
+
+    void insert(bot *b);
+
+public:
+    std::map<char *, bot *> *bots;
+
+    user(int uid);
+    user(std::string username);
+    ~user();
+
+    void create(std::string name);
+    void remove(std::string name);
+
+    void run(std::string name);
+    void stop(std::string name);
+
+    bool active(std::string name);
 };
 
 }

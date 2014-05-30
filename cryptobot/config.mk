@@ -26,8 +26,8 @@ gendir = src/gen
 
 
 # Default compiler flags (for C and C++)
-CFLAGS = -O3 -mtune=generic -pipe -fstack-protector --param=ssp-buffer-size=4 \
--Wno-sign-compare -Wno-unused-function
+CFLAGS = -O3 -mtune=generic -pipe -fstack-protector \
+--param=ssp-buffer-size=4 -Wno-sign-compare -Wno-unused-function
 
 # Default compiler flags for C++
 CXXFLAGS = -std=c++11 -Wno-write-strings 
@@ -47,9 +47,9 @@ THRIFT_FLAGS = -out $(gendir) -I $(gendir) -strict --gen cpp
 # Flags for compiling and linking against ALGLIB
 ALGLIB_LDFLAGS = -lalglib
 
-# Flags for compiling and linking against boost::python
-BP_CFLAGS = -I/usr/include/python2.7 -DBOOST_NO_RVALUE_REFERENCES
-BP_LDFLAGS = -lboost_python -lpython2.7
+# Flags for compiling and linking against Cython
+CYTHON_CFLAGS = -I/usr/include/python2.7 -Wno-strict-aliasing
+CYTHON_LDFLAGS = -lpython2.7 
 
 # Flags for linking against NuoDB
 NUODB_LDFLAGS = -L/opt/nuodb/lib64 -lNuoRemote

@@ -1,9 +1,12 @@
 from . import mtgox
 from . import models
 from . import store
-from .lib import interface
 
-import ast
+import inspect
+import io
+import json
+import os
+import sys
 
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
@@ -15,6 +18,20 @@ from django.http import HttpResponse
 
 from registrationform import RegisterForm
 
+USER = 'test'
+PASS = 'foo'
+KEYFILE = os.path.join(os.path.dirname(__file__), 'tmp/keys.txt')
+NAME = u'cryptobot'
+
+def get_keys(path):
+    with io.open(path) as f:
+        keys = dict((name, (key, secret)) for [name, key, secret] in
+                    [unicode(line).split(u' ') for line in f])
+    return keys
+
+def json_print(json_str):
+    return json.dumps(json_str, sort_keys=True, indent=4,
+                      separators=(',', ': '))
 
 def init(user, keys):
     user_db = store.UserDB()
@@ -43,57 +60,9 @@ def index(request):
 def trade(request):
     return render(request, "cryptobot/trade.html")
 
-
-class BotForm(forms.Form):
-    name = forms.CharField(max_length=24, required=True)
-    action = forms.TypedChoiceField(widget=forms.Select, required=True, 
-        choices=(
-            (0, "Watch"), 
-            (1, "Buy"), 
-            (2, "Sell")
-        ),
-        coerce=lambda i: interface.identity(interface.action_t(i)),
-        empty_value=None
-    )
-    amount = forms.FloatField(required=True)
-    indicators = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,
-        required=True, choices=(
-            (("SMA", 10), "10 Day SMA"),
-            (("SMA", 21), "21 Day SMA")
-        )
-    )
-    start = forms.IntegerField(required=True)
-    end = forms.IntegerField(required=True)
-
 @login_required(login_url='/login/')
 def bots(request):
-    if request.method == 'POST':
-        form = BotForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            action = form.cleaned_data['action']
-            indicators = form.cleaned_data['indicators']
-            start = form.cleaned_data['start']
-            end = form.cleaned_data['end']
-
-            b = interface.bot(request.user.id, str(name))
-            r = interface.sma(action, 0.0)
-
-            for i in indicators:
-                type_, period = ast.literal_eval(i)
-                if type_ == "SMA":
-                    r.add_indicator(period)
-            r.update_indices(start, end)
-
-            b.insert_rule(r)
-            b.run(False)
-
-            return HttpResponse("ran bot {} for uid {}".format(
-                name, request.user.id))
-    else:
-        form = BotForm()
-
-    return render(request, "cryptobot/bots.html", {"botform": form})
+    return render(request, "cryptobot/bots.html")
 
 @login_required(login_url='/login/')
 def mtgox_trade(request):

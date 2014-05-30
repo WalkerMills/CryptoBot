@@ -159,60 +159,6 @@ int table::erase(int id) {
 }
 
 
-// (Django) User relation interface methods
-int user::primary(const char *name) {
-    std::stringstream ss;
-    NuoDB::PreparedStatement *stmt;
-    NuoDB::ResultSet *result;
-    int id;
-
-    // Prepare our query
-    ss << "SELECT id FROM " << this->model << " WHERE username=" << name;
-    const std::string &tmp = ss.str();
-    stmt = this->prepare(tmp.c_str());
-
-    // Safely execute query
-    result = this->query(stmt);
-
-    // If no row was found, return an invalid id
-    if ( ! result->next() ) return 0;
-
-    // Return the id of the result
-    id = result->getInt(1);
-    result->close();
-
-    return id;
-}
-
-char *user::username(int uid) {
-    std::stringstream ss;
-    NuoDB::PreparedStatement *stmt;
-    NuoDB::ResultSet *result;
-    char *name = NULL;
-
-    // Prepare our query
-    ss << "SELECT username FROM " << this->model << " WHERE id=" << uid;
-    const std::string &tmp = ss.str();
-    stmt = this->prepare(tmp.c_str());
-
-    // Safely execute query
-    result = this->query(stmt);
-
-    // Check our results
-    if ( ! result->next() ) return NULL;
-
-    // Copy the hostname from our result to a new string
-    const std::string &out = result->getString(1);
-    name = new char[out.size() + 1];
-    strcpy(name, out.c_str());
-
-    // Clean up and return hostname
-    result->close();
-
-    return name;
-}
-
-
 // Trade relation interface methods
 int trade::primary(const int tid, const double price, const double amount) {
     std::stringstream ss;
@@ -443,16 +389,54 @@ double price::get_amount(const int tid) {
     return stddev;
 }
 
-NuoDB::ResultSet *price::get_similar(const double var) {
+double price::get_slope(const int tid) {
     std::stringstream ss;
     NuoDB::PreparedStatement *stmt;
     NuoDB::ResultSet *result;
 
-    double upper = var * 1.005;
-    double lower = var * 0.995;
+    ss << "SELECT slope FROM " << this->model << " WHERE tid=" 
+       << tid;
+
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    result = this->query(stmt);
+    stmt->close();
+
+    if ( ! result->next() ) {
+        std::cerr << "Error: No time period found with this unix timestamp" 
+                  << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    double slope = result->getDouble(1);
+    std::cout << "This is the slope of the row: " << slope << std::endl;
+
+    return slope;
+}
+
+NuoDB::ResultSet *price::get_similar(const double var, const double slope) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+
+    double loc_var; 
+
+    if ( var == 0 ) {
+        loc_var = 1;
+    }
+    else {
+        loc_var = var;
+    }
+
+    double up_var = loc_var * 1.01;
+    double low_var = loc_var * 0.99;
+    double up_slope = slope + 0.5;
+    double low_slope = slope - 0.5;
     
-    ss << "SELECT tid, amount FROM " << this->model << " WHERE stddev >= " << lower 
-       << " AND stddev <= " << upper;
+    ss << "SELECT tid, amount FROM " << this->model << " WHERE stddev >= " 
+    << low_var << " AND stddev <= " << up_var << " AND slope >= " << low_slope 
+    << " AND slope <= " << up_slope;
 
     const std::string &tmp = ss.str();
     stmt = this->prepare(tmp.c_str());
@@ -463,8 +447,9 @@ NuoDB::ResultSet *price::get_similar(const double var) {
     if ( ! result->next() ) {
         std::cerr << "Error: No results found within given stddev range"  
                   << std::endl;
-        exit(EXIT_FAILURE);
+        result = 0;
     }
+
 
     return result;
 }

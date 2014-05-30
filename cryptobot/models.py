@@ -106,8 +106,8 @@ class Price_15(models.Model):
     # StdDev (Measure of Variance) of each time period 
     stddev = models.FloatField()
 
-    # SMA slope value; SMA value of next period - SMA value of this period
-    slope = models.FloatField()
+    # Slope of the 10-day SMA of each time period
+    slope = models.FloatField() 
 
 # Stores price data from Bitcoin exchanges - 15 min
 class Price_30(models.Model):
@@ -123,8 +123,8 @@ class Price_30(models.Model):
     # StdDev (Measure of Variance) of each time period 
     stddev = models.FloatField()
 
-    # SMA slope value; SMA value of next period - SMA value of this period
-    slope = models.FloatField()
+    # Slope of the 10-day SMA of each time period
+    slope = models.FloatField() 
 
 # Stores price data from Bitcoin exchanges - 15 min
 class Price_60(models.Model):
@@ -138,7 +138,7 @@ class Price_60(models.Model):
     amount = models.DecimalField(max_digits=20, decimal_places=12)
 
     # StdDev (Measure of Variance) of each time period 
-    stddev = models.FloatField()    
+    stddev = models.FloatField()
 
-    # SMA slope value; SMA value of next period - SMA value of this period
-    slope = models.FloatField()
+    # Slope of the 10-day SMA of each time period
+    slope = models.FloatField() 

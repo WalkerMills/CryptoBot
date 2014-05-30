@@ -9,8 +9,6 @@
 
 #include <nuodb/NuoDB.h>
 
-#define USER "auth_user"
-
 #define TRADE "cryptobot_trade"
 #define PRICE "cryptobot_price"
 #define PRICE_15 "cryptobot_price_15"
@@ -70,15 +68,6 @@ public:
 
 };
 
-class user : public table {
-public:
-    user() : table(USER) { }
-
-    int primary(const char *username);
-
-    char *username(const int uid);
-};
-
 class trade : public table {
 public:
     trade() : table(TRADE) { }
@@ -98,9 +87,10 @@ public:
 
     int primary(const int tid);
     NuoDB::ResultSet *get_range(const int begID, const int endID);
-    double get_amount(const int tid); 
+    double get_amount(const int unix_tid); 
     double get_stddev(const int unix_tid); 
-    NuoDB::ResultSet *get_similar(const double var);
+    double get_slope(const int unix_tid);
+    NuoDB::ResultSet *get_similar(const double var, const double slope);
 };
 
 class price_15 : public price {

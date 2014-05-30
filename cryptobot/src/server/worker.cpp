@@ -72,10 +72,10 @@ void worker::run() {
         this->rules = new std::vector<bots::rule *>(out);
 
         // Execute rules
-        for ( std::vector<bots::rule *>::iterator it = this->rules->begin();
-              it != this->rules->end(); ++it ) {
-            (*it)->run();
-        }
+        std::cout << "The function is about to run" << std::endl;
+        double *result = this->rules->at(0)->run(0);
+        std::cout << "The result is: " << result[0] << std::endl;
+        std::cout << "started from the bottom" << std::endl;
 
         exit(EXIT_SUCCESS);
     } else {

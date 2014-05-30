@@ -128,14 +128,6 @@ void bot::delete_rule(int index) {
     this->store_rules();
 }
 
-bool bot::active() {
-    db::runs *runs_db = new db::runs();
-    const int rid = runs_db->primary(this->id);
-    delete runs_db;
-
-    return ( rid > 0 );
-}
-
 void bot::run(bool trade) {
     control::network *cluster = new control::network();
     control::host *node = cluster->route();
@@ -192,4 +184,27 @@ void bot::stop() {
     delete node;
 }
 
-};
+// TODO: implement user class + hook it into Django/NuoDB
+user::user(int uid) {
+}
+
+user::~user() {
+}
+
+void user::create(std::string name) {
+}
+
+void user::remove(std::string name) {
+}
+
+void user::run(std::string name) {
+}
+
+void user::stop(std::string name) {
+}
+
+bool user::active(std::string name) {
+    return false;
+}
+
+}
