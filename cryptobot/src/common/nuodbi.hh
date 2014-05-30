@@ -9,17 +9,16 @@
 
 #include <nuodb/NuoDB.h>
 
-#define USER "auth_user"
-
-#define TRADE "cryptobot_trade"
+#define BOT "cryptobot_bot"
+#define HOST "cryptobot_host"
 #define PRICE "cryptobot_price"
 #define PRICE_15 "cryptobot_price_15"
 #define PRICE_30 "cryptobot_price_30"
 #define PRICE_60 "cryptobot_price_60"
 #define RULE "cryptobot_rule"
-#define HOST "cryptobot_host"
 #define RUNS "cryptobot_runs"
-#define BOT "cryptobot_bot"
+#define TRADE "cryptobot_trade"
+#define USER "auth_user"
 
 namespace db {
 
@@ -98,9 +97,10 @@ public:
 
     int primary(const int tid);
     NuoDB::ResultSet *get_range(const int begID, const int endID);
-    double get_amount(const int tid); 
+    double get_amount(const int unix_tid); 
     double get_stddev(const int unix_tid); 
-    NuoDB::ResultSet *get_similar(const double var);
+    double get_slope(const int unix_tid);
+    NuoDB::ResultSet *get_similar(const double var, const double slope);
 };
 
 class price_15 : public price {

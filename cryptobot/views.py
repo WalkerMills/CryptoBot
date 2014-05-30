@@ -4,6 +4,7 @@ from . import store
 from .lib import interface
 
 import ast
+import subprocess
 
 from django import forms
 from django.http import HttpResponse, HttpResponseRedirect
@@ -82,11 +83,12 @@ def bots(request):
             for i in indicators:
                 type_, period = ast.literal_eval(i)
                 if type_ == "SMA":
-                    r.add_indicator(period)
-            r.update_indices(start, end)
+                    r.add_sma(period)
+            # r.update_indices(start, end)
 
             b.insert_rule(r)
             b.run(False)
+            subprocess.call(["./bin/test"])
 
             return HttpResponse("ran bot {} for uid {}".format(
                 name, request.user.id))

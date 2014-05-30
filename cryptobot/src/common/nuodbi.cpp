@@ -443,16 +443,54 @@ double price::get_amount(const int tid) {
     return stddev;
 }
 
-NuoDB::ResultSet *price::get_similar(const double var) {
+double price::get_slope(const int tid) {
     std::stringstream ss;
     NuoDB::PreparedStatement *stmt;
     NuoDB::ResultSet *result;
 
-    double upper = var * 1.005;
-    double lower = var * 0.995;
+    ss << "SELECT slope FROM " << this->model << " WHERE tid=" 
+       << tid;
+
+    const std::string &tmp = ss.str();
+    stmt = this->prepare(tmp.c_str());
+
+    result = this->query(stmt);
+    stmt->close();
+
+    if ( ! result->next() ) {
+        std::cerr << "Error: No time period found with this unix timestamp" 
+                  << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    double slope = result->getDouble(1);
+    std::cout << "This is the slope of the row: " << slope << std::endl;
+
+    return slope;
+}
+
+NuoDB::ResultSet *price::get_similar(const double var, const double slope) {
+    std::stringstream ss;
+    NuoDB::PreparedStatement *stmt;
+    NuoDB::ResultSet *result;
+
+    double loc_var; 
+
+    if ( var == 0 ) {
+        loc_var = 1;
+    }
+    else {
+        loc_var = var;
+    }
+
+    double up_var = loc_var * 1.01;
+    double low_var = loc_var * 0.99;
+    double up_slope = slope + 0.5;
+    double low_slope = slope - 0.5;
     
-    ss << "SELECT tid, amount FROM " << this->model << " WHERE stddev >= " << lower 
-       << " AND stddev <= " << upper;
+    ss << "SELECT tid, amount FROM " << this->model << " WHERE stddev >= " 
+    << low_var << " AND stddev <= " << up_var << " AND slope >= " << low_slope 
+    << " AND slope <= " << up_slope;
 
     const std::string &tmp = ss.str();
     stmt = this->prepare(tmp.c_str());
@@ -463,8 +501,9 @@ NuoDB::ResultSet *price::get_similar(const double var) {
     if ( ! result->next() ) {
         std::cerr << "Error: No results found within given stddev range"  
                   << std::endl;
-        exit(EXIT_FAILURE);
+        result = 0;
     }
+
 
     return result;
 }

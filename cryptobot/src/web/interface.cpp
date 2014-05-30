@@ -31,7 +31,7 @@ BOOST_PYTHON_MODULE(interface) {
 
     class_<sma, bases<rule>>("sma", init<>())
         .def(init<action_t, float>())
-        .def("add_indicator", &sma::add_indicator)
+        .def("add_sma", &sma::add_sma)
         .def("update_indices", &sma::update_indices)
     ;
 }
